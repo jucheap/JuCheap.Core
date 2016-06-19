@@ -3,7 +3,6 @@ using System.Security.Principal;
 using JuCheap.Core.Data;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Services.AppServices;
-using JuCheap.Core.Web.Filters;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -57,9 +56,14 @@ namespace JuCheap.Core.Web
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
 
-            services.AddScoped<IgnoreRightFilter>();
-            services.AddScoped<RightFilter>();
-            services.AddScoped<VisitFilter>();
+            //services.Configure<AutoMapper.IConfiguration>(cfg =>
+            //{
+            //    cfg = AutoMapperConfig.GetMapperConfiguration();
+            //});
+            //services.Configure<AutoMapper.IMapper>(mapper =>
+            //{
+            //    mapper = AutoMapperConfig.GetMapperConfiguration().CreateMapper();
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

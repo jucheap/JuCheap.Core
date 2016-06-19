@@ -1,0 +1,46 @@
+﻿@using System.Collections.Generic
+@using JuCheap.Core.Models
+@using JuCheap.Core.Models.Enum
+@{
+    List<MenuDto> menus = ViewBag.Menus;
+}
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="nav-close">
+        <i class="fa fa-times-circle"></i>
+    </div>
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <h1 style="font-size: 2em; color: white; text-align: center">JuCheap</h1>
+                </div>
+                <div class="logo-element">
+                    Ju3
+                </div>
+            </li>
+            @if (menus != null)
+            {
+                foreach (var module in menus.Where(item => item.Type == MenuType.Module))
+                {
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-label">@module.Name</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            @foreach (var menu in menus.Where(item => item.ParentId == module.Id))
+                            {
+                                <li>
+                                    <a class="J_menuItem" href="@menu.Url" data-index="0">@menu.Name</a>
+                                </li>
+                            }
+                        </ul>
+
+                    </li>
+                }
+            }
+        </ul>
+    </div>
+</nav>

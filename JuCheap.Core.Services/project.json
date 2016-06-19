@@ -1,0 +1,22 @@
+﻿{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "AutoMapper": "4.2.1",
+    "JuCheap.Core.Data": "1.0.0-*",
+    "JuCheap.Core.Infrastructure": "1.0.0-*",
+    "JuCheap.Core.Interfaces": "1.0.0-*",
+    "JuCheap.Core.Models": "1.0.0-*",
+    "NETStandard.Library": "1.5.0-rc2-24027"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dotnet5.6",
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  }
+}

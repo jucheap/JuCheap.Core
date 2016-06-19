@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "用户角色授权";
+    Layout = "~/Views/Shared/_Layout_Content.cshtml";
+}
+@section styles
+{
+    <link href="~/css/plugins/jqgrid/ui.jqgrid.css" rel="stylesheet" />
+}
+
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>用户角色授权</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="jqGrid_wrapper">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="table_list_my"></table>
+                        <div id="pager_list_my"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table id="table_list_notmy"></table>
+                        <div id="pager_list_notmy"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+    <script src="~/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
+    <script src="~/js/jqgrid-list.js"></script>
+    <script src="~/js/base.js"></script>
+    <script>
+        function cancelRight(roleId) {
+            XPage.DoPost(null,"@Url.Action("CancelRight")" + "/" + roleId, null, function(res) {
+                if (res && res.flag) {
+                    reloadGrid("table_list_my");
+                    reloadGrid("table_list_notmy");
+                } else {
+                    alert("取消失败：" + res.msg);
+                }
+            }, null);
+        }
+
+        function giveRight(roleId) {
+            XPage.DoPost(null, "@Url.Action("GiveRight")" + "/" + roleId, null, function(res) {
+                if (res && res.flag) {
+                    reloadGrid("table_list_my");
+                    reloadGrid("table_list_notmy");
+                } else {
+                    alert("授权失败：" + res.msg);
+                }
+            }, null);
+        }
+        function reloadGrid(gridId) {
+            $("#" + gridId).setGridParam({ search: true }).trigger("reloadGrid", [{ page: 1 }]);
+        }
+        $(document).ready(function() {
+            var myConfig = {
+                id: "table_list_my",
+                pagerId: "pager_list_my",
+                title: '我的角色',
+                url: '@Url.Action("GetMyRoles")',
+                colNames: ['主键', '角色名称', '操作'],
+                colModel: [
+                    { name: 'Id', index: 'Id', width: 30, key: true, hidden: true },
+                    { name: 'Name', index: 'Name', width: 120 },
+                    { name: 'Cancel', index: 'Cancel', width: 30 }
+                ],
+                gridComplete: function() {
+                    var ids = jQuery("#table_list_my").jqGrid('getDataIDs');
+                    for (var i = 0; i < ids.length; i++) {
+                        var id = ids[i];
+                        var cancel = "<button class=\"btn btn-danger btn-sm\" type=\"button\" onclick=\"cancelRight(" + id + ")\">取消</button>";
+                        jQuery("#table_list_my").jqGrid('setRowData', ids[i], { Cancel: cancel });
+                    }
+                }
+            };
+            var notMyConfig = {
+                id: "table_list_notmy",
+                pagerId: "pager_list_notmy",
+                title: '尚未分配德角色',
+                url: '@Url.Action("GetNotMyRoles")',
+                colNames: ['主键', '角色名称', '操作'],
+                colModel: [
+                    { name: 'Id', index: 'Id', width: 30, key: true, hidden: true },
+                    { name: 'Name', index: 'Name', width: 120 },
+                    { name: 'Authen', index: 'Authen', width: 30 }
+                ],
+                gridComplete: function() {
+                    var ids = jQuery("#table_list_notmy").jqGrid('getDataIDs');
+                    for (var i = 0; i < ids.length; i++) {
+                        var id = ids[i];
+                        var authen = "<button class=\"btn btn-info btn-sm\" type=\"button\" onclick=\"giveRight(" + id + ")\">授权</button>";
+                        jQuery("#table_list_notmy").jqGrid('setRowData', ids[i], { Authen: authen });
+                    }
+                }
+            };
+            JucheapGrid.Load(myConfig);
+            JucheapGrid.Load(notMyConfig);
+        });
+    </script>
+}

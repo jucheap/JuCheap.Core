@@ -1,0 +1,82 @@
+﻿@using System.Security.Policy
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model JuCheap.Core.Models.MenuDto
+
+@{
+    ViewBag.Title = "添加菜单";
+    Layout = "~/Views/Shared/_Layout_Content.cshtml";
+}
+
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>添加菜单</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            @using (Html.BeginForm("Add", "Menu", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@Html.LabelFor(m => m.ParentName)：</label>
+                    <div class="col-sm-8">
+
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.ParentName, new { @class = "form-control", placeholder = "上级菜单" })
+                            @Html.HiddenFor(m => m.ParentId)
+                            @Html.ValidationMessageFor(m => m.ParentName)
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-white dropdown-toggle" data-toggle="dropdown">
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right" role="menu"></ul>
+                            </div>
+                            <!-- /btn-group -->
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@Html.LabelFor(m => m.Name)：</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "菜单名称" })
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@Html.LabelFor(m => m.Url)：</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Url, new { @class = "form-control", placeholder = "URL地址" })
+                        @Html.ValidationMessageFor(m => m.Url)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@Html.LabelFor(m => m.Order)：</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Order, new { @class = "form-control", placeholder = "排序" })
+                        @Html.ValidationMessageFor(m => m.Order)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-8">
+                        <button class="btn btn-info" type="submit">保存</button>
+                        <button class="btn btn-white" type="button" id="btnBack">返回</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section scripts{
+
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/page/menu.js"></script>
+    <script>
+        $("#btnBack").bind("click", function(e) {
+            XPage.GoTo(e.target, "@Url.Action("Index")");
+        });
+    </script>
+}

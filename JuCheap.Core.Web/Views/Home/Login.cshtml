@@ -1,0 +1,129 @@
+﻿@model JuCheap.Core.Models.LoginDto
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>登录 JuCheap 后台主题UI框架</title>
+
+    <meta name="keywords" content="JuCheap后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台管理系统">
+    <meta name="description" content="JuCheap是一个完全响应式，基于Bootstrap3开发的扁平化主题，采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术搭建的一个快速开发后台管理系统MVC框架">
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/css/login-theme.css" rel="stylesheet" />
+    <link href="~/css/login.css" rel="stylesheet" />
+</head>
+<body class="external-page sb-l-c sb-r-c">
+    <div id="main" class="animated fadeIn">
+
+        <!-- Start: Content-Wrapper -->
+        <section id="content_wrapper">
+
+            <!-- begin canvas animation bg -->
+            <!-- Begin: Content -->
+            <section id="content">
+
+                <div class="admin-form theme-info" id="login1">
+                    <div class="panel panel-info mt10 br-n">
+
+                        <div class="panel-heading heading-border bg-white">
+                            <span class="panel-title">
+                                <i class="fa fa-sign-in"></i>登录JuCheap
+                            </span>
+                        </div>
+
+                        <!-- end .form-header section -->
+                        @using (Html.BeginForm("Login", "Home", FormMethod.Post, new { @class = "form-horizontal", id = "loginFrm" }))
+                        {
+                            @Html.HiddenFor(m => m.ReturnUrl)
+                            <div class="panel-body bg-light p30">
+                                <div class="row">
+                                    <div class="col-sm-7 pr30">
+                                        <div class="section">
+                                            <label class="field-label text-muted fs18 mb10">账号</label>
+                                            <label for="LoginName" class="field prepend-icon">
+                                                @Html.TextBoxFor(m => m.LoginName, new { @class = "gui-input", placeholder = "请输入用户名", autofocus = "" })
+                                                <label for="LoginName" class="field-icon">
+                                                    <i class="fa fa-user"></i>
+                                                </label>
+                                            </label>
+                                            @Html.ValidationMessageFor(m => m.LoginName)
+                                        </div>
+                                        <!-- end section -->
+
+                                        <div class="section">
+                                            <label class="field-label text-muted fs18 mb10">密码</label>
+
+                                            <label for="Password" class="field prepend-icon">
+                                                @Html.PasswordFor(m => m.Password, new { @class = "gui-input", placeholder = "请输入密码", value = "qwaszx" })
+                                                <label for="Password" class="field-icon">
+                                                    <i class="fa fa-lock"></i>
+                                                </label>
+                                                @Html.ValidationMessageFor(m => m.Password)
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
+
+                                    </div>
+                                    <div class="col-sm-5 br-l br-grey pl30">
+                                        <h3 class="mb25"> JuCheap的技术:</h3>
+                                        <p class="mb15">
+                                            <span class="fa fa-check text-success pr5"></span> MVC+Identity+EF+T4
+                                        </p>
+                                        <p class="mb15">
+                                            <span class="fa fa-check text-success pr5"></span> SimpleInjector/AutoMapper
+                                        </p>
+                                        <p class="mb15">
+                                            <span class="fa fa-check text-success pr5"></span> 异步编程
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        <!-- end .form-body section -->
+                            <div class="panel-footer clearfix p10 ph15">
+                                <input id="btnLogin" type="submit" class="btn btn-primary mr10 pull-right" value="登录">
+                                <label class="switch ib switch-primary pull-left input-align mt10">
+                                    <input type="checkbox" id="RememberMe" name="RememberMe" value="true">
+                                    <label for="RememberMe" data-on="YES" data-off="NO"></label>
+                                    <span>记住我</span>
+                                </label>
+                            </div>
+                        <!-- end .form-footer section -->
+                        }
+                    </div>
+                </div>
+
+            </section>
+            <!-- End: Content -->
+
+        </section>
+        <!-- End: Content-Wrapper -->
+
+    </div>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/jquery.validate.min.js"></script>
+    <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+        $("#btnLogin").click(function () {
+            if ($("#loginFrm").validate().form()) {
+                $(this).button("loading");
+                return true;
+            }
+            return false;
+        });
+    </script>
+</body>
+</html>

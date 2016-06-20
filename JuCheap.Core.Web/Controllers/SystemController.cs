@@ -1,6 +1,7 @@
 ﻿
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JuCheap.Core.Web.Controllers
@@ -8,6 +9,7 @@ namespace JuCheap.Core.Web.Controllers
     /// <summary>
     /// 系统管理
     /// </summary>
+    [Authorize]
     public class SystemController : Controller
     {
         private readonly IDatabaseInitService _databaseInitService;

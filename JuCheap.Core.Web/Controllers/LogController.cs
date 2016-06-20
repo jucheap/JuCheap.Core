@@ -1,6 +1,7 @@
 ﻿using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models.Filters;
 using JuCheap.Core.Web.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JuCheap.Core.Web.Controllers
@@ -8,6 +9,7 @@ namespace JuCheap.Core.Web.Controllers
     /// <summary>
     /// 日志
     /// </summary>
+    [Authorize]
     public class LogController : Controller
     {
         private readonly ILogService _logService;

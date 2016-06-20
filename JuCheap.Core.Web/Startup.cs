@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using System.Security.Principal;
 using JuCheap.Core.Data;
 using JuCheap.Core.Interfaces;
@@ -10,9 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using JuCheap.Core.Infrastructure.Extentions;
-using JuCheap.Core.Web.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Http;
 namespace JuCheap.Core.Web
 {
     public class Startup
@@ -44,8 +43,8 @@ namespace JuCheap.Core.Web
             services.AddDbContext<JuCheapContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddDefaultTokenProviders();
+            //services.AddIdentity<ApplicationUser, IdentityRole>()
+            //    .AddDefaultTokenProviders();
                         
             services.AddMvc();
 
@@ -85,7 +84,21 @@ namespace JuCheap.Core.Web
             
             app.UseStaticFiles();
 
-            app.UseIdentity();
+            //app.UseIdentity();
+
+            var option = new CookieAuthenticationOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                CookieHttpOnly = true,
+                ExpireTimeSpan = TimeSpan.FromMinutes(43200),
+                LoginPath = new PathString("/Home/Login"),
+                LogoutPath = new PathString("/Home/Logout"),
+                CookieName = ".JuCheapCore",
+                CookiePath = "/",
+                //DataProtectionProvider = null//如果需要做负载均衡，就需要提供一个Key
+            };
+            app.UseCookieAuthentication(option);
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 

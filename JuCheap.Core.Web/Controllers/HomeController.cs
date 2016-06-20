@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Web.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -19,12 +20,13 @@ namespace JuCheap.Core.Web.Controllers
     /// 首页
     /// </summary>
     [IgnoreRightFilter]
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly IUserService _userService;
         private readonly IMenuService _menuService;
 
-        public HomeController(IUserService userSvr,IMenuService menuService)
+        public HomeController(IUserService userSvr, IMenuService menuService)
         {
             _userService = userSvr;
             _menuService = menuService;
@@ -59,7 +61,7 @@ namespace JuCheap.Core.Web.Controllers
         [AllowAnonymous]
         public ActionResult Login()
         {
-            
+
             var model = new LoginDto
             {
                 ReturnUrl = Request.Query["ReturnUrl"],
@@ -77,7 +79,7 @@ namespace JuCheap.Core.Web.Controllers
         [HttpPost]
         public ActionResult Login(LoginDto model)
         {
-            
+
             if (!ModelState.IsValid) return View(model);
 
             var connection = Request.HttpContext.Features.Get<IHttpConnectionFeature>();
@@ -91,13 +93,13 @@ namespace JuCheap.Core.Web.Controllers
             var loginDto = _userService.Login(model);
             if (loginDto.LoginSuccess)
             {
-                var user = new ApplicationUser
-                {
-                    UserName = loginDto.User.LoginName
-                };
-                //_signInManager.SignInAsync(user, new AuthenticationProperties {IsPersistent = false});
-                if (model.ReturnUrl.IsBlank())
-                    return RedirectToAction("Index");
+                var authenType = CookieAuthenticationDefaults.AuthenticationScheme;
+                var identity = new ClaimsIdentity(authenType);
+                identity.AddClaim(new Claim(ClaimTypes.Name, loginDto.User.LoginName));
+                identity.AddClaim(new Claim("LoginUserId", loginDto.User.Id.ToString()));
+                var properties = new AuthenticationProperties() {IsPersistent = true};
+                var principal = new ClaimsPrincipal(identity);
+                HttpContext.Authentication.SignInAsync(authenType, principal, properties);
                 return Redirect(model.ReturnUrl);
             }
             ModelState.AddModelError(loginDto.Result == LoginResult.AccountNotExists ? "LoginName" : "Password",
@@ -111,7 +113,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <returns></returns>
         public ActionResult Logout()
         {
-            HttpContext.Authentication.SignOutAsync("ApplicationCookie");
+            HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
         }
     }

@@ -6,12 +6,14 @@ using JuCheap.Core.Web.Filters;
 using JuCheap.Core.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using JuCheap.Core.Infrastructure.Extentions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JuCheap.Core.Web.Controllers
 {
     /// <summary>
     /// 用户角色
     /// </summary>
+    [Authorize]
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;

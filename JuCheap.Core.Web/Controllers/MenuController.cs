@@ -7,12 +7,14 @@ using JuCheap.Core.Models.Filters;
 using JuCheap.Core.Web.Filters;
 using JuCheap.Core.Web.Models;
 using JuCheap.Core.Infrastructure.Extentions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JuCheap.Core.Web.Controllers
 {
     /// <summary>
     /// 菜单
     /// </summary>
+    [Authorize]
     public class MenuController : Controller
     {
         private readonly IMenuService _menuService;

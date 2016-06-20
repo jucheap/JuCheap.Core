@@ -152,33 +152,24 @@ namespace JuCheap.Core.Services.AppServices
         public List<MenuDto> GetMyMenus(int userId)
         {
             var dbSet = _context.Menu;
-            //var dbSetUserRoles = _context.UserRole;
-            //var dbSetRoleMenus = _context.RoleMenus;
-            //var query = dbSet.Where(item => !item.IsDeleted && item.Type != (byte)MenuType.Button);
-            //var roleIds = dbSetUserRoles.Where(item => item.UserId == userId)
-            //    .Select(item => item.RoleId).ToList();
-            //var menuIds = dbSetRoleMenus.Where(item => roleIds.Contains(item.RoleId))
-            //    .Select(item => item.MenuId)
-            //    .ToList();
-            //return query.Where(item => menuIds.Contains(item.Id))
-            //    .Select(item => new MenuDto
-            //    {
-            //        Id = item.Id,
-            //        ParentId = item.ParentId,
-            //        Name = item.Name,
-            //        Url = item.Url,
-            //        Order = item.Order,
-            //        Type = (MenuType)item.Type
-            //    }).ToList();
-            return dbSet.Select(item => new MenuDto
-            {
-                Id = item.Id,
-                ParentId = item.ParentId,
-                Name = item.Name,
-                Url = item.Url,
-                Order = item.Order,
-                Type = (MenuType) item.Type
-            }).ToList();
+            var dbSetUserRoles = _context.UserRole;
+            var dbSetRoleMenus = _context.RoleMenu;
+            var query = dbSet.Where(item => !item.IsDeleted && item.Type != (byte)MenuType.Button);
+            var roleIds = dbSetUserRoles.Where(item => item.UserId == userId)
+                .Select(item => item.RoleId).ToList();
+            var menuIds = dbSetRoleMenus.Where(item => roleIds.Contains(item.RoleId))
+                .Select(item => item.MenuId)
+                .ToList();
+            return query.Where(item => menuIds.Contains(item.Id))
+                .Select(item => new MenuDto
+                {
+                    Id = item.Id,
+                    ParentId = item.ParentId,
+                    Name = item.Name,
+                    Url = item.Url,
+                    Order = item.Order,
+                    Type = (MenuType)item.Type
+                }).ToList();
         }
 
         /// <summary>

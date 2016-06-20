@@ -26,10 +26,11 @@ namespace JuCheap.Core.Services.AppServices
         /// ctor
         /// </summary>
         /// <param name="context"></param>
-        public MenuService(JuCheapContext context)
+        /// <param name="mapper"></param>
+        public MenuService(JuCheapContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
-            _mapper = AutoMapperConfig.GetMapperConfiguration().CreateMapper();
         }
 
         /// <summary>

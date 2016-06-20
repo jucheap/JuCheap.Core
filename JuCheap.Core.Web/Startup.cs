@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using JuCheap.Core.Infrastructure.Extentions;
+using JuCheap.Core.Services;
 using Microsoft.AspNetCore.Http;
 namespace JuCheap.Core.Web
 {
@@ -49,20 +50,17 @@ namespace JuCheap.Core.Web
             services.AddMvc();
 
             // Add application services.
+            // 1.automapper
+            services.AddScoped<AutoMapper.IConfiguration>(_ => AutoMapperConfig.GetMapperConfiguration());
+            services.AddScoped<AutoMapper.IMapper>(_ => AutoMapperConfig.GetMapperConfiguration().CreateMapper());
+
+            // 2.service
             services.AddScoped<IDatabaseInitService, DatabaseInitService>();
             services.AddScoped<ILogService, LogService>();
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
-
-            //services.Configure<AutoMapper.IConfiguration>(cfg =>
-            //{
-            //    cfg = AutoMapperConfig.GetMapperConfiguration();
-            //});
-            //services.Configure<AutoMapper.IMapper>(mapper =>
-            //{
-            //    mapper = AutoMapperConfig.GetMapperConfiguration().CreateMapper();
-            //});
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

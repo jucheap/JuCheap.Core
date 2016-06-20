@@ -8,11 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using JuCheap.Core.Infrastructure.Extentions;
-using JuCheap.Core.Web.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.Authentication;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -38,8 +35,6 @@ namespace JuCheap.Core.Web.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
-            //var user = HttpContext.Features.Get<UserManager<ApplicationUser>>();
-            //var userName = user.GetUserName(User);
             var myMenus = _menuService.GetMyMenus(User.Identity.GetLoginUserId());
             ViewBag.Menus = myMenus;
             return View();

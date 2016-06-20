@@ -25,10 +25,11 @@ namespace JuCheap.Core.Services.AppServices
         /// ctor
         /// </summary>
         /// <param name="context"></param>
-        public RoleService(JuCheapContext context)
+        /// <param name="mapper"></param>
+        public RoleService(JuCheapContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
-            _mapper = AutoMapperConfig.GetMapperConfiguration().CreateMapper();
         }
 
         /// <summary>

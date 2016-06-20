@@ -105,7 +105,7 @@ namespace JuCheap.Core.Services.AppServices
         {
             var reslt = new UserLoginDto();
             var dbSet = _context.Users;
-            var logDbSet = _context.LoginLog;
+            var logDbSet = _context.LoginLogs;
             var entity = dbSet.FirstOrDefault(item => item.LoginName == dto.LoginName.Trim());
             var loginLog = new LoginLogEntity
             {
@@ -148,7 +148,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public bool Give(int userId, int roleId)
         {
-            var dbSet = _context.UserRole;
+            var dbSet = _context.UserRoles;
             if (dbSet.Any(item => item.UserId == userId && item.RoleId == roleId))
                 return true;
             dbSet.Add(new UserRoleEntity
@@ -167,7 +167,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public bool Cancel(int userId, int roleId)
         {
-            var dbSet = _context.UserRole;
+            var dbSet = _context.UserRoles;
             var userRole = dbSet.FirstOrDefault(item => item.UserId == userId && item.RoleId == roleId);
             dbSet.Remove(userRole);
             return _context.SaveChanges() > 0;
@@ -210,9 +210,9 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public bool HasRight(int userId, string url)
         {
-            var dbSet = _context.Menu;
-            var dbSetUserRoles = _context.UserRole;
-            var dbSetRoleMenus = _context.RoleMenu;
+            var dbSet = _context.Menus;
+            var dbSetUserRoles = _context.UserRoles;
+            var dbSetRoleMenus = _context.RoleMenus;
             var query = dbSet.Where(item => !item.IsDeleted);
             var roleIds = dbSetUserRoles.Where(item => item.UserId == userId)
                 .Select(item => item.RoleId).ToList();
@@ -229,7 +229,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public bool Visit(VisitDto dto)
         {
-            var dbSet = _context.PageView;
+            var dbSet = _context.PageViews;
             var entity = _mapper.Map<VisitDto, PageViewEntity>(dto);
             dbSet.Add(entity);
             return _context.SaveChanges() > 0;
@@ -307,7 +307,7 @@ namespace JuCheap.Core.Services.AppServices
         {
             var reslt = new UserLoginDto();
             var dbSet = _context.Users;
-            var logDbSet = _context.LoginLog;
+            var logDbSet = _context.LoginLogs;
             var entity = await dbSet.FirstOrDefaultAsync(item => item.LoginName == dto.LoginName.Trim());
             var loginLog = new LoginLogEntity
             {
@@ -350,7 +350,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> GiveAsync(int userId, int roleId)
         {
-            var dbSet = _context.UserRole;
+            var dbSet = _context.UserRoles;
             if (await dbSet.AnyAsync(item => item.UserId == userId && item.RoleId == roleId))
                 return true;
             dbSet.Add(new UserRoleEntity
@@ -369,7 +369,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> CancelAsync(int userId, int roleId)
         {
-            var dbSet = _context.UserRole;
+            var dbSet = _context.UserRoles;
             var userRole = await dbSet.FirstOrDefaultAsync(item => item.UserId == userId && item.RoleId == roleId);
             dbSet.Remove(userRole);
             return await _context.SaveChangesAsync() > 0;
@@ -412,9 +412,9 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> HasRightAsync(int userId, string url)
         {
-            var dbSet = _context.Menu;
-            var dbSetUserRoles = _context.UserRole;
-            var dbSetRoleMenus = _context.RoleMenu;
+            var dbSet = _context.Menus;
+            var dbSetUserRoles = _context.UserRoles;
+            var dbSetRoleMenus = _context.RoleMenus;
             var query = dbSet.Where(item => !item.IsDeleted);
             var roleIds = await dbSetUserRoles.Where(item => item.UserId == userId)
                 .Select(item => item.RoleId).ToListAsync();
@@ -431,7 +431,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> VisitAsync(VisitDto dto)
         {
-            var dbSet = _context.PageView;
+            var dbSet = _context.PageViews;
             var entity = _mapper.Map<VisitDto, PageViewEntity>(dto);
             dbSet.Add(entity);
             return await _context.SaveChangesAsync() > 0;

@@ -41,7 +41,7 @@ namespace JuCheap.Core.Services.AppServices
         public int Add(MenuDto dto)
         {
             var entity = _mapper.Map<MenuDto, MenuEntity>(dto);
-            var dbSet = _context.Menu;
+            var dbSet = _context.Menus;
             var pathCodeDbSet = _context.PathCodes;
 
             var existsCode = dbSet.Where(item => item.ParentId == dto.ParentId)
@@ -71,7 +71,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public bool Update(MenuDto dto)
         {
-            var dbSet = _context.Menu;
+            var dbSet = _context.Menus;
 
             var entity = dbSet.FirstOrDefault(m => m.Id == dto.Id);
             entity.Name = dto.Name;
@@ -88,7 +88,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public MenuDto Find(int id)
         {
-            var dbSet = _context.Menu;
+            var dbSet = _context.Menus;
             var entity = dbSet.FirstOrDefault(m => m.Id == id);
             var dto = _mapper.Map<MenuEntity, MenuDto>(entity);
             if (dto.ParentId > 0)
@@ -106,7 +106,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public bool Delete(IEnumerable<int> ids)
         {
-            var dbSet = _context.Menu;
+            var dbSet = _context.Menus;
             var entities = dbSet.Where(item => ids.Contains(item.Id)).ToList();
             foreach (var menuEntity in entities)
             {
@@ -125,7 +125,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters == null)
                 return new PagedResult<MenuDto>();
 
-            var dbSet = _context.Menu;
+            var dbSet = _context.Menus;
             var query = dbSet.Where(item => !item.IsDeleted);
 
             if (filters.keywords.IsNotBlank())
@@ -152,9 +152,9 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public List<MenuDto> GetMyMenus(int userId)
         {
-            var dbSet = _context.Menu;
-            var dbSetUserRoles = _context.UserRole;
-            var dbSetRoleMenus = _context.RoleMenu;
+            var dbSet = _context.Menus;
+            var dbSetUserRoles = _context.UserRoles;
+            var dbSetRoleMenus = _context.RoleMenus;
             var query = dbSet.Where(item => !item.IsDeleted && item.Type != (byte)MenuType.Button);
             var roleIds = dbSetUserRoles.Where(item => item.UserId == userId)
                 .Select(item => item.RoleId).ToList();
@@ -181,7 +181,7 @@ namespace JuCheap.Core.Services.AppServices
         public async Task<int> AddAsync(MenuDto dto)
         {
             var entity = _mapper.Map<MenuDto, MenuEntity>(dto);
-            var dbSet = _context.Menu;
+            var dbSet = _context.Menus;
             var pathCodeDbSet = _context.PathCodes;
 
             var existsCode = await dbSet.Where(item => item.ParentId == dto.ParentId)
@@ -211,7 +211,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> UpdateAsync(MenuDto dto)
         {
-            var dbSet = _context.Menu;
+            var dbSet = _context.Menus;
 
             var entity = await dbSet.FirstOrDefaultAsync(m => m.Id == dto.Id);
             entity.Name = dto.Name;
@@ -228,7 +228,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<MenuDto> FindAsync(int id)
         {
-            var dbSet = _context.Menu;
+            var dbSet = _context.Menus;
             var entity = await dbSet.FirstOrDefaultAsync(m => m.Id == id);
             var dto = _mapper.Map<MenuEntity, MenuDto>(entity);
             if (dto.ParentId > 0)
@@ -246,7 +246,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> DeleteAsync(IEnumerable<int> ids)
         {
-            var dbSet = _context.Menu;
+            var dbSet = _context.Menus;
             var entities = await dbSet.Where(item => ids.Contains(item.Id)).ToListAsync();
             foreach (var menuEntity in entities)
             {
@@ -265,7 +265,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters == null)
                 return new PagedResult<MenuDto>();
 
-            var dbSet = _context.Menu;
+            var dbSet = _context.Menus;
             var query = dbSet.Where(item => !item.IsDeleted);
 
             if (filters.keywords.IsNotBlank())
@@ -292,9 +292,9 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<List<MenuDto>> GetMyMenusAsync(int userId)
         {
-            var dbSet = _context.Menu;
-            var dbSetUserRoles = _context.UserRole;
-            var dbSetRoleMenus = _context.RoleMenu;
+            var dbSet = _context.Menus;
+            var dbSetUserRoles = _context.UserRoles;
+            var dbSetRoleMenus = _context.RoleMenus;
             var query = dbSet.Where(item => !item.IsDeleted && item.Type != (byte)MenuType.Button);
             var roleIds = await dbSetUserRoles.Where(item => item.UserId == userId)
                 .Select(item => item.RoleId).ToListAsync();

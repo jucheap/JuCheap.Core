@@ -103,7 +103,7 @@ namespace JuCheap.Core.Services.AppServices
 
             if (filters.UserId.HasValue && filters.UserId.Value > 0)
             {
-                var userRoles = _context.UserRole;
+                var userRoles = _context.UserRoles;
                 var myRoleIds = userRoles.Where(item => item.UserId == filters.UserId.Value)
                                 .Select(item => item.RoleId)
                                 .ToList();
@@ -192,7 +192,7 @@ namespace JuCheap.Core.Services.AppServices
 
             if (filters.UserId.HasValue && filters.UserId.Value > 0)
             {
-                var userRoles = _context.UserRole;
+                var userRoles = _context.UserRoles;
                 var myRoleIds = userRoles.Where(item => item.UserId == filters.UserId.Value)
                                 .Select(item => item.RoleId)
                                 .ToList();

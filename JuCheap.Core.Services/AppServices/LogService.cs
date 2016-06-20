@@ -32,7 +32,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public PagedResult<LoginLogDto> SearchLoginLogs(LogFilters filters)
         {
-            var dbSet = _context.LoginLog;
+            var dbSet = _context.LoginLogs;
             var query = dbSet.AsQueryable();
             if (filters.keywords.IsNotBlank())
                 query = query.Where(item => item.LoginName.Contains(filters.keywords));
@@ -56,7 +56,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public PagedResult<VisitDto> SearchVisitLogs(LogFilters filters)
         {
-            var dbSet = _context.PageView;
+            var dbSet = _context.PageViews;
             var query = dbSet.AsQueryable();
             if (filters.keywords.IsNotBlank())
                 query = query.Where(item => item.LoginName.Contains(filters.keywords));
@@ -80,7 +80,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<PagedResult<LoginLogDto>> SearchLoginLogsAsync(LogFilters filters)
         {
-            var dbSet = _context.LoginLog;
+            var dbSet = _context.LoginLogs;
             var query = dbSet.AsQueryable();
             if (filters.keywords.IsNotBlank())
                 query = query.Where(item => item.LoginName.Contains(filters.keywords));
@@ -104,7 +104,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<PagedResult<VisitDto>> SearchVisitLogsAsync(LogFilters filters)
         {
-            var dbSet = _context.PageView;
+            var dbSet = _context.PageViews;
             var query = dbSet.AsQueryable();
             if (filters.keywords.IsNotBlank())
                 query = query.Where(item => item.LoginName.Contains(filters.keywords));

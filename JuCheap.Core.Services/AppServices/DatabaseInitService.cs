@@ -33,7 +33,7 @@ namespace JuCheap.Core.Services.AppServices
         public void Init()
         {
             var isCreated = _context.Database.EnsureCreated();
-            _context.Database.Migrate();
+            //_context.Database.Migrate();
             if (isCreated)
             {
                 #region 用户
@@ -244,12 +244,12 @@ namespace JuCheap.Core.Services.AppServices
 
                 #endregion
 
-                _context.Menu.AddRange(menus);
+                _context.Menus.AddRange(menus);
                 _context.Roles.AddRange(roles);
                 _context.Users.AddRange(user);
                 _context.SaveChanges();
-                _context.UserRole.AddRange(userRoles);
-                _context.RoleMenu.AddRange(roleMenus);
+                _context.UserRoles.AddRange(userRoles);
+                _context.RoleMenus.AddRange(roleMenus);
                 _context.SaveChanges();
             }
         }

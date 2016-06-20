@@ -60,7 +60,6 @@ namespace JuCheap.Core.Web
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,6 +105,10 @@ namespace JuCheap.Core.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            //init database
+            var _dbService = app.ApplicationServices.GetService<IDatabaseInitService>();
+            _dbService.Init();
         }
     }
 

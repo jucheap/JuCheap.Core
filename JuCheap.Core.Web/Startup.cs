@@ -107,7 +107,7 @@ namespace JuCheap.Core.Web
             });
 
             //init database
-            var _dbService = app.ApplicationServices.GetService<IDatabaseInitService>();
+            var _dbService = app.ApplicationServices.GetRequiredService<IDatabaseInitService>();
             _dbService.Init();
         }
     }

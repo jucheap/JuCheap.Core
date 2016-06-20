@@ -16,6 +16,7 @@ namespace JuCheap.Core.Web.Controllers
     /// 用户
     /// </summary>
     [Authorize]
+    [VisitFilter]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

@@ -15,6 +15,7 @@ namespace JuCheap.Core.Web.Controllers
     /// 菜单
     /// </summary>
     [Authorize]
+    [VisitFilter]
     public class MenuController : Controller
     {
         private readonly IMenuService _menuService;

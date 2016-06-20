@@ -18,6 +18,7 @@ namespace JuCheap.Core.Web.Controllers
     /// </summary>
     [IgnoreRightFilter]
     [Authorize]
+    [VisitFilter]
     public class HomeController : Controller
     {
         private readonly IUserService _userService;

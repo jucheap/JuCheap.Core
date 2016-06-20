@@ -52,7 +52,7 @@ namespace JuCheap.Core.Web
             // Add application services.
             // 1.automapper
             services.AddScoped<AutoMapper.IConfiguration>(_ => AutoMapperConfig.GetMapperConfiguration());
-            services.AddScoped<AutoMapper.IMapper>(_ => AutoMapperConfig.GetMapperConfiguration().CreateMapper());
+            services.AddScoped(_ => AutoMapperConfig.GetMapperConfiguration().CreateMapper());
 
             // 2.service
             services.AddScoped<IDatabaseInitService, DatabaseInitService>();

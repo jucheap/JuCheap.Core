@@ -33,6 +33,7 @@ namespace JuCheap.Core.Services.AppServices
         public void Init()
         {
             var isCreated = _context.Database.EnsureCreated();
+            _context.Database.Migrate();
             if (isCreated)
             {
                 #region 用户

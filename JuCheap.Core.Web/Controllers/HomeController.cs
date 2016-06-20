@@ -100,6 +100,7 @@ namespace JuCheap.Core.Web.Controllers
                 var properties = new AuthenticationProperties() {IsPersistent = true};
                 var principal = new ClaimsPrincipal(identity);
                 HttpContext.Authentication.SignInAsync(authenType, principal, properties);
+                model.ReturnUrl = model.ReturnUrl.IsNotBlank() ? model.ReturnUrl : "/";
                 return Redirect(model.ReturnUrl);
             }
             ModelState.AddModelError(loginDto.Result == LoginResult.AccountNotExists ? "LoginName" : "Password",

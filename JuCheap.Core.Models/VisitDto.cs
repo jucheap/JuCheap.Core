@@ -28,7 +28,7 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 访问者IP
         /// </summary>
-        public string IP { get; set; }
+        public string Ip { get; set; }
 
         /// <summary>
         /// 访问时间

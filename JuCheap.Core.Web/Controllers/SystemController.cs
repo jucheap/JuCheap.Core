@@ -11,7 +11,6 @@ namespace JuCheap.Core.Web.Controllers
     /// 系统管理
     /// </summary>
     [Authorize]
-    [VisitFilter]
     public class SystemController : Controller
     {
         private readonly IDatabaseInitService _databaseInitService;

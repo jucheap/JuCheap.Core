@@ -67,7 +67,7 @@ namespace JuCheap.Core.Services.AppServices
                     Id = item.Id,
                     UserId = item.UserId,
                     LoginName = item.LoginName,
-                    IP = item.IP,
+                    Ip = item.IP,
                     Url = item.Url,
                     VisitDate = item.CreateDateTime
                 }).Paging(filters.page, filters.rows);
@@ -115,7 +115,7 @@ namespace JuCheap.Core.Services.AppServices
                     Id = item.Id,
                     UserId = item.UserId,
                     LoginName = item.LoginName,
-                    IP = item.IP,
+                    Ip = item.IP,
                     Url = item.Url,
                     VisitDate = item.CreateDateTime
                 }).PagingAsync(filters.page, filters.rows);

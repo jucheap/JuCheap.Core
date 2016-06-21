@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Services;
+using JuCheap.Core.Web.Filters;
 using Microsoft.AspNetCore.Http;
 namespace JuCheap.Core.Web
 {
@@ -99,16 +100,18 @@ namespace JuCheap.Core.Web
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
+            app.UseMiddleware<VisitMiddleware>();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
+            
             //init database
-            var _dbService = app.ApplicationServices.GetRequiredService<IDatabaseInitService>();
-            _dbService.Init();
+            var dbService = app.ApplicationServices.GetRequiredService<IDatabaseInitService>();
+            dbService.Init();
         }
     }
 

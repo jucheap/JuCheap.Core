@@ -10,7 +10,6 @@ namespace JuCheap.Core.Web.Controllers
     /// 日志
     /// </summary>
     [Authorize]
-    [VisitFilter]
     public class LogController : Controller
     {
         private readonly ILogService _logService;

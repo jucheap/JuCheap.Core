@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
 using JuCheap.Core.Models.Enum;
@@ -18,7 +17,6 @@ namespace JuCheap.Core.Web.Controllers
     /// </summary>
     [IgnoreRightFilter]
     [Authorize]
-    [VisitFilter]
     public class HomeController : Controller
     {
         private readonly IUserService _userService;

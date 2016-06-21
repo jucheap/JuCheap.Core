@@ -14,7 +14,6 @@ namespace JuCheap.Core.Web.Controllers
     /// 用户角色
     /// </summary>
     [Authorize]
-    [VisitFilter]
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;

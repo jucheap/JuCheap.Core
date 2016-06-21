@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
@@ -16,7 +17,6 @@ namespace JuCheap.Core.Web.Controllers
     /// 用户
     /// </summary>
     [Authorize]
-    [VisitFilter]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
@@ -110,9 +110,10 @@ namespace JuCheap.Core.Web.Controllers
         public JsonResult Delete(IEnumerable<int> ids)
         {
             var result = new JsonResultModel<bool>();
-            if (ids.AnyOne())
+            var enumerable = ids as IList<int> ?? ids.ToList();
+            if (enumerable.AnyOne())
             {
-                result.flag = _userService.Delete(ids);
+                result.flag = _userService.Delete(enumerable);
             }
             return Json(result);
         }

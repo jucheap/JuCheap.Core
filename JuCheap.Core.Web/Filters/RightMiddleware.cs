@@ -1,8 +1,8 @@
-﻿using System.Net;
-using System.Reflection;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Net;
 using JuCheap.Core.Interfaces;
-using Microsoft.AspNetCore.Http;
+using JuCheap.Core.Web;
+using JuCheap.Core.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,40 +10,49 @@ using Microsoft.Extensions.DependencyInjection;
 namespace JuCheap.Core.Web.Filters
 {
     /// <summary>
-    /// 权限验证管道
+    /// 权限验证
     /// </summary>
-    public class RightMiddleware
+    public class RightFilter : ActionFilterAttribute
     {
-        private readonly RequestDelegate _request;
-
         /// <summary>
-        /// ctor
+        /// OnActionExecuting
         /// </summary>
-        /// <param name="requestDelegate"></param>
-        public RightMiddleware(RequestDelegate requestDelegate)
+        /// <param name="filterContext"></param>
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _request = requestDelegate;
-        }
-
-        /// <summary>
-        /// 处理事件
-        /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
-        public async Task Invoke(HttpContext context)
-        {
-            var userService = context.RequestServices.GetRequiredService<IUserService>();
-            var identity = context.User.Identity;
-            var url = context.Request.Path;
-            var hasRight = await userService.HasRightAsync(identity.GetLoginUserId(), url);
-
-            if (!hasRight)
+            var isIgnored = filterContext.ActionDescriptor.FilterDescriptors.Any(f => f.Filter is IgnoreRightFilter);
+            if (!isIgnored)
             {
-                context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
-                //还需要处理ajax和一般http请求，未完成
-            }
+                var userService = filterContext.HttpContext.RequestServices.GetService<IUserService>();
+                var context = filterContext.HttpContext;
+                var identity = context.User.Identity;
+                var routeData = filterContext.RouteData.Values;
+                var controller = routeData["controller"];
+                var action = routeData["action"];
+                var url = string.Format("/{0}/{1}", controller, action);
+                var hasRight = userService.HasRight(identity.GetLoginUserId(), url);
 
-            await _request(context);
+                if (hasRight) return;
+                var isAjax = context.Request.Headers["Accept"].ToString().ToLower().Contains("application/json");
+                if (isAjax)
+                {
+                    var data = new
+                    {
+                        flag = false,
+                        code = (int)HttpStatusCode.Unauthorized,
+                        msg = "您没有权限！"
+                    };
+                    filterContext.Result = new JsonResult(data);
+                }
+                else
+                {
+                    var view = new ViewResult
+                    {
+                        ViewName = "~/Views/Shared/NoRight.cshtml",
+                    };
+                    filterContext.Result = view;
+                }
+            }
         }
     }
 }

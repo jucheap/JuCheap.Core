@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace JuCheap.Core.Web.Filters
 {
@@ -9,7 +10,11 @@ namespace JuCheap.Core.Web.Filters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            //context.ActionDescriptor.FilterDescriptors[0].
+            var filters = context.ActionDescriptor.FilterDescriptors;
+            if (filters.Any(f => f.Filter is IgnoreRightFilter))
+            {
+                
+            }
         }
     }
 }

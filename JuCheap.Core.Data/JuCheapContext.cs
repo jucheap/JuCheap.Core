@@ -35,6 +35,7 @@ namespace JuCheap.Core.Data
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<MenuEntity>(m =>
             {
                 m.HasKey(e => e.Id);

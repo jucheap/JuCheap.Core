@@ -7,5 +7,9 @@ namespace JuCheap.Core.Web.Filters
     /// </summary>
     public class IgnoreRightFilter : ActionFilterAttribute
     {
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            //context.ActionDescriptor.FilterDescriptors[0].
+        }
     }
 }

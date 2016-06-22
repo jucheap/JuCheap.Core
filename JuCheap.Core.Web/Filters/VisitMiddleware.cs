@@ -21,9 +21,6 @@ namespace JuCheap.Core.Web.Filters
 
         public async Task Invoke(HttpContext context)
         {
-            
-            await _next(context);
-
             #region 记录访问记录
 
             try
@@ -40,7 +37,7 @@ namespace JuCheap.Core.Web.Filters
                     Url = context.Request.Path,
                     UserId = isLogined ? user.Identity.GetLoginUserId().ToString() : "0"
                 };
-                userService.Visit(visit);
+                await userService.VisitAsync(visit);
             }
             catch
             {
@@ -48,6 +45,9 @@ namespace JuCheap.Core.Web.Filters
             }
 
             #endregion
+
+
+            await _next(context);
         }
     }
 }

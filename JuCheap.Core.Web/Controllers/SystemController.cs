@@ -1,6 +1,5 @@
 ﻿
 using JuCheap.Core.Interfaces;
-using JuCheap.Core.Web.Filters;
 using JuCheap.Core.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +10,6 @@ namespace JuCheap.Core.Web.Controllers
     /// 系统管理
     /// </summary>
     [Authorize]
-    [RightFilter]
     public class SystemController : Controller
     {
         private readonly IDatabaseInitService _databaseInitService;

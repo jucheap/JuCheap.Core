@@ -13,7 +13,10 @@ using Microsoft.Extensions.Logging;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Services;
 using JuCheap.Core.Web.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Authorization;
+
 namespace JuCheap.Core.Web
 {
     public class Startup
@@ -47,8 +50,11 @@ namespace JuCheap.Core.Web
 
             //services.AddIdentity<ApplicationUser, IdentityRole>()
             //    .AddDefaultTokenProviders();
-                        
-            services.AddMvc();
+
+            services.AddMvc(cfg =>
+            {
+                cfg.Filters.Add(new RightFilter());
+            });
 
             // Add application services.
             // 1.automapper

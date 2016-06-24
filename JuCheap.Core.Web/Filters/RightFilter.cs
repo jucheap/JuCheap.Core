@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using System.Net;
 using JuCheap.Core.Interfaces;
-using JuCheap.Core.Web;
-using JuCheap.Core.Web.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;

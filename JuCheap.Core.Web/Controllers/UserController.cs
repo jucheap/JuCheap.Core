@@ -4,7 +4,6 @@ using AutoMapper;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
 using JuCheap.Core.Models.Filters;
-using JuCheap.Core.Services;
 using JuCheap.Core.Web.Filters;
 using JuCheap.Core.Web.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -23,11 +22,11 @@ namespace JuCheap.Core.Web.Controllers
         private readonly IRoleService _roleService;
         private readonly IMapper _mapper;
 
-        public UserController(IUserService userSvc, IRoleService roleSvc)
+        public UserController(IUserService userSvc, IRoleService roleSvc, IMapper mapper)
         {
             _userService = userSvc;
-            _mapper = AutoMapperConfig.GetMapperConfiguration().CreateMapper();
             _roleService = roleSvc;
+            _mapper = mapper;
         }
 
         /// <summary>

@@ -13,9 +13,7 @@ using Microsoft.Extensions.Logging;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Services;
 using JuCheap.Core.Web.Filters;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace JuCheap.Core.Web
 {
@@ -46,10 +44,16 @@ namespace JuCheap.Core.Web
         {
             // Add framework services.
             services.AddDbContext<JuCheapContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
+                
+            });
+
+            
 
             //services.AddIdentity<ApplicationUser, IdentityRole>()
             //    .AddDefaultTokenProviders();
+            
 
             services.AddMvc(cfg =>
             {

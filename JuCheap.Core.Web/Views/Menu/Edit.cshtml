@@ -1,6 +1,5 @@
-﻿@using System.Security.Policy
-@using Microsoft.AspNetCore.Mvc.Rendering
-@model Core..Models.MenuDto
+﻿@using Microsoft.AspNetCore.Mvc.Rendering
+@model JuCheap.Core.Models.MenuDto
 
 @{
     ViewBag.Title = "添加菜单";
@@ -56,8 +55,9 @@
 @section scripts{
     <script src="~/js/jquery.validate.min.js"></script>
     <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/plugins/suggest/bootstrap-suggest.min.js"></script>
     <script src="~/js/page/menu.js"></script>
-<script src="~/js/base.js"></script>
+    <script src="~/js/base.js"></script>
     <script>
             $("#btnBack").bind("click", function(e) {
                 XPage.GoTo(e.target, "@Url.Action("Index")");

@@ -64,7 +64,7 @@ namespace JuCheap.Core.Data
                 m.HasKey(e => e.Id);
                 m.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
                 m.Property(e => e.IP).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Mac).HasMaxLength(100).IsRequired();
+                m.Property(e => e.Mac).HasMaxLength(200).IsRequired();
                 m.Property(e => e.UserId).IsRequired();
                 m.Property(e => e.CreateDateTime).IsRequired();
                 m.Property(e => e.IsDeleted).IsRequired();
@@ -120,6 +120,16 @@ namespace JuCheap.Core.Data
                 m.Property(e => e.IsDeleted).IsRequired();
                 m.ToTable("Users");
             });
+            modelBuilder.Entity<SystemConfigEntity>(m =>
+            {
+                m.HasKey(e => e.Id);
+                m.Property(e => e.SystemName).HasMaxLength(50).IsRequired();
+                m.Property(e => e.IsDataInited).IsRequired();
+                m.Property(e => e.DataInitedDate).IsRequired();
+                m.Property(e => e.CreateDateTime).IsRequired();
+                m.Property(e => e.IsDeleted).IsRequired();
+                m.ToTable("SystemConfigs");
+            });
         }
 
         #region DbSets
@@ -163,6 +173,11 @@ namespace JuCheap.Core.Data
         /// 登录日志
         /// </summary>
         public DbSet<LoginLogEntity> LoginLogs { get; set; }
+
+        /// <summary>
+        /// 系统配置
+        /// </summary>
+        public DbSet<SystemConfigEntity> SystemConfigs { get; set; } 
 
         #endregion
     }

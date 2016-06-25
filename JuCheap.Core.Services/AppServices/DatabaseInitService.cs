@@ -163,7 +163,7 @@ namespace JuCheap.Core.Services.AppServices
             };//9
             var logLogin = new MenuEntity
             {
-                ParentId = 9,
+                ParentId = 12,
                 Name = "登录日志",
                 Url = "/Log/Logins",
                 CreateDateTime = _now,
@@ -174,7 +174,7 @@ namespace JuCheap.Core.Services.AppServices
             };//10
             var logView = new MenuEntity
             {
-                ParentId = 9,
+                ParentId = 12,
                 Name = "访问日志",
                 Url = "/Log/Visits",
                 CreateDateTime = _now,

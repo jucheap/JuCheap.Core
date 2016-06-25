@@ -191,7 +191,7 @@ namespace JuCheap.Core.Services.AppServices
                     query.Where(item => item.LoginName.Contains(filters.keywords) ||
                                         item.RealName.Contains(filters.keywords));
 
-            return query.OrderBy(item => item.CreateDateTime)
+            return query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new UserDto
                 {
                     Id = item.Id,
@@ -393,7 +393,7 @@ namespace JuCheap.Core.Services.AppServices
                     query.Where(item => item.LoginName.Contains(filters.keywords) ||
                                         item.RealName.Contains(filters.keywords));
 
-            return await query.OrderBy(item => item.CreateDateTime)
+            return await query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new UserDto
                 {
                     Id = item.Id,

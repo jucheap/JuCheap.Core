@@ -21,6 +21,8 @@ namespace JuCheap.Core.Web.Filters
 
         public async Task Invoke(HttpContext context)
         {
+            await _next(context);
+
             #region 记录访问记录
 
             try
@@ -45,9 +47,6 @@ namespace JuCheap.Core.Web.Filters
             }
 
             #endregion
-
-
-            await _next(context);
         }
     }
 }

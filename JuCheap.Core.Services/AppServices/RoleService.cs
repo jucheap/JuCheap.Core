@@ -112,7 +112,7 @@ namespace JuCheap.Core.Services.AppServices
                     : query.Where(item => myRoleIds.Contains(item.Id));
             }
 
-            return query.OrderBy(item => item.CreateDateTime)
+            return query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new RoleDto
                 {
                     Id = item.Id,
@@ -201,7 +201,7 @@ namespace JuCheap.Core.Services.AppServices
                     : query.Where(item => myRoleIds.Contains(item.Id));
             }
 
-            return await query.OrderBy(item => item.CreateDateTime)
+            return await query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new RoleDto
                 {
                     Id = item.Id,

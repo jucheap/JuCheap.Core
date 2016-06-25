@@ -37,7 +37,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters.keywords.IsNotBlank())
                 query = query.Where(item => item.LoginName.Contains(filters.keywords));
 
-            return query.OrderBy(item => item.CreateDateTime)
+            return query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new LoginLogDto
                 {
                     Id = item.Id,
@@ -61,7 +61,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters.keywords.IsNotBlank())
                 query = query.Where(item => item.LoginName.Contains(filters.keywords));
 
-            return query.OrderBy(item => item.CreateDateTime)
+            return query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new VisitDto
                 {
                     Id = item.Id,
@@ -85,7 +85,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters.keywords.IsNotBlank())
                 query = query.Where(item => item.LoginName.Contains(filters.keywords));
 
-            return await query.OrderBy(item => item.CreateDateTime)
+            return await query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new LoginLogDto
                 {
                     Id = item.Id,
@@ -109,7 +109,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters.keywords.IsNotBlank())
                 query = query.Where(item => item.LoginName.Contains(filters.keywords));
 
-            return await query.OrderBy(item => item.CreateDateTime)
+            return await query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new VisitDto
                 {
                     Id = item.Id,

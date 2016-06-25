@@ -133,7 +133,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters.ExcludeType.HasValue)
                 query = query.Where(item => item.Type != (byte)filters.ExcludeType.Value);
 
-            return query.OrderBy(item => item.CreateDateTime)
+            return query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new MenuDto
                 {
                     Id = item.Id,
@@ -273,7 +273,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters.ExcludeType.HasValue)
                 query = query.Where(item => item.Type != (byte)filters.ExcludeType.Value);
 
-            return await query.OrderBy(item => item.CreateDateTime)
+            return await query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new MenuDto
                 {
                     Id = item.Id,

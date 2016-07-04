@@ -46,7 +46,6 @@ namespace JuCheap.Core.Web
             services.AddDbContext<JuCheapContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
-                
             });
 
             
@@ -91,7 +90,7 @@ namespace JuCheap.Core.Web
             }
 
             app.UseRuntimeInfoPage("/runtime");
-            
+
             app.UseStaticFiles();
 
             //app.UseIdentity();

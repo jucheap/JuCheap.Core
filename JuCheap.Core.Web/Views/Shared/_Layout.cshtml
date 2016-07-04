@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -12,9 +12,16 @@
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
-    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/css/style.min.css" rel="stylesheet" />
-    <link href="~/css/font-awesome.min.css" rel="stylesheet" />
+    
+    <environment names="Development">
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/style.css" rel="stylesheet" />
+        <link href="~/css/font-awesome.css" rel="stylesheet" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    
     @Html.Partial("BaiduTongji")
 </head>
 
@@ -27,11 +34,17 @@
         @RenderBody()
         <!--右侧部分结束-->
     </div>
-    <script src="~/js/jquery.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-    <script src="~/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-    <script src="~/js/jucheap.js"></script>
-    <script src="~/js/contabs.js"></script>
+    
+    <environment names="Development">
+        <script src="~/js/jquery.min.js"></script>
+        <script src="~/js/bootstrap.min.js"></script>
+        <script src="~/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="~/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="~/js/jucheap.js"></script>
+        <script src="~/js/contabs.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
 </body>
 </html>

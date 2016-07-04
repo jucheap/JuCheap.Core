@@ -53,6 +53,15 @@ namespace JuCheap.Core.Web.Controllers
         }
 
         /// <summary>
+        /// 角色授权
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Authen()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// 添加
         /// </summary>
         /// <returns></returns>

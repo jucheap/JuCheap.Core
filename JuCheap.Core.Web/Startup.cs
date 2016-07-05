@@ -89,8 +89,6 @@ namespace JuCheap.Core.Web
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseRuntimeInfoPage("/runtime");
-
             app.UseStaticFiles();
 
             //app.UseIdentity();

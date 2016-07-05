@@ -52,7 +52,7 @@
 @section scripts
 {
     <environment names="Development">
-        <script src="~/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+        <script src="~/js/plugins/jqgrid/jquery.jqGrid.js"></script>
         <script src="~/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
         <script src="~/js/jqgrid-list.js"></script>
         <script src="~/js/base.js"></script>
@@ -93,16 +93,16 @@
                 url: '@Url.Action("GetListWithPager")',
                 colNames: ['主键', '登录名', '真实姓名', '邮箱', '注册时间'],
                 colModel: [
-                    { name: 'Id', index: 'Id', width: 60, key: true, hidden: true },
-                    { name: 'LoginName', index: 'LoginName', width: 60 },
-                    { name: 'RealName', index: 'RealName', width: 60 },
-                    { name: 'Email', index: 'Email', width: 60 },
+                    { name: 'id', index: 'id', width: 60, key: true, hidden: true },
+                    { name: 'loginName', index: 'loginName', width: 60 },
+                    { name: 'realName', index: 'realName', width: 60 },
+                    { name: 'email', index: 'email', width: 60 },
                     {
-                        name: 'CreateDateTime',
-                        index: 'CreateDateTime',
+                        name: 'createDateTime',
+                        index: 'createDateTime',
                         width: 60,
                         formatter: function(cellValue, options, rowObject) {
-                            return cellValue.getDate();
+                            return cellValue;
                         }
                     }
                 ]

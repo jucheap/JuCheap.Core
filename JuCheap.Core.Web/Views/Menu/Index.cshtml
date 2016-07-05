@@ -53,7 +53,7 @@
 {
 
     <environment names="Development">
-        <script src="~/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+        <script src="~/js/plugins/jqgrid/jquery.jqGrid.js"></script>
         <script src="~/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
         <script src="~/js/jqgrid-list.js"></script>
         <script src="~/js/base.js"></script>
@@ -93,15 +93,15 @@
                 url: '@Url.Action("GetListWithPager")',
                 colNames: ['主键', '菜单名称','类型', 'URL地址', '排序'],
                 colModel: [
-                    { name: 'Id', index: 'Id', width: 60, key: true, hidden: true },
-                    { name: 'Name', index: 'Name', width: 60 },
+                    { name: 'id', index: 'id', width: 60, key: true, hidden: true },
+                    { name: 'name', index: 'name', width: 60 },
                     {
-                        name: 'Type', index: 'Type', width: 60, formatter: function (cellValue, options, rowObject) {
+                        name: 'type', index: 'type', width: 60, formatter: function (cellValue, options, rowObject) {
                             return rowObject.TypeName;
                         }
                     },
-                    { name: 'Url', index: 'Url', width: 60 },
-                    { name: 'Order', index: 'Order', width: 60 }
+                    { name: 'url', index: 'url', width: 60 },
+                    { name: 'order', index: 'order', width: 60 }
                 ]
             };
             JucheapGrid.Load(config);

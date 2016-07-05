@@ -147,7 +147,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="filters">查询参数</param>
         /// <returns></returns>
-        //[IgnoreRightFilter]
+        [IgnoreRightFilter]
         public JsonResult GetNotMyRoles(RoleFilters filters)
         {
             filters.UserId = User.Identity.GetLoginUserId();

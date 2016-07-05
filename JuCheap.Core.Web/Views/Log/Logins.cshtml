@@ -44,7 +44,7 @@
 @section scripts
 {
     <environment names="Development">
-        <script src="~/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+        <script src="~/js/plugins/jqgrid/jquery.jqGrid.js"></script>
         <script src="~/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
         <script src="~/js/jqgrid-list.js"></script>
         <script src="~/js/base.js"></script>
@@ -67,13 +67,13 @@
                 url: '@Url.Action("LoginsList")',
                 colNames: ['主键', '登录名', '结果', 'Ip', '时间'],
                 colModel: [
-                    { name: 'Id', index: 'Id', width: 60, key: true, hidden: true },
-                    { name: 'LoginName', index: 'LoginName', width: 60 },
-                    { name: 'Mac', index: 'Mac', width: 60 },
-                    { name: 'Ip', index: 'Ip', width: 60 },
+                    { name: 'id', index: 'id', width: 60, key: true, hidden: true },
+                    { name: 'loginName', index: 'loginName', width: 60 },
+                    { name: 'mac', index: 'mac', width: 60 },
+                    { name: 'ip', index: 'ip', width: 60 },
                     {
-                        name: 'CreateDateTime',
-                        index: 'CreateDateTime',
+                        name: 'createDateTime',
+                        index: 'createDateTime',
                         width: 60,
                         formatter: function(cellValue, options, rowObject) {
                             return cellValue;

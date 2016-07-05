@@ -52,7 +52,7 @@
 @section scripts
 {
     <environment names="Development">
-        <script src="~/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+        <script src="~/js/plugins/jqgrid/jquery.jqGrid.js"></script>
         <script src="~/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
         <script src="~/js/jqgrid-list.js"></script>
         <script src="~/js/base.js"></script>
@@ -92,9 +92,9 @@
                 url: '@Url.Action("GetListWithPager")',
                 colNames: ['主键', '角色名称', '角色描述'],
                 colModel: [
-                    { name: 'Id', index: 'Id', width: 60, key: true, hidden: true },
-                    { name: 'Name', index: 'Name', width: 60 },
-                    { name: 'Description', index: 'Description', width: 100 }
+                    { name: 'id', index: 'id', width: 60, key: true, hidden: true },
+                    { name: 'name', index: 'name', width: 60 },
+                    { name: 'description', index: 'description', width: 100 }
                 ]
             };
             JucheapGrid.Load(config);

@@ -45,7 +45,7 @@
 @section scripts
 {
     <environment names="Development">
-        <script src="~/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+        <script src="~/js/plugins/jqgrid/jquery.jqGrid.js"></script>
         <script src="~/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
         <script src="~/js/jqgrid-list.js"></script>
         <script src="~/js/base.js"></script>
@@ -86,8 +86,8 @@
                 url: '@Url.Action("GetMyRoles")',
                 colNames: ['主键', '角色名称', '操作'],
                 colModel: [
-                    { name: 'Id', index: 'Id', width: 30, key: true, hidden: true },
-                    { name: 'Name', index: 'Name', width: 120 },
+                    { name: 'id', index: 'id', width: 30, key: true, hidden: true },
+                    { name: 'name', index: 'name', width: 120 },
                     { name: 'Cancel', index: 'Cancel', width: 30 }
                 ],
                 gridComplete: function() {
@@ -106,8 +106,8 @@
                 url: '@Url.Action("GetNotMyRoles")',
                 colNames: ['主键', '角色名称', '操作'],
                 colModel: [
-                    { name: 'Id', index: 'Id', width: 30, key: true, hidden: true },
-                    { name: 'Name', index: 'Name', width: 120 },
+                    { name: 'id', index: 'id', width: 30, key: true, hidden: true },
+                    { name: 'name', index: 'name', width: 120 },
                     { name: 'Authen', index: 'Authen', width: 30 }
                 ],
                 gridComplete: function() {

@@ -20,11 +20,16 @@
     <!--[if lt IE 9]>
     <meta http-equiv="refresh" content="0;ie.html" />
     <![endif]-->
+    <environment names="Development">
+        <link href="~/css/bootstrap.css" rel="stylesheet" />
+        <link href="~/css/font-awesome.css" rel="stylesheet" />
+        <link href="~/css/login-theme.css" rel="stylesheet" />
+        <link href="~/css/login.css" rel="stylesheet" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/login.min.css" asp-append-version="true" />
+    </environment>
 
-    <link href="~/css/bootstrap.css" rel="stylesheet" />
-    <link href="~/css/font-awesome.css" rel="stylesheet" />
-    <link href="~/css/login-theme.css" rel="stylesheet" />
-    <link href="~/css/login.css" rel="stylesheet" />
 </head>
 <body class="external-page sb-l-c sb-r-c">
     <div id="main" class="animated fadeIn">
@@ -113,10 +118,16 @@
         <!-- End: Content-Wrapper -->
 
     </div>
-    <script src="~/js/jquery.min.js"></script>
-    <script src="~/js/bootstrap.min.js"></script>
-    <script src="~/js/jquery.validate.min.js"></script>
-    <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+    <environment names="Development">
+        <script src="~/js/jquery.js"></script>
+        <script src="~/js/bootstrap.js"></script>
+        <script src="~/js/jquery.validate.min.js"></script>
+        <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/content.min.js" asp-append-version="true"></script>
+        <script src="~/js/validate.min.js" asp-append-version="true"></script>
+    </environment>
     <script>
         $("#btnLogin").click(function () {
             if ($("#loginFrm").validate().form()) {

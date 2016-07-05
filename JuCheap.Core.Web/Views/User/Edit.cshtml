@@ -61,9 +61,15 @@
     </div>
 </div>
 @section scripts{
-    <script src="~/js/jquery.validate.min.js"></script>
-    <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/js/base.js"></script>
+    <environment names="Development">
+        <script src="~/js/jquery.validate.min.js"></script>
+        <script src="~/js/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/js/base.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/validate.min.js" asp-append-version="true"></script>
+        <script src="~/js/base.min.js" asp-append-version="true"></script>
+    </environment>
     <script>
         $("#btnBack").bind("click", function(e) {
             XPage.GoTo(e.target, "@Url.Action("Index")");

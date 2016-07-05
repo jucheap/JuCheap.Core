@@ -5,7 +5,12 @@
 }
 @section styles
 {
-    <link href="~/css/plugins/jqgrid/ui.jqgrid.css" rel="stylesheet" />
+    <environment names="Development">
+        <link href="~/css/plugins/jqgrid/ui.jqgrid.css" rel="stylesheet" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/css/grid.min.css" asp-append-version="true" />
+    </environment>
 }
 
 <div class="wrapper wrapper-content">
@@ -46,10 +51,15 @@
 
 @section scripts
 {
-    <script src="~/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
-    <script src="~/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
-    <script src="~/js/jqgrid-list.js"></script>
-    <script src="~/js/base.js"></script>
+    <environment names="Development">
+        <script src="~/js/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+        <script src="~/js/plugins/jqgrid/i18n/grid.locale-cn.js"></script>
+        <script src="~/js/jqgrid-list.js"></script>
+        <script src="~/js/base.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/grid.min.js" asp-append-version="true"></script>
+    </environment>
     <script>
         function addModel() {
             $("#btnAdd").button("loading");

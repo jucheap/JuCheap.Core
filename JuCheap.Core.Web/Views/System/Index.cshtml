@@ -22,7 +22,12 @@
 @section scripts
 {
 
-    <script src="~/js/base.js"></script>
+    <environment names="Development">
+        <script src="~/js/base.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/base.min.js" asp-append-version="true"></script>
+    </environment>
     <script>
         $(function() {
             $("#btnReload").click(function() {

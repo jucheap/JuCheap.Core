@@ -84,15 +84,39 @@ var paths = {
     concatGridCssDest: webroot + "css/grid.min.css"
 };
 
+gulp.task("clean:js_base", function (cb) {
+    rimraf(paths.concatBaseJsDest, cb);
+});
 gulp.task("clean:js", function (cb) {
     rimraf(paths.concatJsDest, cb);
+});
+gulp.task("clean:js_content", function (cb) {
+    rimraf(paths.concatContentJsDest, cb);
+});
+gulp.task("clean:js_validate", function (cb) {
+    rimraf(paths.concatValidateJsDest, cb);
+});
+gulp.task("clean:js_grid", function (cb) {
+    rimraf(paths.concatGridJsDest, cb);
+});
+gulp.task("clean:js_menu", function (cb) {
+    rimraf(paths.concatMenuJsDest, cb);
 });
 
 gulp.task("clean:css", function (cb) {
     rimraf(paths.concatCssDest, cb);
 });
+gulp.task("clean:css_content", function (cb) {
+    rimraf(paths.concatContentCssDest, cb);
+});
+gulp.task("clean:css_login", function (cb) {
+    rimraf(paths.concatLoginCssDest, cb);
+});
+gulp.task("clean:css_grid", function (cb) {
+    rimraf(paths.concatGridCssDest, cb);
+});
 
-gulp.task("clean", ["clean:js", "clean:css"]);
+gulp.task("clean", ["clean:js", "clean:js_base", "clean:js_content", "clean:js_validate", "clean:js_grid", "clean:js_menu", "clean:css", "clean:css_content", "clean:css_login", "clean:css_grid"]);
 
 gulp.task("min:js_base", function () {
     return gulp.src(paths.baseJs, { base: "." })

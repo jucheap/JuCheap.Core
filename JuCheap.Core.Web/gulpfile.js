@@ -94,74 +94,74 @@ gulp.task("clean:css", function (cb) {
 
 gulp.task("clean", ["clean:js", "clean:css"]);
 
-gulp.task("min:js", function () {
+gulp.task("min:js_base", function () {
     return gulp.src(paths.baseJs, { base: "." })
         .pipe(concat(paths.concatBaseJsDest))
         .pipe(uglify())
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:js", function () {
+gulp.task("min:js_layout", function () {
     return gulp.src(paths.layoutJs, { base: "." })
         .pipe(concat(paths.concatJsDest))
         .pipe(uglify())
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:js", function () {
+gulp.task("min:js_content", function () {
     return gulp.src(paths.contentJs, { base: "." })
         .pipe(concat(paths.concatContentJsDest))
         .pipe(uglify())
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:js", function () {
+gulp.task("min:js_validate", function () {
     return gulp.src(paths.validateJs, { base: "." })
         .pipe(concat(paths.concatValidateJsDest))
         .pipe(uglify())
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:js", function () {
+gulp.task("min:js_grid", function () {
     return gulp.src(paths.gridJs, { base: "." })
         .pipe(concat(paths.concatGridJsDest))
         .pipe(uglify())
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:js", function () {
+gulp.task("min:js_menu", function () {
     return gulp.src(paths.menuJs, { base: "." })
         .pipe(concat(paths.concatMenuJsDest))
         .pipe(uglify())
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:css", function () {
+gulp.task("min:css_layout", function () {
     return gulp.src(paths.layoutCss)
         .pipe(concat(paths.concatCssDest))
         .pipe(cssmin())
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:css", function () {
+gulp.task("min:css_content", function () {
     return gulp.src(paths.contentCss)
         .pipe(concat(paths.concatContentCssDest))
         .pipe(cssmin())
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:css", function () {
+gulp.task("min:css_login", function () {
     return gulp.src(paths.loginCss)
         .pipe(concat(paths.concatLoginCssDest))
         .pipe(cssmin())
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min:css", function () {
+gulp.task("min:css_grid", function () {
     return gulp.src(paths.gridCss)
         .pipe(concat(paths.concatGridCssDest))
         .pipe(cssmin())
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min", ["min:js", "min:css"]);
+gulp.task("min", ["min:js_base", "min:js_layout", "min:js_content", "min:js_validate", "min:js_grid", "min:js_menu", "min:css_layout", "min:css_content", "min:css_login", "min:css_grid"]);

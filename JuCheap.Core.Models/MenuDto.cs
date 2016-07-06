@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using JuCheap.Core.Models.Enum;
+using JuCheap.Core.Infrastructure.Extentions;
 
 namespace JuCheap.Core.Models
 {
@@ -53,7 +54,7 @@ namespace JuCheap.Core.Models
         /// </summary>
         public string TypeName
         {
-            get { return Type.ToString(); }
+            get { return Type.GetDescriptionForEnum(); }
         }
     }
 }

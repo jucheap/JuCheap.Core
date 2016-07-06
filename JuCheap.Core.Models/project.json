@@ -1,8 +1,10 @@
-﻿{
+{
   "version": "1.0.0-*",
 
   "dependencies": {
-    "System.ComponentModel.Annotations": "4.1.0"
+    "JuCheap.Core.Infrastructure": "1.0.0-*",
+    "System.ComponentModel.Annotations": "4.1.0",
+    "System.ComponentModel.Primitives": "4.1.0"
   },
 
   "frameworks": {

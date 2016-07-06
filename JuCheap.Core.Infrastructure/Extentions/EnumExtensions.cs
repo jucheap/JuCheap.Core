@@ -22,16 +22,6 @@ namespace JuCheap.Core.Infrastructure.Extentions
     public static class EnumExtensions
     {
         /// <summary>
-        ///     获取枚举项的Description特性的描述文字
-        /// </summary>
-        /// <param name="value">枚举对象</param>
-        /// <returns> </returns>
-        public static string ToDescription(this Enum value)
-        {
-            return value == null ? string.Empty : GetDescriptionForEnum(value);
-        }
-
-        /// <summary>
         /// 获取描述
         /// </summary>
         /// <param name="value"></param>

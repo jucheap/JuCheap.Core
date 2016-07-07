@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
 using JuCheap.Core.Models.Filters;
@@ -81,6 +82,31 @@ namespace JuCheap.Core.Web.Controllers
         {
             var list = _roleService.GetTrees();
             return Json(list);
+        }
+
+        /// <summary>
+        /// 获取角色下的菜单
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult AuthenRoleMenus(int id)
+        {
+            var list = _menuService.GetMenusByRoleId(id);
+            var menuIds = list?.Select(item => item.Id);
+            return Json(menuIds);
+        }
+
+        /// <summary>
+        /// 获取角色下的菜单
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult SetRoleMenus(List<RoleMenuDto> datas)
+        {
+            var result = new JsonResultModel<bool>
+            {
+                flag = _roleService.SetRoleMenus(datas)
+            };
+            return Json(result);
         }
 
         /// <summary>

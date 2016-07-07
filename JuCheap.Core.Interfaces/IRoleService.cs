@@ -53,7 +53,13 @@ namespace JuCheap.Core.Interfaces
         /// <returns></returns>
         List<TreeDto> GetTrees();
 
-            /// <summary>
+        /// <summary>
+        /// 设置角色权限
+        /// </summary>
+        /// <returns></returns>
+        bool SetRoleMenus(List<RoleMenuDto> datas);
+
+        /// <summary>
         /// 添加角色
         /// </summary>
         /// <param name="dto">角色模型</param>
@@ -93,5 +99,11 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<List<TreeDto>> GetTreesAsync();
+
+        /// <summary>
+        /// 设置角色权限
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> SetRoleMenusAsync(List<RoleMenuDto> datas);
     }
 }

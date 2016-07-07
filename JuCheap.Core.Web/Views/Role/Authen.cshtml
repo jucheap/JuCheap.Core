@@ -16,62 +16,12 @@
 @section scripts{
     <environment names="Development">
         <script src="~/js/plugins/ztree/jquery.ztree.all.js"></script>
+        <script src="~/js/page/roleAuthen.js"></script>
+        <script src="~/js/json2.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/js/ztree.min.js" asp-append-version="true"></script>
     </environment>
-    
-    <script type="text/javascript">
-     <!--
-        var roleSetting = {
-            async: {
-                enable: true,
-                url: "/Role/AuthenRoleDatas",
-                autoParam: ["id", "name=n", "level=lv"],
-                otherParam: { "otherParam": "tree" }
-            },
-            data: {
-                simpleData: {
-                    enable: true
-                }
-            },
-            check: {
-                enable: true,
-                chkStyle: "radio",
-                radioType: "level"
-            },
-            callback: {
-                onCheck: onCheck
-            }
-        };
-        var menuSetting = {
-            async: {
-                enable: true,
-                url: "/Role/AuthenMenuDatas",
-                autoParam: ["id", "name=n", "level=lv"],
-                otherParam: { "otherParam": "tree" }
-            },
-            data: {
-                simpleData: {
-                    enable: true
-                }
-            },
-            check: {
-                enable: true,
-                chkStyle: "radio",
-                radioType: "level"
-            }
-        };
-        function onCheck(e, treeId, treeNode) {
-            alert(treeNode.id);
-            //加载此角色下的菜单
-        }
-		$(document).ready(function () {
-		    $.fn.zTree.init($("#roleTree"), roleSetting);
-		    $.fn.zTree.init($("#menuTree"), menuSetting);
-        });
-        //-->
-    </script>
 }
 
 <div class="wrapper wrapper-content">
@@ -85,6 +35,11 @@
             </div>
         </div>
         <div class="ibox-content">
+            <div class="row">
+                <div class="form-group">
+                    <button id="btnSave" class="btn btn-w-m btn-primary" type="button">保存</button>
+                </div>
+            </div>
             <div class="row">
                 <div class="col-sm-4">
                     <div class="panel panel-info">

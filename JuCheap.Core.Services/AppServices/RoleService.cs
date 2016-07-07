@@ -129,7 +129,34 @@ namespace JuCheap.Core.Services.AppServices
         {
             var list = _context.Roles.Where(r => !r.IsDeleted).ToList();
             return _mapper.Map<List<RoleEntity>, List<TreeDto>>(list);
-        } 
+        }
+
+        /// <summary>
+        /// 设置角色权限
+        /// </summary>
+        /// <returns></returns>
+        public bool SetRoleMenus(List<RoleMenuDto> datas)
+        {
+            if (!datas.AnyOne()) return false;
+
+            var roleId = datas.First().RoleId;
+            var olds = _context.RoleMenus.Where(item => item.RoleId == roleId).ToList();
+            var oldIds = olds.Select(item => item.MenuId);
+            var newIds = datas.Select(item => item.MenuId);
+            var adds = datas.Where(item => !oldIds.Contains(item.MenuId)).ToList();
+            var removes = olds.Where(item => !newIds.Contains(item.MenuId)).ToList();
+            if (adds.AnyOne())
+            {
+                var roleMenus = _mapper.Map<List<RoleMenuDto>, List<RoleMenuEntity>>(adds);
+                _context.RoleMenus.AddRange(roleMenus);
+            }
+            if (removes.AnyOne())
+            {
+                _context.RoleMenus.RemoveRange(removes);
+            }
+
+            return _context.SaveChanges() > 0;
+        }
 
         /// <summary>
         /// 添加角色
@@ -228,6 +255,33 @@ namespace JuCheap.Core.Services.AppServices
         {
             var list = await _context.Roles.Where(r => !r.IsDeleted).ToListAsync();
             return _mapper.Map<List<RoleEntity>, List<TreeDto>>(list);
+        }
+
+        /// <summary>
+        /// 设置角色权限
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> SetRoleMenusAsync(List<RoleMenuDto> datas)
+        {
+            if (!datas.AnyOne()) return false;
+
+            var roleId = datas.First().RoleId;
+            var olds = await _context.RoleMenus.Where(item => item.RoleId == roleId).ToListAsync();
+            var oldIds = olds.Select(item => item.MenuId);
+            var newIds = datas.Select(item => item.MenuId);
+            var adds = datas.Where(item => !oldIds.Contains(item.MenuId)).ToList();
+            var removes = olds.Where(item => !newIds.Contains(item.MenuId)).ToList();
+            if (adds.AnyOne())
+            {
+                var roleMenus = _mapper.Map<List<RoleMenuDto>, List<RoleMenuEntity>>(adds);
+                _context.RoleMenus.AddRange(roleMenus);
+            }
+            if (removes.AnyOne())
+            {
+                _context.RoleMenus.RemoveRange(removes);
+            }
+
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }

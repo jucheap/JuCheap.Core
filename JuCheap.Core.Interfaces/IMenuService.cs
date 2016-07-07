@@ -61,6 +61,13 @@ namespace JuCheap.Core.Interfaces
         List<TreeDto> GetTrees();
 
         /// <summary>
+        /// 通过角色ID获取拥有的菜单权限
+        /// </summary>
+        /// <param name="roleId">角色ID</param>
+        /// <returns></returns>
+        List<MenuDto> GetMenusByRoleId(int roleId);
+
+            /// <summary>
         /// 添加菜单
         /// </summary>
         /// <param name="dto">菜单模型</param>
@@ -107,5 +114,12 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<List<TreeDto>> GetTreesAsync();
+
+        /// <summary>
+        /// 通过角色ID获取拥有的菜单权限
+        /// </summary>
+        /// <param name="roleId">角色ID</param>
+        /// <returns></returns>
+        Task<List<MenuDto>> GetMenusByRoleIdAsync(int roleId);
     }
 }

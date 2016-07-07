@@ -186,6 +186,19 @@ namespace JuCheap.Core.Services.AppServices
         }
 
         /// <summary>
+        /// 获取菜单树
+        /// </summary>
+        /// <returns></returns>
+        public List<MenuDto> GetMenusByRoleId(int roleId)
+        {
+            var list = _context.Menus.Where(m => !m.IsDeleted)
+                .Join(_context.RoleMenus, m => m.Id, rm => rm.MenuId, (menu, roleMenu) => new {menu, roleMenu})
+                .Where(item => item.roleMenu.RoleId == roleId)
+                .Select(item => item.menu).ToList();
+            return _mapper.Map<List<MenuEntity>, List<MenuDto>>(list);
+        }
+
+        /// <summary>
         /// 添加菜单
         /// </summary>
         /// <param name="dto">菜单模型</param>
@@ -333,6 +346,19 @@ namespace JuCheap.Core.Services.AppServices
         {
             var list = await _context.Menus.Where(m => !m.IsDeleted).ToListAsync();
             return _mapper.Map<List<MenuEntity>, List<TreeDto>>(list);
+        }
+
+        /// <summary>
+        /// 获取菜单树
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<MenuDto>> GetMenusByRoleIdAsync(int roleId)
+        {
+            var list = await _context.Menus.Where(m => !m.IsDeleted)
+                .Join(_context.RoleMenus, m => m.Id, rm => rm.MenuId, (menu, roleMenu) => new { menu, roleMenu })
+                .Where(item => item.roleMenu.RoleId == roleId)
+                .Select(item => item.menu).ToListAsync();
+            return _mapper.Map<List<MenuEntity>, List<MenuDto>>(list);
         }
     }
 }

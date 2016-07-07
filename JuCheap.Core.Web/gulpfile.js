@@ -50,6 +50,8 @@ var paths = {
     ],
     ztreeJs: [
         webroot + "js/plugins/ztree/jquery.ztree.all.js",
+        webroot + "js/page/roleAuthen.js",
+        webroot + "js/json2.js",
         "!" + webroot + "js/ztree.min.js"
     ],
 

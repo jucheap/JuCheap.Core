@@ -16,8 +16,8 @@
 @section scripts{
     <environment names="Development">
         <script src="~/js/plugins/ztree/jquery.ztree.all.js"></script>
-        <script src="~/js/page/roleAuthen.js"></script>
         <script src="~/js/json2.js"></script>
+        <script src="~/js/page/roleAuthen.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/js/ztree.min.js" asp-append-version="true"></script>
@@ -36,8 +36,9 @@
         </div>
         <div class="ibox-content">
             <div class="row">
-                <div class="form-group">
+                <div class="col-sm-12">
                     <button id="btnSave" class="btn btn-w-m btn-primary" type="button">保存</button>
+                    <button id="btnClear" class="btn btn-w-m btn-danger" type="button">清空</button>
                 </div>
             </div>
             <div class="row">
@@ -51,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-8">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             权限菜单

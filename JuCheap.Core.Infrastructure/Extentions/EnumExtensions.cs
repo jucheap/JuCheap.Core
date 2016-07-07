@@ -28,17 +28,24 @@ namespace JuCheap.Core.Infrastructure.Extentions
         /// <returns></returns>
         public static string GetDescriptionForEnum(this object value)
         {
-            if (value == null) return string.Empty;
-            var type = value.GetType();
-            var field = type.GetField(Enum.GetName(type, value));
+            try
+            {
+                if (value == null) return string.Empty;
+                var type = value.GetType();
+                var field = type.GetField(Enum.GetName(type, value));
 
-            if (field == null) return value.ToString();
+                if (field == null) return value.ToString();
 
-            var des = CustomAttributeData.GetCustomAttributes(type.GetMember(field.Name)[0]);
+                var des = CustomAttributeData.GetCustomAttributes(type.GetMember(field.Name)[0]);
 
-            return des.AnyOne() && des[0].ConstructorArguments.AnyOne()
-                ? des[0].ConstructorArguments[0].Value.ToString()
-                : value.ToString();
+                return des.AnyOne() && des[0].ConstructorArguments.AnyOne()
+                    ? des[0].ConstructorArguments[0].Value.ToString()
+                    : value.ToString();
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
+            }
         }
     }
 }

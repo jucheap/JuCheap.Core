@@ -22,6 +22,7 @@ namespace JuCheap.Core.Services
             config.CreateMap<UserDto, UserUpdateDto>().ReverseMap();
             config.CreateMap<UserRoleEntity, UserRoleDto>().ReverseMap();
             config.CreateMap<RoleEntity, RoleDto>().ReverseMap();
+            config.CreateMap<RoleMenuDto, RoleMenuEntity>().ReverseMap();
             config.CreateMap<PageViewEntity, VisitDto>()
                 .ForMember(v => v.VisitDate, e => e.MapFrom(pv => pv.CreateDateTime))
                 .ReverseMap();

@@ -100,7 +100,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult SetRoleMenus(List<RoleMenuDto> datas)
+        public IActionResult SetRoleMenus([FromBody]List<RoleMenuDto> datas)
         {
             var result = new JsonResultModel<bool>
             {

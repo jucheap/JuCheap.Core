@@ -70,7 +70,7 @@
             var row = JucheapGrid.GetData();
             if (row != null) {
                 $("#btnEdit").button("loading");
-                window.location.href = "@Url.Action("Edit")/" + row.Id;
+                window.location.href = "@Url.Action("Edit")/" + row.id;
             } else {
                 alert("请选择要编辑的数据");
             }

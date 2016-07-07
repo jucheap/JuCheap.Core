@@ -3,12 +3,12 @@
         allowNoKeyword: true,
         multiWord: true,
         showHeader: true,
-        effectiveFieldsAlias: { Id: "主键", Name: "名称", TypeName: "类型", Url: "URL地址" },
-        effectiveFields: ["Id", "Name","TypeName", "Url"],
+        effectiveFieldsAlias: { id: "主键", name: "名称", typeName: "类型", url: "URL地址" },
+        effectiveFields: ["id", "name","typeName", "url"],
         getDataMethod: "url",
         url: "/Menu/GetListWithKeywords?keywords=",
-        idField: "Id",
-        keyField: "Name"
+        idField: "id",
+        keyField: "name"
     }).on('onSetSelectValue', function(e, data) {
         $("#ParentId").val(data.id);
     }).on('onUnsetSelectValue', function() {

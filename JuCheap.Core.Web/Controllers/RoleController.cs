@@ -17,17 +17,19 @@ namespace JuCheap.Core.Web.Controllers
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;
+        private readonly IMenuService _menuService;
 
-        public RoleController(IRoleService roleSvc)
+        public RoleController(IRoleService roleSvc,IMenuService menuService)
         {
             _roleService = roleSvc;
+            _menuService = menuService;
         }
 
         /// <summary>
         /// 首页
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
@@ -36,7 +38,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 添加
         /// </summary>
         /// <returns></returns>
-        public ActionResult Add()
+        public IActionResult Add()
         {
             return View(new RoleDto());
         }
@@ -46,7 +48,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
             var model = _roleService.Find(id);
             return View(model);
@@ -56,9 +58,29 @@ namespace JuCheap.Core.Web.Controllers
         /// 角色授权
         /// </summary>
         /// <returns></returns>
-        public ActionResult Authen()
+        public IActionResult Authen()
         {
             return View();
+        }
+
+        /// <summary>
+        /// 获取菜单树
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult AuthenMenuDatas()
+        {
+            var list = _menuService.GetTrees();
+            return Json(list);
+        }
+
+        /// <summary>
+        /// 获取角色树
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult AuthenRoleDatas()
+        {
+            var list = _roleService.GetTrees();
+            return Json(list);
         }
 
         /// <summary>
@@ -66,7 +88,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Add(RoleDto dto)
+        public IActionResult Add(RoleDto dto)
         {
             if (ModelState.IsValid)
             {
@@ -83,14 +105,13 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(RoleDto dto)
+        public IActionResult Edit(RoleDto dto)
         {
-            if (ModelState.IsValid)
-            {
-                var result = _roleService.Update(dto);
-                if (result)
-                    return RedirectToAction("Index");
-            }
+            if (!ModelState.IsValid) return View(dto);
+
+            var result = _roleService.Update(dto);
+            if (result)
+                return RedirectToAction("Index");
             return View(dto);
         }
 

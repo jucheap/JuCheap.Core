@@ -122,6 +122,16 @@ namespace JuCheap.Core.Services.AppServices
         }
 
         /// <summary>
+        /// 获取角色树
+        /// </summary>
+        /// <returns></returns>
+        public List<TreeDto> GetTrees()
+        {
+            var list = _context.Roles.Where(r => !r.IsDeleted).ToList();
+            return _mapper.Map<List<RoleEntity>, List<TreeDto>>(list);
+        } 
+
+        /// <summary>
         /// 添加角色
         /// </summary>
         /// <param name="dto">角色模型</param>
@@ -208,6 +218,16 @@ namespace JuCheap.Core.Services.AppServices
                     Name = item.Name,
                     Description = item.Description
                 }).PagingAsync(filters.page, filters.rows);
+        }
+
+        /// <summary>
+        /// 获取角色树
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<TreeDto>> GetTreesAsync()
+        {
+            var list = await _context.Roles.Where(r => !r.IsDeleted).ToListAsync();
+            return _mapper.Map<List<RoleEntity>, List<TreeDto>>(list);
         }
     }
 }

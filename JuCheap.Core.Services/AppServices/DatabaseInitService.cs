@@ -66,6 +66,7 @@ namespace JuCheap.Core.Services.AppServices
 
             var system = new MenuEntity
             {
+                Id = 1,
                 Name = "系统设置",
                 Url = "#",
                 CreateDateTime = _now,
@@ -76,6 +77,7 @@ namespace JuCheap.Core.Services.AppServices
             };//1
             var menuMgr = new MenuEntity
             {
+                Id = 2,
                 ParentId = 1,
                 Name = "菜单管理",
                 Url = "/Menu/Index",
@@ -87,6 +89,7 @@ namespace JuCheap.Core.Services.AppServices
             };//2
             var roleMgr = new MenuEntity
             {
+                Id = 3,
                 ParentId = 1,
                 Name = "角色管理",
                 Url = "/Role/Index",
@@ -98,6 +101,7 @@ namespace JuCheap.Core.Services.AppServices
             };//3
             var userMgr = new MenuEntity
             {
+                Id = 4,
                 ParentId = 1,
                 Name = "用户管理",
                 Url = "/User/Index",
@@ -109,50 +113,55 @@ namespace JuCheap.Core.Services.AppServices
             };//4
             var userRoleMgr = new MenuEntity
             {
+                Id = 5,
                 ParentId = 1,
                 Name = "用户授权",
                 Url = "/User/Authen",
                 CreateDateTime = _now,
-                Order = 4,
+                Order = 5,
                 Code = "AC",
                 PathCode = "AAAC",
                 Type = 2
             };//5
             var roleMenuMgr = new MenuEntity
             {
+                Id = 6,
                 ParentId = 1,
                 Name = "角色授权",
                 Url = "/Role/Authen",
                 CreateDateTime = _now,
-                Order = 4,
+                Order = 6,
                 Code = "AC",
                 PathCode = "AAAC",
                 Type = 2
             };//6
             var sysConfig = new MenuEntity
             {
+                Id = 7,
                 ParentId = 1,
                 Name = "系统配置",
                 Url = "/System/Index",
                 CreateDateTime = _now,
-                Order = 4,
+                Order = 7,
                 Code = "AD",
                 PathCode = "AAAD",
                 Type = 2
             };//7
             var sysConfigReloadPathCode = new MenuEntity
             {
+                Id = 8,
                 ParentId = 7,
                 Name = "重置路径码",
                 Url = "/System/ReloadPathCode",
                 CreateDateTime = _now,
-                Order = 1,
+                Order = 8,
                 Code = "AAAD",
                 PathCode = "AAADAA",
                 Type = 3
             };//8
             var log = new MenuEntity
             {
+                Id = 9,
                 Name = "日志查看",
                 Url = "#",
                 CreateDateTime = _now,
@@ -163,22 +172,24 @@ namespace JuCheap.Core.Services.AppServices
             };//9
             var logLogin = new MenuEntity
             {
-                ParentId = 12,
+                Id = 10,
+                ParentId = 9,
                 Name = "登录日志",
                 Url = "/Log/Logins",
                 CreateDateTime = _now,
-                Order = 9,
+                Order = 10,
                 Code = "AA",
                 PathCode = "ABAA",
                 Type = 2
             };//10
             var logView = new MenuEntity
             {
-                ParentId = 12,
+                Id = 11,
+                ParentId = 9,
                 Name = "访问日志",
                 Url = "/Log/Visits",
                 CreateDateTime = _now,
-                Order = 10,
+                Order = 11,
                 Code = "AB",
                 PathCode = "ABAB",
                 Type = 2
@@ -199,9 +210,9 @@ namespace JuCheap.Core.Services.AppServices
                 logLogin,
                 logView
             };
-            var menuBtns = GetMenuButtons(2, "Menu", "菜单", "AAAA");//14
-            var rolwBtns = GetMenuButtons(3, "Role", "角色", "AAAB");//17
-            var userBtns = GetMenuButtons(4, "User", "用户", "AAAC");//20
+            var menuBtns = GetMenuButtons(2, "Menu", "菜单", "AAAA", 12);//14
+            var rolwBtns = GetMenuButtons(3, "Role", "角色", "AAAB", 15);//17
+            var userBtns = GetMenuButtons(4, "User", "用户", "AAAC", 18);//20
 
             menus.AddRange(menuBtns);//14
             menus.AddRange(rolwBtns);//17
@@ -255,11 +266,21 @@ namespace JuCheap.Core.Services.AppServices
             };
 
             #endregion
-
-            _context.Menus.AddRange(menus);
+            
+            _context.Menus.AddRange(menus.OrderBy(m => m.Order).ToArray());
             _context.Roles.AddRange(roles);
             _context.Users.AddRange(user);
-            _context.SaveChanges();
+            _context.Database.OpenConnection();
+            try
+            {
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Menus ON");
+                _context.SaveChanges();
+                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Menus OFF");
+            }
+            finally
+            {
+                _context.Database.CloseConnection();
+            }
             _context.UserRoles.AddRange(userRoles);
             _context.RoleMenus.AddRange(roleMenus);
             _context.SystemConfigs.Add(systemConfig);
@@ -320,40 +341,44 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="controllerName">控制器名称</param>
         /// <param name="controllerShowName">菜单显示名称</param>
         /// <param name="parentPathCode">父级路径码</param>
+        /// <param name="order">排序</param>
         /// <returns></returns>
-        private IEnumerable<MenuEntity> GetMenuButtons(int parentId, string controllerName, string controllerShowName, string parentPathCode)
+        private IEnumerable<MenuEntity> GetMenuButtons(int parentId, string controllerName, string controllerShowName, string parentPathCode,int order)
         {
             return new List<MenuEntity>
             {
                 new MenuEntity
                 {
+                    Id = order,
                     ParentId = parentId,
                     Name = string.Concat("添加",controllerShowName),
                     Url = string.Format("/{0}/Add",controllerName),
                     CreateDateTime = _now,
-                    Order = 1,
+                    Order = order,
                     Code = "AA",
                     PathCode = parentPathCode+"AA",
                     Type = 3
                 },
                 new MenuEntity
                 {
+                    Id = order + 1,
                     ParentId = parentId,
                     Name = string.Concat("修改",controllerShowName),
                     Url = string.Format("/{0}/Edit",controllerName),
                     CreateDateTime = _now,
-                    Order = 2,
+                    Order = order+1,
                     Code = "AB",
                     PathCode = parentPathCode+"AB",
                     Type = 3
                 },
                 new MenuEntity
                 {
+                    Id = order + 2,
                     ParentId = parentId,
                     Name = string.Concat("删除",controllerShowName),
                     Url = string.Format("/{0}/Delete",controllerName),
                     CreateDateTime = _now,
-                    Order = 3,
+                    Order = order+2,
                     Code = "AC",
                     PathCode = parentPathCode+"AC",
                     Type = 3

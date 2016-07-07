@@ -29,6 +29,13 @@ namespace JuCheap.Core.Services
             config.CreateMap<MenuEntity, MenuDto>()
                 .ForMember(m => m.Type, e => e.MapFrom(item => (MenuType) item.Type))
                 .ReverseMap();
+            config.CreateMap<MenuEntity, TreeDto>()
+                .ForMember(m => m.id, e => e.MapFrom(item => item.Id))
+                .ForMember(m => m.pId, e => e.MapFrom(item => item.ParentId))
+                .ForMember(m => m.name, e => e.MapFrom(item => item.Name));
+            config.CreateMap<RoleEntity, TreeDto>()
+                .ForMember(m => m.id, e => e.MapFrom(item => item.Id))
+                .ForMember(m => m.name, e => e.MapFrom(item => item.Name));
         }
     }
 }

@@ -219,7 +219,7 @@ namespace JuCheap.Core.Services.AppServices
             var menuIds = dbSetRoleMenus.Where(item => roleIds.Contains(item.RoleId))
                 .Select(item => item.MenuId)
                 .ToList();
-            return query.Any(item => menuIds.Contains(item.Id) && item.Url.StartsWith(url));
+            return query.Any(item => menuIds.Contains(item.Id) && url.StartsWith(item.Url));
         }
 
         /// <summary>
@@ -421,7 +421,7 @@ namespace JuCheap.Core.Services.AppServices
             var menuIds = await dbSetRoleMenus.Where(item => roleIds.Contains(item.RoleId))
                 .Select(item => item.MenuId)
                 .ToListAsync();
-            return await query.AnyAsync(item => menuIds.Contains(item.Id) && item.Url.StartsWith(url));
+            return await query.AnyAsync(item => menuIds.Contains(item.Id) && url.StartsWith(item.Url));
         }
 
         /// <summary>

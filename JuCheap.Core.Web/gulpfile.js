@@ -48,6 +48,11 @@ var paths = {
         webroot + "js/base.js",
         "!" + webroot + "js/menu.min.js"
     ],
+    ztreeJs: [
+        webroot + "js/plugins/ztree/jquery.ztree.all.js",
+        "!" + webroot + "js/ztree.min.js"
+    ],
+
     layoutCss:[
         webroot + "css/bootstrap.css",
         webroot + "css/style.css",
@@ -72,16 +77,22 @@ var paths = {
         webroot + "css/plugins/jqgrid/ui.jqgrid.css",
         "!" + webroot + "css/grid.min.css"
     ],
+    ztreeCss: [
+        webroot + "css/plugins/ztree/metroStyle.css",
+        "!" + webroot + "css/ztree.min.css"
+    ],
     concatBaseJsDest: webroot + "js/base.min.js",
     concatJsDest: webroot + "js/site.min.js",
     concatContentJsDest: webroot + "js/content.min.js",
     concatValidateJsDest: webroot + "js/validate.min.js",
     concatGridJsDest: webroot + "js/grid.min.js",
     concatMenuJsDest: webroot + "js/menu.min.js",
+    concatZTreeJsDest: webroot + "js/ztree.min.js",
     concatCssDest: webroot + "css/site.min.css",
     concatContentCssDest: webroot + "css/content.min.css",
     concatLoginCssDest: webroot + "css/login.min.css",
-    concatGridCssDest: webroot + "css/grid.min.css"
+    concatGridCssDest: webroot + "css/grid.min.css",
+    concatZTreeCssDest: webroot + "css/ztree.min.css"
 };
 
 gulp.task("clean:js_base", function (cb) {
@@ -102,6 +113,9 @@ gulp.task("clean:js_grid", function (cb) {
 gulp.task("clean:js_menu", function (cb) {
     rimraf(paths.concatMenuJsDest, cb);
 });
+gulp.task("clean:js_ztree", function (cb) {
+    rimraf(paths.concatZTreeJsDest, cb);
+});
 
 gulp.task("clean:css", function (cb) {
     rimraf(paths.concatCssDest, cb);
@@ -115,8 +129,11 @@ gulp.task("clean:css_login", function (cb) {
 gulp.task("clean:css_grid", function (cb) {
     rimraf(paths.concatGridCssDest, cb);
 });
+gulp.task("clean:css_ztree", function (cb) {
+    rimraf(paths.concatZTreeCssDest, cb);
+});
 
-gulp.task("clean", ["clean:js", "clean:js_base", "clean:js_content", "clean:js_validate", "clean:js_grid", "clean:js_menu", "clean:css", "clean:css_content", "clean:css_login", "clean:css_grid"]);
+gulp.task("clean", ["clean:js", "clean:js_base", "clean:js_content", "clean:js_validate", "clean:js_grid", "clean:js_menu", "clean:js_ztree", "clean:css", "clean:css_content", "clean:css_login", "clean:css_grid", "clean:css_ztree"]);
 
 gulp.task("min:js_base", function () {
     return gulp.src(paths.baseJs, { base: "." })
@@ -160,6 +177,13 @@ gulp.task("min:js_menu", function () {
         .pipe(gulp.dest("."));
 });
 
+gulp.task("min:js_ztree", function () {
+    return gulp.src(paths.ztreeJs, { base: "." })
+        .pipe(concat(paths.concatZTreeJsDest))
+        .pipe(uglify())
+        .pipe(gulp.dest("."));
+});
+
 gulp.task("min:css_layout", function () {
     return gulp.src(paths.layoutCss)
         .pipe(concat(paths.concatCssDest))
@@ -188,4 +212,11 @@ gulp.task("min:css_grid", function () {
         .pipe(gulp.dest("."));
 });
 
-gulp.task("min", ["min:js_base", "min:js_layout", "min:js_content", "min:js_validate", "min:js_grid", "min:js_menu", "min:css_layout", "min:css_content", "min:css_login", "min:css_grid"]);
+gulp.task("min:css_ztree", function () {
+    return gulp.src(paths.ztreeCss)
+        .pipe(concat(paths.concatZTreeCssDest))
+        .pipe(cssmin())
+        .pipe(gulp.dest("."));
+});
+
+gulp.task("min", ["min:js_base", "min:js_layout", "min:js_content", "min:js_validate", "min:js_grid", "min:js_menu", "min:js_ztree", "min:css_layout", "min:css_content", "min:css_login", "min:css_grid", "min:css_ztree"]);

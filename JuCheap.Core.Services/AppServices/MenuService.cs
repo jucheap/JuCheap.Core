@@ -91,11 +91,11 @@ namespace JuCheap.Core.Services.AppServices
             var dbSet = _context.Menus;
             var entity = dbSet.FirstOrDefault(m => m.Id == id);
             var dto = _mapper.Map<MenuEntity, MenuDto>(entity);
-            if (dto.ParentId > 0)
-            {
-                var parent = dbSet.FirstOrDefault(m => m.Id == dto.ParentId);
-                dto.ParentName = parent.Name;
-            }
+
+            if (dto.ParentId <= 0) return dto;
+
+            var parent = dbSet.FirstOrDefault(m => m.Id == dto.ParentId);
+            dto.ParentName = parent.Name;
             return dto;
         }
 
@@ -171,6 +171,18 @@ namespace JuCheap.Core.Services.AppServices
                     Order = item.Order,
                     Type = (MenuType)item.Type
                 }).ToList();
+        }
+
+        /// <summary>
+        /// 获取菜单树
+        /// </summary>
+        /// <returns></returns>
+        public List<TreeDto> GetTrees()
+        {
+            var list = _context.Menus.Where(m => !m.IsDeleted).ToList();
+            var result = _mapper.Map<List<MenuEntity>, List<TreeDto>>(list);
+            result.ForEach(t => t.open = true);
+            return result;
         }
 
         /// <summary>
@@ -311,6 +323,16 @@ namespace JuCheap.Core.Services.AppServices
                     Order = item.Order,
                     Type = (MenuType)item.Type
                 }).ToListAsync();
+        }
+
+        /// <summary>
+        /// 获取菜单树
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<TreeDto>> GetTreesAsync()
+        {
+            var list = await _context.Menus.Where(m => !m.IsDeleted).ToListAsync();
+            return _mapper.Map<List<MenuEntity>, List<TreeDto>>(list);
         }
     }
 }

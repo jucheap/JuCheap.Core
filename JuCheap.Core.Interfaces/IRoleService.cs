@@ -48,6 +48,12 @@ namespace JuCheap.Core.Interfaces
         PagedResult<RoleDto> Search(RoleFilters filters);
 
         /// <summary>
+        /// 获取角色树
+        /// </summary>
+        /// <returns></returns>
+        List<TreeDto> GetTrees();
+
+            /// <summary>
         /// 添加角色
         /// </summary>
         /// <param name="dto">角色模型</param>
@@ -81,5 +87,11 @@ namespace JuCheap.Core.Interfaces
         /// <param name="filters">查询过滤参数</param>
         /// <returns></returns>
         Task<PagedResult<RoleDto>> SearchAsync(RoleFilters filters);
+
+        /// <summary>
+        /// 获取角色树
+        /// </summary>
+        /// <returns></returns>
+        Task<List<TreeDto>> GetTreesAsync();
     }
 }

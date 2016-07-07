@@ -55,6 +55,12 @@ namespace JuCheap.Core.Interfaces
         List<MenuDto> GetMyMenus(int userId);
 
         /// <summary>
+        /// 获取菜单树
+        /// </summary>
+        /// <returns></returns>
+        List<TreeDto> GetTrees();
+
+        /// <summary>
         /// 添加菜单
         /// </summary>
         /// <param name="dto">菜单模型</param>
@@ -95,5 +101,11 @@ namespace JuCheap.Core.Interfaces
         /// <param name="userId">用户Id</param>
         /// <returns></returns>
         Task<List<MenuDto>> GetMyMenusAsync(int userId);
+
+        /// <summary>
+        /// 获取菜单树
+        /// </summary>
+        /// <returns></returns>
+        Task<List<TreeDto>> GetTreesAsync();
     }
 }

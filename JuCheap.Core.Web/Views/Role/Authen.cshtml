@@ -3,6 +3,77 @@
     Layout = "~/Views/Shared/_Layout_Content.cshtml";
 }
 
+@section styles{
+   
+    <environment names="Development">
+        <link href="~/css/plugins/ztree/metroStyle.css" rel="stylesheet" />
+    </environment>
+    <environment names="Staging,Production">
+        <link href="~/css/ztree.min.css" asp-append-version="true" rel="stylesheet"/>
+    </environment>
+}
+
+@section scripts{
+    <environment names="Development">
+        <script src="~/js/plugins/ztree/jquery.ztree.all.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/ztree.min.js" asp-append-version="true"></script>
+    </environment>
+    
+    <script type="text/javascript">
+     <!--
+        var roleSetting = {
+            async: {
+                enable: true,
+                url: "/Role/AuthenRoleDatas",
+                autoParam: ["id", "name=n", "level=lv"],
+                otherParam: { "otherParam": "tree" }
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            check: {
+                enable: true,
+                chkStyle: "radio",
+                radioType: "level"
+            },
+            callback: {
+                onCheck: onCheck
+            }
+        };
+        var menuSetting = {
+            async: {
+                enable: true,
+                url: "/Role/AuthenMenuDatas",
+                autoParam: ["id", "name=n", "level=lv"],
+                otherParam: { "otherParam": "tree" }
+            },
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            check: {
+                enable: true,
+                chkStyle: "radio",
+                radioType: "level"
+            }
+        };
+        function onCheck(e, treeId, treeNode) {
+            alert(treeNode.id);
+            //加载此角色下的菜单
+        }
+		$(document).ready(function () {
+		    $.fn.zTree.init($("#roleTree"), roleSetting);
+		    $.fn.zTree.init($("#menuTree"), menuSetting);
+        });
+        //-->
+    </script>
+}
+
 <div class="wrapper wrapper-content">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
@@ -14,7 +85,28 @@
             </div>
         </div>
         <div class="ibox-content">
-            暂未实现！
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            角色列表
+                        </div>
+                        <div class="panel-body">
+                            <ul id="roleTree" class="ztree"></ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            权限菜单
+                        </div>
+                        <div class="panel-body">
+                            <ul id="menuTree" class="ztree"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

@@ -106,7 +106,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public JsonResult Delete(IEnumerable<int> ids)
+        public JsonResult Delete([FromBody]IEnumerable<int> ids)
         {
             var result = new JsonResultModel<bool>();
             var enumerable = ids as IList<int> ?? ids.ToList();

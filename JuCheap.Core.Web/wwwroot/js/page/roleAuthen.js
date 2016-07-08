@@ -47,7 +47,7 @@ function onCheck(e, treeId, treeNode) {
             success: function (res) {
                 for (var i = 0, id; id = res[i]; i++) {
                     var node = zTree.getNodeByParam("id", id);
-                    zTree.checkNode(node, true, true, false);
+                    zTree.checkNode(node, true, false, false);
                 }
             }
         });

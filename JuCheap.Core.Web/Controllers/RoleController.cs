@@ -102,10 +102,15 @@ namespace JuCheap.Core.Web.Controllers
         [HttpPost]
         public IActionResult SetRoleMenus([FromBody]List<RoleMenuDto> datas)
         {
-            var result = new JsonResultModel<bool>
+            var result = new JsonResultModel<bool>();
+            if (datas.AnyOne())
             {
-                flag = _roleService.SetRoleMenus(datas)
-            };
+                result.flag = _roleService.SetRoleMenus(datas);
+            }
+            else
+            {
+                result.msg = "请选择需要授权的菜单";
+            }
             return Json(result);
         }
 

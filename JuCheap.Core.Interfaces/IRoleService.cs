@@ -60,6 +60,13 @@ namespace JuCheap.Core.Interfaces
         bool SetRoleMenus(List<RoleMenuDto> datas);
 
         /// <summary>
+        /// 清空该角色下的所有权限
+        /// </summary>
+        /// <param name="roleId">角色ID</param>
+        /// <returns></returns>
+        bool ClearRoleMenus(int roleId);
+
+        /// <summary>
         /// 添加角色
         /// </summary>
         /// <param name="dto">角色模型</param>
@@ -105,5 +112,13 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <returns></returns>
         Task<bool> SetRoleMenusAsync(List<RoleMenuDto> datas);
+
+
+        /// <summary>
+        /// 清空该角色下的所有权限
+        /// </summary>
+        /// <param name="roleId">角色ID</param>
+        /// <returns></returns>
+        Task<bool> ClearRoleMenusAsync(int roleId);
     }
 }

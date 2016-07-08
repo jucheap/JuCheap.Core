@@ -6,6 +6,7 @@ using JuCheap.Core.Data.Entity;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Infrastructure.Utilities;
 using JuCheap.Core.Interfaces;
+using JuCheap.Core.Models.Enum;
 using Microsoft.EntityFrameworkCore;
 
 namespace JuCheap.Core.Services.AppServices
@@ -217,6 +218,30 @@ namespace JuCheap.Core.Services.AppServices
             menus.AddRange(menuBtns);//14
             menus.AddRange(rolwBtns);//17
             menus.AddRange(userBtns);//20
+            menus.Add(new MenuEntity
+            {
+                Id = 21,
+                ParentId = 6,
+                Order = 6,
+                Name = "授权",
+                Type = (byte)MenuType.Button,
+                Url = "/Role/SetRoleMenus",
+                CreateDateTime = _now,
+                Code = "AA",
+                PathCode = "AAACAA"
+            });
+            menus.Add(new MenuEntity
+            {
+                Id = 22,
+                ParentId = 6,
+                Order = 6,
+                Name = "清空权限",
+                Type = (byte)MenuType.Button,
+                Url = "/Role/ClearRoleMenus",
+                CreateDateTime = _now,
+                Code = "AB",
+                PathCode = "AAACAB"
+            });
 
             #endregion
 
@@ -243,14 +268,24 @@ namespace JuCheap.Core.Services.AppServices
             #endregion
 
             #region 角色菜单权限关系
-            //超级管理员授权/游客授权
+
             var roleMenus = new List<RoleMenuEntity>();
-            var len = menus.Count;
-            for (var i = 0; i < len; i++)
+            //管理员授权(管理员有所有权限)
+            menus.ForEach(m =>
             {
-                roleMenus.Add(new RoleMenuEntity { RoleId = 1, MenuId = i + 1, CreateDateTime = _now });
-                roleMenus.Add(new RoleMenuEntity { RoleId = 2, MenuId = i + 1, CreateDateTime = _now });
-            }
+                roleMenus.Add(new RoleMenuEntity { RoleId = 1, MenuId = m.Id, CreateDateTime = _now });
+            });
+            //guest授权(guest只有查看权限，没有按钮操作权限)
+            menus.Where(item=>item.Type!=(byte)MenuType.Button).ForEach(m =>
+            {
+                roleMenus.Add(new RoleMenuEntity {RoleId = 2, MenuId = m.Id, CreateDateTime = _now});
+            });
+
+            #endregion
+
+            #region 路径码
+
+            InitPathCode();
 
             #endregion
 

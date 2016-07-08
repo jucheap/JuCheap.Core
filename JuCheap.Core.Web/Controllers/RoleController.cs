@@ -109,8 +109,23 @@ namespace JuCheap.Core.Web.Controllers
             }
             else
             {
-                result.msg = "请选择需要授权的菜单";
+                
             }
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 清空该角色下的所有权限
+        /// </summary>
+        /// <param name="id">角色ID</param>
+        /// <returns></returns>
+        [HttpPost]
+        public IActionResult ClearRoleMenus(int id)
+        {
+            var result = new JsonResultModel<bool>
+            {
+                flag = _roleService.ClearRoleMenus(id)
+            };
             return Json(result);
         }
 

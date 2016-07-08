@@ -159,6 +159,21 @@ namespace JuCheap.Core.Services.AppServices
         }
 
         /// <summary>
+        /// 清空该角色下的所有权限
+        /// </summary>
+        /// <param name="roleId">角色ID</param>
+        /// <returns></returns>
+        public bool ClearRoleMenus(int roleId)
+        {
+            if (roleId <= 0) return false;
+
+            var list = _context.RoleMenus.Where(item => item.RoleId == roleId);
+            _context.RoleMenus.RemoveRange(list);
+
+            return _context.SaveChanges() > 0;
+        }
+
+        /// <summary>
         /// 添加角色
         /// </summary>
         /// <param name="dto">角色模型</param>
@@ -280,6 +295,21 @@ namespace JuCheap.Core.Services.AppServices
             {
                 _context.RoleMenus.RemoveRange(removes);
             }
+
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        /// <summary>
+        /// 清空该角色下的所有权限
+        /// </summary>
+        /// <param name="roleId">角色ID</param>
+        /// <returns></returns>
+        public async Task<bool> ClearRoleMenusAsync(int roleId)
+        {
+            if (roleId <= 0) return false;
+
+            var list = await _context.RoleMenus.Where(item => item.RoleId == roleId).ToListAsync();
+            _context.RoleMenus.RemoveRange(list);
 
             return await _context.SaveChangesAsync() > 0;
         }

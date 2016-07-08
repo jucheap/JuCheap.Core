@@ -81,7 +81,7 @@ var paths = {
     ],
     ztreeCss: [
         webroot + "css/plugins/ztree/metroStyle.css",
-        "!" + webroot + "css/ztree.min.css"
+        "!" + webroot + "css//plugins/ztree/ztree.min.css"
     ],
     concatBaseJsDest: webroot + "js/base.min.js",
     concatJsDest: webroot + "js/site.min.js",
@@ -94,7 +94,7 @@ var paths = {
     concatContentCssDest: webroot + "css/content.min.css",
     concatLoginCssDest: webroot + "css/login.min.css",
     concatGridCssDest: webroot + "css/grid.min.css",
-    concatZTreeCssDest: webroot + "css/ztree.min.css"
+    concatZTreeCssDest: webroot + "css/plugins/ztree/ztree.min.css"
 };
 
 gulp.task("clean:js_base", function (cb) {

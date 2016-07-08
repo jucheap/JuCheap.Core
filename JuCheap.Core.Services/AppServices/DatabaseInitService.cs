@@ -42,7 +42,7 @@ namespace JuCheap.Core.Services.AppServices
             {
                 LoginName = "jucheap",
                 RealName = "超级管理员",
-                Password = "qwaszx".ToMd5(),
+                Password = "qwaszx12".ToMd5(),
                 Email = "service@jucheap.com",
                 IsSuperMan = true,
                 CreateDateTime = _now

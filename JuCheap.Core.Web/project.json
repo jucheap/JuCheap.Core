@@ -48,30 +48,19 @@
 
   "tools": {
     "Microsoft.AspNetCore.Razor.Tools": {
-      "version": "1.0.0-preview2-final",
-      "imports": "portable-net45+win8+dnxcore50"
+      "version": "1.0.0-preview2-final"
     },
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": {
-      "version": "1.0.0-preview2-final",
-      "imports": "portable-net45+win8+dnxcore50"
+      "version": "1.0.0-preview2-final"
     },
     "Microsoft.EntityFrameworkCore.Tools": {
-      "version": "1.0.0-preview2-final",
-      "imports": [
-        "portable-net45+win8+dnxcore50",
-        "portable-net45+win8"
-      ]
+      "version": "1.0.0-preview2-final"
     },
     "Microsoft.Extensions.SecretManager.Tools": {
-      "version": "1.0.0-preview2-final",
-      "imports": "portable-net45+win8+dnxcore50"
+      "version": "1.0.0-preview2-final"
     },
     "Microsoft.VisualStudio.Web.CodeGeneration.Tools": {
-      "version": "1.0.0-preview2-final",
-      "imports": [
-        "portable-net45+win8+dnxcore50",
-        "portable-net45+win8"
-      ]
+      "version": "1.0.0-preview2-final"
     }
   },
 

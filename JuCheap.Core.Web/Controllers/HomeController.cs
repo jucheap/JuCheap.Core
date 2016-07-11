@@ -111,5 +111,15 @@ namespace JuCheap.Core.Web.Controllers
             HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
         }
+
+        /// <summary>
+        /// 错误页面
+        /// </summary>
+        /// <returns></returns>
+        [IgnoreRightFilter]
+        public IActionResult Error()
+        {
+            return View();
+        }
     }
 }

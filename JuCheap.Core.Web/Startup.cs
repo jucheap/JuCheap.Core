@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Services;
 using JuCheap.Core.Web.Filters;
 using Microsoft.AspNetCore.Http;
@@ -45,15 +44,9 @@ namespace JuCheap.Core.Web
             // Add framework services.
             services.AddDbContext<JuCheapContext>(options =>
             {
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
-                //options.UseSqlite(Configuration.GetConnectionString("DefaultConnection1"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
+                //options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
+                options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
             });
-
-            
-
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddDefaultTokenProviders();
-            
 
             services.AddMvc(cfg =>
             {

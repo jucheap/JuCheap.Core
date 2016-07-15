@@ -1,18 +1,14 @@
 {
-  "version": "1.0.0-*",
-
   "dependencies": {
-    "NETStandard.Library": "1.6.0",
+    "Microsoft.EntityFrameworkCore": "1.0.0",
     "System.ComponentModel": "4.0.1",
     "System.Linq.Expressions": "4.1.0",
     "System.Reflection.TypeExtensions": "4.1.0",
     "System.Security.Cryptography.Algorithms": "4.2.0",
-    "System.Xml.XmlSerializer": "4.0.11",
-    "Microsoft.EntityFrameworkCore": "1.0.0"
+    "System.Xml.XmlSerializer": "4.0.11"
   },
-
   "frameworks": {
-     "netcoreapp1.0": {
+    "netcoreapp1.0": {
       "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
@@ -21,5 +17,6 @@
       },
       "imports": [ "dnxcore50", "portable-net45+win8" ]
     }
-  }
+  },
+  "version": "1.0.0-*"
 }

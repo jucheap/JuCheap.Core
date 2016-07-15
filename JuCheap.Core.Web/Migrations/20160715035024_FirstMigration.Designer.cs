@@ -8,17 +8,19 @@ using JuCheap.Core.Data;
 namespace JuCheap.Core.Web.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    [Migration("20160715031805_FirstMigration")]
+    [Migration("20160715035024_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.LoginLogEntity", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -46,7 +48,8 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.MenuEntity", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -81,7 +84,8 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.PageViewEntity", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -110,7 +114,8 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.PathCodeEntity", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -129,7 +134,8 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.RoleEntity", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -150,7 +156,8 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.RoleMenuEntity", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -173,7 +180,8 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.SystemConfigEntity", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -194,7 +202,8 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.UserEntity", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -225,7 +234,8 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.UserRoleEntity", b =>
                 {
-                    b.Property<string>("Id");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<DateTime>("CreateDateTime");
 

@@ -12,7 +12,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "LoginLogs",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IP = table.Column<string>(maxLength: 20, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -29,7 +29,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "Menus",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
                     Code = table.Column<string>(maxLength: 6, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -49,7 +49,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "PageViews",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IP = table.Column<string>(maxLength: 20, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -66,7 +66,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "PathCodes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
                     Code = table.Column<string>(maxLength: 4, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -81,7 +81,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(maxLength: 50, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -96,7 +96,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "SystemConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     DataInitedDate = table.Column<DateTime>(nullable: false),
                     IsDataInited = table.Column<bool>(nullable: false),
@@ -112,7 +112,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     Email = table.Column<string>(maxLength: 36, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -130,7 +130,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "RoleMenus",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     MenuId = table.Column<string>(nullable: false),
@@ -157,7 +157,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "UserRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     RoleId = table.Column<string>(nullable: false),

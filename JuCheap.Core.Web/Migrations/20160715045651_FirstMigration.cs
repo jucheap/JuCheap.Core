@@ -18,7 +18,7 @@ namespace JuCheap.Core.Web.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     LoginName = table.Column<string>(maxLength: 20, nullable: false),
                     Mac = table.Column<string>(maxLength: 200, nullable: false),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(type: "varchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +35,7 @@ namespace JuCheap.Core.Web.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
                     Order = table.Column<int>(nullable: false),
-                    ParentId = table.Column<string>(nullable: true),
+                    ParentId = table.Column<string>(type: "varchar(20)", nullable: true),
                     PathCode = table.Column<string>(maxLength: 20, nullable: false),
                     Type = table.Column<byte>(nullable: false),
                     Url = table.Column<string>(maxLength: 300, nullable: false)
@@ -55,7 +55,7 @@ namespace JuCheap.Core.Web.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     LoginName = table.Column<string>(maxLength: 20, nullable: false),
                     Url = table.Column<string>(maxLength: 300, nullable: false),
-                    UserId = table.Column<string>(maxLength: 20, nullable: false)
+                    UserId = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -133,8 +133,8 @@ namespace JuCheap.Core.Web.Migrations
                     Id = table.Column<string>(type: "varchar(20)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    MenuId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    MenuId = table.Column<string>(type: "varchar(20)", nullable: false),
+                    RoleId = table.Column<string>(type: "varchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -160,8 +160,8 @@ namespace JuCheap.Core.Web.Migrations
                     Id = table.Column<string>(type: "varchar(20)", nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: false)
+                    RoleId = table.Column<string>(type: "varchar(20)", nullable: false),
+                    UserId = table.Column<string>(type: "varchar(20)", nullable: false)
                 },
                 constraints: table =>
                 {

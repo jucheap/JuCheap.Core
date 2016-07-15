@@ -8,7 +8,7 @@ using JuCheap.Core.Data;
 namespace JuCheap.Core.Web.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    [Migration("20160715035024_FirstMigration")]
+    [Migration("20160715045651_FirstMigration")]
     partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,8 @@ namespace JuCheap.Core.Web.Migrations
                         .HasAnnotation("MaxLength", 200);
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
 
@@ -65,7 +66,8 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<int>("Order");
 
-                    b.Property<string>("ParentId");
+                    b.Property<string>("ParentId")
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("PathCode")
                         .IsRequired()
@@ -105,6 +107,7 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
+                        .HasColumnType("varchar(20)")
                         .HasAnnotation("MaxLength", 20);
 
                     b.HasKey("Id");
@@ -164,10 +167,12 @@ namespace JuCheap.Core.Web.Migrations
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("MenuId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("RoleId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
 
@@ -242,10 +247,12 @@ namespace JuCheap.Core.Web.Migrations
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("RoleId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasColumnType("varchar(20)");
 
                     b.HasKey("Id");
 

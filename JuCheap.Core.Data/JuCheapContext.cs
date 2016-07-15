@@ -40,7 +40,7 @@ namespace JuCheap.Core.Data
             {
                 m.HasKey(e => e.Id);
                 m.Property(e => e.Id).HasColumnType("varchar(20)").ValueGeneratedNever();
-                m.Property(e => e.ParentId);
+                m.Property(e => e.ParentId).HasColumnType("varchar(20)");
                 m.Property(e => e.Code).HasMaxLength(6).IsRequired();
                 m.Property(e => e.PathCode).HasMaxLength(20).IsRequired();
                 m.Property(e => e.Name).HasMaxLength(20).IsRequired();
@@ -68,7 +68,7 @@ namespace JuCheap.Core.Data
                 m.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
                 m.Property(e => e.IP).HasMaxLength(20).IsRequired();
                 m.Property(e => e.Mac).HasMaxLength(200).IsRequired();
-                m.Property(e => e.UserId).IsRequired();
+                m.Property(e => e.UserId).HasColumnType("varchar(20)").IsRequired();
                 m.Property(e => e.CreateDateTime).IsRequired();
                 m.Property(e => e.IsDeleted).IsRequired();
                 m.ToTable("LoginLogs");
@@ -80,7 +80,7 @@ namespace JuCheap.Core.Data
                 m.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
                 m.Property(e => e.IP).HasMaxLength(20).IsRequired();
                 m.Property(e => e.Url).HasMaxLength(300).IsRequired();
-                m.Property(e => e.UserId).HasMaxLength(20).IsRequired();
+                m.Property(e => e.UserId).HasColumnType("varchar(20)").HasMaxLength(20).IsRequired();
                 m.Property(e => e.CreateDateTime).IsRequired();
                 m.Property(e => e.IsDeleted).IsRequired();
                 m.ToTable("PageViews");
@@ -99,8 +99,8 @@ namespace JuCheap.Core.Data
             {
                 m.HasKey(e => e.Id);
                 m.Property(e => e.Id).HasColumnType("varchar(20)").ValueGeneratedNever();
-                m.Property(e => e.RoleId).IsRequired();
-                m.Property(e => e.MenuId).IsRequired();
+                m.Property(e => e.RoleId).HasColumnType("varchar(20)").IsRequired();
+                m.Property(e => e.MenuId).HasColumnType("varchar(20)").IsRequired();
                 m.Property(e => e.CreateDateTime).IsRequired();
                 m.Property(e => e.IsDeleted).IsRequired();
                 m.ToTable("RoleMenus");
@@ -109,8 +109,8 @@ namespace JuCheap.Core.Data
             {
                 m.HasKey(e => e.Id);
                 m.Property(e => e.Id).HasColumnType("varchar(20)").ValueGeneratedNever();
-                m.Property(e => e.RoleId).IsRequired();
-                m.Property(e => e.UserId).IsRequired();
+                m.Property(e => e.RoleId).HasColumnType("varchar(20)").IsRequired();
+                m.Property(e => e.UserId).HasColumnType("varchar(20)").IsRequired();
                 m.Property(e => e.CreateDateTime).IsRequired();
                 m.Property(e => e.IsDeleted).IsRequired();
                 m.ToTable("UserRoles");

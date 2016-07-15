@@ -8,12 +8,12 @@
         /// <summary>
         /// Id
         /// </summary>
-        public int id { get; set; }
+        public string id { get; set; }
 
         /// <summary>
         /// 父类ID
         /// </summary>
-        public int pId { get; set; }
+        public string pId { get; set; }
 
         /// <summary>
         /// 名称

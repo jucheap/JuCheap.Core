@@ -56,7 +56,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
             var model = _menuService.Find(id);
             return View(model);
@@ -72,7 +72,7 @@ namespace JuCheap.Core.Web.Controllers
             if (ModelState.IsValid)
             {
                 var result = _menuService.Add(dto);
-                if (result > 0)
+                if (result.IsNotBlank())
                     return RedirectToAction("Index");
             }
             return View(dto);
@@ -100,7 +100,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public JsonResult Delete([FromBody]IEnumerable<int> ids)
+        public JsonResult Delete([FromBody]IEnumerable<string> ids)
         {
             var result = new JsonResultModel<bool>();
             if (ids.AnyOne())

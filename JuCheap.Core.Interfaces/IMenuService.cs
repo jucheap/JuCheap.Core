@@ -17,7 +17,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="dto">菜单模型</param>
         /// <returns></returns>
-        int Add(MenuDto dto);
+        string Add(MenuDto dto);
 
         /// <summary>
         /// 更新菜单
@@ -31,14 +31,14 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        MenuDto Find(int id);
+        MenuDto Find(string id);
 
         /// <summary>
         /// 批量删除
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        bool Delete(IEnumerable<int> ids);
+        bool Delete(IEnumerable<string> ids);
 
         /// <summary>
         /// 分页搜索
@@ -52,7 +52,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="userId">用户Id</param>
         /// <returns></returns>
-        List<MenuDto> GetMyMenus(int userId);
+        List<MenuDto> GetMyMenus(string userId);
 
         /// <summary>
         /// 获取菜单树
@@ -65,14 +65,14 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        List<MenuDto> GetMenusByRoleId(int roleId);
+        List<MenuDto> GetMenusByRoleId(string roleId);
 
             /// <summary>
         /// 添加菜单
         /// </summary>
         /// <param name="dto">菜单模型</param>
         /// <returns></returns>
-        Task<int> AddAsync(MenuDto dto);
+        Task<string> AddAsync(MenuDto dto);
 
         /// <summary>
         /// 更新菜单
@@ -86,14 +86,14 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task<MenuDto> FindAsync(int id);
+        Task<MenuDto> FindAsync(string id);
 
         /// <summary>
         /// 批量删除
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        Task<bool> DeleteAsync(IEnumerable<int> ids);
+        Task<bool> DeleteAsync(IEnumerable<string> ids);
 
         /// <summary>
         /// 分页搜索
@@ -107,7 +107,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="userId">用户Id</param>
         /// <returns></returns>
-        Task<List<MenuDto>> GetMyMenusAsync(int userId);
+        Task<List<MenuDto>> GetMyMenusAsync(string userId);
 
         /// <summary>
         /// 获取菜单树
@@ -120,6 +120,6 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        Task<List<MenuDto>> GetMenusByRoleIdAsync(int roleId);
+        Task<List<MenuDto>> GetMenusByRoleIdAsync(string roleId);
     }
 }

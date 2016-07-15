@@ -16,7 +16,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="dto">用户模型</param>
         /// <returns></returns>
-        int Add(UserAddDto dto);
+        string Add(UserAddDto dto);
 
         /// <summary>
         /// 更新用户
@@ -30,7 +30,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        UserDto Find(int id);
+        UserDto Find(string id);
 
         /// <summary>
         /// 登陆
@@ -44,7 +44,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        bool Delete(IEnumerable<int> ids);
+        bool Delete(IEnumerable<string> ids);
 
         /// <summary>
         /// 用户角色授权
@@ -52,7 +52,7 @@ namespace JuCheap.Core.Interfaces
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        bool Give(int userId, int roleId);
+        bool Give(string userId, string roleId);
 
         /// <summary>
         /// 用户角色取消
@@ -60,7 +60,7 @@ namespace JuCheap.Core.Interfaces
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        bool Cancel(int userId, int roleId);
+        bool Cancel(string userId, string roleId);
 
         /// <summary>
         /// 分页搜索
@@ -75,7 +75,7 @@ namespace JuCheap.Core.Interfaces
         /// <param name="userId">用户ID</param>
         /// <param name="url">url地址</param>
         /// <returns></returns>
-        bool HasRight(int userId, string url);
+        bool HasRight(string userId, string url);
 
         /// <summary>
         /// 记录访问记录
@@ -89,7 +89,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="dto">用户模型</param>
         /// <returns></returns>
-        Task<int> AddAsync(UserAddDto dto);
+        Task<string> AddAsync(UserAddDto dto);
 
         /// <summary>
         /// 更新用户
@@ -103,7 +103,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task<UserDto> FindAsync(int id);
+        Task<UserDto> FindAsync(string id);
 
         /// <summary>
         /// 登陆
@@ -117,7 +117,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        Task<bool> DeleteAsync(IEnumerable<int> ids);
+        Task<bool> DeleteAsync(IEnumerable<string> ids);
 
         /// <summary>
         /// 用户角色授权
@@ -125,7 +125,7 @@ namespace JuCheap.Core.Interfaces
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        Task<bool> GiveAsync(int userId, int roleId);
+        Task<bool> GiveAsync(string userId, string roleId);
 
         /// <summary>
         /// 用户角色取消
@@ -133,7 +133,7 @@ namespace JuCheap.Core.Interfaces
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        Task<bool> CancelAsync(int userId, int roleId);
+        Task<bool> CancelAsync(string userId, string roleId);
 
         /// <summary>
         /// 分页搜索
@@ -148,7 +148,7 @@ namespace JuCheap.Core.Interfaces
         /// <param name="userId">用户ID</param>
         /// <param name="url">url地址</param>
         /// <returns></returns>
-        Task<bool> HasRightAsync(int userId, string url);
+        Task<bool> HasRightAsync(string userId, string url);
 
         /// <summary>
         /// 记录访问记录

@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace JuCheap.Core.Web.Migrations
 {
-    public partial class jucheapcore : Migration
+    public partial class FirstMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,13 +12,12 @@ namespace JuCheap.Core.Web.Migrations
                 name: "LoginLogs",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
-                    IP = table.Column<string>(nullable: false),
+                    IP = table.Column<string>(maxLength: 20, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    LoginName = table.Column<string>(nullable: false),
-                    Mac = table.Column<string>(nullable: false),
+                    LoginName = table.Column<string>(maxLength: 20, nullable: false),
+                    Mac = table.Column<string>(maxLength: 200, nullable: false),
                     UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -31,17 +29,16 @@ namespace JuCheap.Core.Web.Migrations
                 name: "Menus",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Code = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
+                    Code = table.Column<string>(maxLength: 6, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
                     Order = table.Column<int>(nullable: false),
-                    ParentId = table.Column<int>(nullable: false),
-                    PathCode = table.Column<string>(nullable: false),
+                    ParentId = table.Column<string>(nullable: true),
+                    PathCode = table.Column<string>(maxLength: 20, nullable: false),
                     Type = table.Column<byte>(nullable: false),
-                    Url = table.Column<string>(nullable: false)
+                    Url = table.Column<string>(maxLength: 300, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,14 +49,13 @@ namespace JuCheap.Core.Web.Migrations
                 name: "PageViews",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
-                    IP = table.Column<string>(nullable: false),
+                    IP = table.Column<string>(maxLength: 20, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    LoginName = table.Column<string>(nullable: false),
-                    Url = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: false)
+                    LoginName = table.Column<string>(maxLength: 20, nullable: false),
+                    Url = table.Column<string>(maxLength: 300, nullable: false),
+                    UserId = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,9 +66,8 @@ namespace JuCheap.Core.Web.Migrations
                 name: "PathCodes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Code = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
+                    Code = table.Column<string>(maxLength: 4, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Len = table.Column<int>(nullable: false)
@@ -86,12 +81,11 @@ namespace JuCheap.Core.Web.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
-                    Description = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(maxLength: 50, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,18 +93,33 @@ namespace JuCheap.Core.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SystemConfigs",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false),
+                    CreateDateTime = table.Column<DateTime>(nullable: false),
+                    DataInitedDate = table.Column<DateTime>(nullable: false),
+                    IsDataInited = table.Column<bool>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    SystemName = table.Column<string>(maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SystemConfigs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(maxLength: 36, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsSuperMan = table.Column<bool>(nullable: false),
-                    LoginName = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false),
-                    RealName = table.Column<string>(nullable: false)
+                    LoginName = table.Column<string>(maxLength: 20, nullable: false),
+                    Password = table.Column<string>(maxLength: 50, nullable: false),
+                    RealName = table.Column<string>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -121,12 +130,11 @@ namespace JuCheap.Core.Web.Migrations
                 name: "RoleMenus",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    MenuId = table.Column<int>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false)
+                    MenuId = table.Column<string>(nullable: false),
+                    RoleId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -149,12 +157,11 @@ namespace JuCheap.Core.Web.Migrations
                 name: "UserRoles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<string>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    RoleId = table.Column<int>(nullable: false),
-                    UserId = table.Column<int>(nullable: false)
+                    RoleId = table.Column<string>(nullable: false),
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -207,6 +214,9 @@ namespace JuCheap.Core.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "RoleMenus");
+
+            migrationBuilder.DropTable(
+                name: "SystemConfigs");
 
             migrationBuilder.DropTable(
                 name: "UserRoles");

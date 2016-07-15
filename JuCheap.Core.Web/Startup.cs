@@ -46,6 +46,7 @@ namespace JuCheap.Core.Web
             services.AddDbContext<JuCheapContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
+                //options.UseSqlite(Configuration.GetConnectionString("DefaultConnection1"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
             });
 
             
@@ -134,10 +135,10 @@ namespace JuCheap.Core.Web
         /// </summary>
         /// <param name="identity">IIdentity</param>
         /// <returns></returns>
-        public static int GetLoginUserId(this IIdentity identity)
+        public static string GetLoginUserId(this IIdentity identity)
         {
             var claim = (identity as ClaimsIdentity)?.FindFirst("LoginUserId");
-            return claim?.Value.ToInt() ?? 0;
+            return claim?.Value;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 邮件ID
         /// </summary>
-        public int EmailId { get; set; }
+        public string EmailId { get; set; }
 
         /// <summary>
         /// 邮件地址

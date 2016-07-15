@@ -23,7 +23,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 上级ID
         /// </summary>
-        public int ParentId { get; set; }
+        public string ParentId { get; set; }
 
         /// <summary>
         /// 编码

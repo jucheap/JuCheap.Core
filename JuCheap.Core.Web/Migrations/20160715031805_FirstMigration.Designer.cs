@@ -8,19 +8,17 @@ using JuCheap.Core.Data;
 namespace JuCheap.Core.Web.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    [Migration("20160624144848_jucheap-core")]
-    partial class jucheapcore
+    [Migration("20160715031805_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431");
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.LoginLogEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -48,8 +46,7 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.MenuEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -65,7 +62,7 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<int>("Order");
 
-                    b.Property<int>("ParentId");
+                    b.Property<string>("ParentId");
 
                     b.Property<string>("PathCode")
                         .IsRequired()
@@ -84,8 +81,7 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.PageViewEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -114,8 +110,7 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.PathCodeEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -134,8 +129,7 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.RoleEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -156,16 +150,17 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.RoleMenuEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<int>("MenuId");
+                    b.Property<string>("MenuId")
+                        .IsRequired();
 
-                    b.Property<int>("RoleId");
+                    b.Property<string>("RoleId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -176,10 +171,30 @@ namespace JuCheap.Core.Web.Migrations
                     b.ToTable("RoleMenus");
                 });
 
+            modelBuilder.Entity("JuCheap.Core.Data.Entity.SystemConfigEntity", b =>
+                {
+                    b.Property<string>("Id");
+
+                    b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<DateTime>("DataInitedDate");
+
+                    b.Property<bool>("IsDataInited");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<string>("SystemName")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 50);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SystemConfigs");
+                });
+
             modelBuilder.Entity("JuCheap.Core.Data.Entity.UserEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -210,16 +225,17 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.UserRoleEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<string>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<int>("RoleId");
+                    b.Property<string>("RoleId")
+                        .IsRequired();
 
-                    b.Property<int>("UserId");
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("Id");
 
@@ -232,26 +248,26 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.RoleMenuEntity", b =>
                 {
-                    b.HasOne("JuCheap.Core.Data.Entity.MenuEntity")
-                        .WithMany()
+                    b.HasOne("JuCheap.Core.Data.Entity.MenuEntity", "Menu")
+                        .WithMany("RoleMenus")
                         .HasForeignKey("MenuId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("JuCheap.Core.Data.Entity.RoleEntity")
-                        .WithMany()
+                    b.HasOne("JuCheap.Core.Data.Entity.RoleEntity", "Role")
+                        .WithMany("RoleMenus")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.UserRoleEntity", b =>
                 {
-                    b.HasOne("JuCheap.Core.Data.Entity.RoleEntity")
-                        .WithMany()
+                    b.HasOne("JuCheap.Core.Data.Entity.RoleEntity", "Role")
+                        .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("JuCheap.Core.Data.Entity.UserEntity")
-                        .WithMany()
+                    b.HasOne("JuCheap.Core.Data.Entity.UserEntity", "User")
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

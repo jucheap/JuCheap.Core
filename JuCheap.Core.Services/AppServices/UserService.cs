@@ -10,6 +10,7 @@ using JuCheap.Core.Models;
 using JuCheap.Core.Models.Enum;
 using JuCheap.Core.Models.Filters;
 using JuCheap.Core.Infrastructure.Extentions;
+using JuCheap.Core.Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JuCheap.Core.Services.AppServices
@@ -38,9 +39,10 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public int Add(UserAddDto user)
+        public string Add(UserAddDto user)
         {
             var entity = _mapper.Map<UserAddDto, UserEntity>(user);
+            entity.Id = BaseIdGenerator.Instance.GetId();
             if (entity.UserRoles.AnyOne())
             {
                 entity.UserRoles.ForEach(r => r.UserId = entity.Id);
@@ -49,7 +51,7 @@ namespace JuCheap.Core.Services.AppServices
             var dbSet = _context.Users;
             dbSet.Add(entity);
 
-            return _context.SaveChanges() > 0 ? entity.Id : 0;
+            return _context.SaveChanges() > 0 ? entity.Id : string.Empty;
         }
 
         /// <summary>
@@ -75,7 +77,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public UserDto Find(int id)
+        public UserDto Find(string id)
         {
             var dbSet = _context.Users;
             var entity = dbSet.FirstOrDefault(u => u.Id == id);
@@ -88,7 +90,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        public bool Delete(IEnumerable<int> ids)
+        public bool Delete(IEnumerable<string> ids)
         {
             var dbSet = _context.Users;
             var entities = dbSet.Where(item => ids.Contains(item.Id));
@@ -109,6 +111,7 @@ namespace JuCheap.Core.Services.AppServices
             var entity = dbSet.FirstOrDefault(item => item.LoginName == dto.LoginName.Trim());
             var loginLog = new LoginLogEntity
             {
+                Id = BaseIdGenerator.Instance.GetId(),
                 LoginName = dto.LoginName,
                 IP = dto.LoginIP
             };
@@ -132,7 +135,7 @@ namespace JuCheap.Core.Services.AppServices
                     reslt.Message = "登陆密码错误";
                     reslt.Result = LoginResult.WrongPassword;
                 }
-                loginLog.UserId = entity.Id.ToString();
+                loginLog.UserId = entity.Id;
             }
             loginLog.Mac = reslt.Message;
             logDbSet.Add(loginLog);
@@ -146,13 +149,14 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        public bool Give(int userId, int roleId)
+        public bool Give(string userId, string roleId)
         {
             var dbSet = _context.UserRoles;
             if (dbSet.Any(item => item.UserId == userId && item.RoleId == roleId))
                 return true;
             dbSet.Add(new UserRoleEntity
             {
+                Id = BaseIdGenerator.Instance.GetId(),
                 UserId = userId,
                 RoleId = roleId
             });
@@ -165,7 +169,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        public bool Cancel(int userId, int roleId)
+        public bool Cancel(string userId, string roleId)
         {
             var dbSet = _context.UserRoles;
             var userRole = dbSet.FirstOrDefault(item => item.UserId == userId && item.RoleId == roleId);
@@ -208,7 +212,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="userId">用户ID</param>
         /// <param name="url">url地址</param>
         /// <returns></returns>
-        public bool HasRight(int userId, string url)
+        public bool HasRight(string userId, string url)
         {
             var dbSet = _context.Menus;
             var dbSetUserRoles = _context.UserRoles;
@@ -231,6 +235,7 @@ namespace JuCheap.Core.Services.AppServices
         {
             var dbSet = _context.PageViews;
             var entity = _mapper.Map<VisitDto, PageViewEntity>(dto);
+            entity.Id = BaseIdGenerator.Instance.GetId();
             dbSet.Add(entity);
             return _context.SaveChanges() > 0;
         }
@@ -240,9 +245,10 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<int> AddAsync(UserAddDto user)
+        public async Task<string> AddAsync(UserAddDto user)
         {
             var entity = _mapper.Map<UserAddDto, UserEntity>(user);
+            entity.Id = BaseIdGenerator.Instance.GetId();
             if (entity.UserRoles.AnyOne())
             {
                 entity.UserRoles.ForEach(r => r.UserId = entity.Id);
@@ -251,7 +257,7 @@ namespace JuCheap.Core.Services.AppServices
             var dbSet = _context.Users;
             dbSet.Add(entity);
 
-            return await _context.SaveChangesAsync() > 0 ? entity.Id : 0;
+            return await _context.SaveChangesAsync() > 0 ? entity.Id : string.Empty;
         }
 
         /// <summary>
@@ -277,7 +283,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task<UserDto> FindAsync(int id)
+        public async Task<UserDto> FindAsync(string id)
         {
             var dbSet = _context.Users;
             var entity = await dbSet.FirstOrDefaultAsync(u => u.Id == id);
@@ -290,7 +296,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        public async Task<bool> DeleteAsync(IEnumerable<int> ids)
+        public async Task<bool> DeleteAsync(IEnumerable<string> ids)
         {
             var dbSet = _context.Users;
             var entities = dbSet.Where(item => ids.Contains(item.Id));
@@ -311,6 +317,7 @@ namespace JuCheap.Core.Services.AppServices
             var entity = await dbSet.FirstOrDefaultAsync(item => item.LoginName == dto.LoginName.Trim());
             var loginLog = new LoginLogEntity
             {
+                Id = BaseIdGenerator.Instance.GetId(),
                 LoginName = dto.LoginName,
                 IP = dto.LoginIP
             };
@@ -334,7 +341,7 @@ namespace JuCheap.Core.Services.AppServices
                     reslt.Message = "登陆密码错误";
                     reslt.Result = LoginResult.WrongPassword;
                 }
-                loginLog.UserId = entity.Id.ToString();
+                loginLog.UserId = entity.Id;
             }
             loginLog.Mac = reslt.Message;
             logDbSet.Add(loginLog);
@@ -348,7 +355,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        public async Task<bool> GiveAsync(int userId, int roleId)
+        public async Task<bool> GiveAsync(string userId, string roleId)
         {
             var dbSet = _context.UserRoles;
             if (await dbSet.AnyAsync(item => item.UserId == userId && item.RoleId == roleId))
@@ -367,7 +374,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        public async Task<bool> CancelAsync(int userId, int roleId)
+        public async Task<bool> CancelAsync(string userId, string roleId)
         {
             var dbSet = _context.UserRoles;
             var userRole = await dbSet.FirstOrDefaultAsync(item => item.UserId == userId && item.RoleId == roleId);
@@ -410,7 +417,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="userId">用户ID</param>
         /// <param name="url">url地址</param>
         /// <returns></returns>
-        public async Task<bool> HasRightAsync(int userId, string url)
+        public async Task<bool> HasRightAsync(string userId, string url)
         {
             var dbSet = _context.Menus;
             var dbSetUserRoles = _context.UserRoles;
@@ -433,6 +440,7 @@ namespace JuCheap.Core.Services.AppServices
         {
             var dbSet = _context.PageViews;
             var entity = _mapper.Map<VisitDto, PageViewEntity>(dto);
+            entity.Id = BaseIdGenerator.Instance.GetId();
             dbSet.Add(entity);
             return await _context.SaveChangesAsync() > 0;
         }

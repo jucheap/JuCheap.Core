@@ -61,7 +61,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
             var dto = _userService.Find(id);
             var model = _mapper.Map<UserDto, UserUpdateDto>(dto);
@@ -78,7 +78,7 @@ namespace JuCheap.Core.Web.Controllers
             if (ModelState.IsValid)
             {
                 var result = _userService.Add(dto);
-                if (result > 0)
+                if (result.IsNotBlank())
                     return RedirectToAction("Index");
             }
             return View(dto);
@@ -106,10 +106,10 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public JsonResult Delete([FromBody]IEnumerable<int> ids)
+        public JsonResult Delete([FromBody]IEnumerable<string> ids)
         {
             var result = new JsonResultModel<bool>();
-            var enumerable = ids as IList<int> ?? ids.ToList();
+            var enumerable = ids as IList<string> ?? ids.ToList();
             if (enumerable.AnyOne())
             {
                 result.flag = _userService.Delete(enumerable);
@@ -162,7 +162,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="id">角色ID</param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult GiveRight(int id)
+        public JsonResult GiveRight(string id)
         {
             var result = new JsonResultModel<bool>
             {
@@ -177,7 +177,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="id">角色ID</param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult CancelRight(int id)
+        public JsonResult CancelRight(string id)
         {
             var result = new JsonResultModel<bool>
             {

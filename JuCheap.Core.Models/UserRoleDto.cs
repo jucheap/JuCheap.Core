@@ -8,7 +8,7 @@
         /// <summary>
         /// 角色ID
         /// </summary>
-        public int RoleId { get; set; }
+        public string RoleId { get; set; }
 
         /// <summary>
         /// 角色名称

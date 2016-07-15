@@ -39,7 +39,8 @@ namespace JuCheap.Core.Data
             modelBuilder.Entity<MenuEntity>(m =>
             {
                 m.HasKey(e => e.Id);
-                m.Property(e => e.ParentId).IsRequired();
+                m.Property(e => e.Id).ValueGeneratedNever();
+                m.Property(e => e.ParentId);
                 m.Property(e => e.Code).HasMaxLength(6).IsRequired();
                 m.Property(e => e.PathCode).HasMaxLength(20).IsRequired();
                 m.Property(e => e.Name).HasMaxLength(20).IsRequired();
@@ -53,6 +54,7 @@ namespace JuCheap.Core.Data
             modelBuilder.Entity<RoleEntity>(m =>
             {
                 m.HasKey(e => e.Id);
+                m.Property(e => e.Id).ValueGeneratedNever();
                 m.Property(e => e.Name).HasMaxLength(20).IsRequired();
                 m.Property(e => e.Description).HasMaxLength(50).IsRequired();
                 m.Property(e => e.CreateDateTime).IsRequired();
@@ -62,6 +64,7 @@ namespace JuCheap.Core.Data
             modelBuilder.Entity<LoginLogEntity>(m =>
             {
                 m.HasKey(e => e.Id);
+                m.Property(e => e.Id).ValueGeneratedNever();
                 m.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
                 m.Property(e => e.IP).HasMaxLength(20).IsRequired();
                 m.Property(e => e.Mac).HasMaxLength(200).IsRequired();
@@ -73,6 +76,7 @@ namespace JuCheap.Core.Data
             modelBuilder.Entity<PageViewEntity>(m =>
             {
                 m.HasKey(e => e.Id);
+                m.Property(e => e.Id).ValueGeneratedNever();
                 m.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
                 m.Property(e => e.IP).HasMaxLength(20).IsRequired();
                 m.Property(e => e.Url).HasMaxLength(300).IsRequired();
@@ -84,6 +88,7 @@ namespace JuCheap.Core.Data
             modelBuilder.Entity<PathCodeEntity>(m =>
             {
                 m.HasKey(e => e.Id);
+                m.Property(e => e.Id).ValueGeneratedNever();
                 m.Property(e => e.Code).HasMaxLength(4).IsRequired();
                 m.Property(e => e.Len).IsRequired();
                 m.Property(e => e.CreateDateTime).IsRequired();
@@ -93,6 +98,7 @@ namespace JuCheap.Core.Data
             modelBuilder.Entity<RoleMenuEntity>(m =>
             {
                 m.HasKey(e => e.Id);
+                m.Property(e => e.Id).ValueGeneratedNever();
                 m.Property(e => e.RoleId).IsRequired();
                 m.Property(e => e.MenuId).IsRequired();
                 m.Property(e => e.CreateDateTime).IsRequired();
@@ -102,6 +108,7 @@ namespace JuCheap.Core.Data
             modelBuilder.Entity<UserRoleEntity>(m =>
             {
                 m.HasKey(e => e.Id);
+                m.Property(e => e.Id).ValueGeneratedNever();
                 m.Property(e => e.RoleId).IsRequired();
                 m.Property(e => e.UserId).IsRequired();
                 m.Property(e => e.CreateDateTime).IsRequired();
@@ -111,6 +118,7 @@ namespace JuCheap.Core.Data
             modelBuilder.Entity<UserEntity>(m =>
             {
                 m.HasKey(e => e.Id);
+                m.Property(e => e.Id).ValueGeneratedNever();
                 m.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
                 m.Property(e => e.RealName).HasMaxLength(20).IsRequired();
                 m.Property(e => e.Email).HasMaxLength(36).IsRequired();
@@ -123,6 +131,7 @@ namespace JuCheap.Core.Data
             modelBuilder.Entity<SystemConfigEntity>(m =>
             {
                 m.HasKey(e => e.Id);
+                m.Property(e => e.Id).ValueGeneratedNever();
                 m.Property(e => e.SystemName).HasMaxLength(50).IsRequired();
                 m.Property(e => e.IsDataInited).IsRequired();
                 m.Property(e => e.DataInitedDate).IsRequired();

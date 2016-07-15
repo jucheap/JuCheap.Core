@@ -17,7 +17,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="dto">角色模型</param>
         /// <returns></returns>
-        int Add(RoleDto dto);
+        string Add(RoleDto dto);
 
         /// <summary>
         /// 更新角色
@@ -31,14 +31,14 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        RoleDto Find(int id);
+        RoleDto Find(string id);
 
         /// <summary>
         /// 批量删除
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        bool Delete(IEnumerable<int> ids);
+        bool Delete(IEnumerable<string> ids);
 
         /// <summary>
         /// 分页搜索
@@ -64,14 +64,14 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        bool ClearRoleMenus(int roleId);
+        bool ClearRoleMenus(string roleId);
 
         /// <summary>
         /// 添加角色
         /// </summary>
         /// <param name="dto">角色模型</param>
         /// <returns></returns>
-        Task<int> AddAsync(RoleDto dto);
+        Task<string> AddAsync(RoleDto dto);
 
         /// <summary>
         /// 更新角色
@@ -85,14 +85,14 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task<RoleDto> FindAsync(int id);
+        Task<RoleDto> FindAsync(string id);
 
         /// <summary>
         /// 批量删除
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        Task<bool> DeleteAsync(IEnumerable<int> ids);
+        Task<bool> DeleteAsync(IEnumerable<string> ids);
 
         /// <summary>
         /// 分页搜索
@@ -119,6 +119,6 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        Task<bool> ClearRoleMenusAsync(int roleId);
+        Task<bool> ClearRoleMenusAsync(string roleId);
     }
 }

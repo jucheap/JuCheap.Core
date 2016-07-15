@@ -21,12 +21,12 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 用户ID
         /// </summary>
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// 角色ID
         /// </summary>
-        public int RoleId { get; set; }
+        public string RoleId { get; set; }
 
         /// <summary>
         /// 所属用户

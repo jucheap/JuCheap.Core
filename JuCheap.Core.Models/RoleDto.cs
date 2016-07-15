@@ -10,7 +10,7 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// Id
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 角色名称

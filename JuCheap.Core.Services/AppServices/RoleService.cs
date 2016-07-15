@@ -9,6 +9,7 @@ using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
 using JuCheap.Core.Models.Filters;
 using JuCheap.Core.Infrastructure.Extentions;
+using JuCheap.Core.Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace JuCheap.Core.Services.AppServices
@@ -37,13 +38,14 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="dto">角色模型</param>
         /// <returns></returns>
-        public int Add(RoleDto dto)
+        public string Add(RoleDto dto)
         {
             var entity = _mapper.Map<RoleDto, RoleEntity>(dto);
+            entity.Id = BaseIdGenerator.Instance.GetId();
             var dbSet = _context.Roles;
             dbSet.Add(entity);
 
-            return _context.SaveChanges() > 0 ? entity.Id : 0;
+            return _context.SaveChanges() > 0 ? entity.Id : string.Empty;
         }
 
         /// <summary>
@@ -64,7 +66,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public RoleDto Find(int id)
+        public RoleDto Find(string id)
         {
             var dbSet = _context.Roles;
             var entity = dbSet.FirstOrDefault(r => r.Id == id);
@@ -77,7 +79,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        public bool Delete(IEnumerable<int> ids)
+        public bool Delete(IEnumerable<string> ids)
         {
             var dbSet = _context.Roles;
             var entities = dbSet.Where(item => ids.Contains(item.Id));
@@ -101,10 +103,10 @@ namespace JuCheap.Core.Services.AppServices
             if (filters.keywords.IsNotBlank())
                 query = query.Where(item => item.Name.Contains(filters.keywords));
 
-            if (filters.UserId.HasValue && filters.UserId.Value > 0)
+            if (filters.UserId.IsNotBlank())
             {
                 var userRoles = _context.UserRoles;
-                var myRoleIds = userRoles.Where(item => item.UserId == filters.UserId.Value)
+                var myRoleIds = userRoles.Where(item => item.UserId == filters.UserId)
                                 .Select(item => item.RoleId)
                                 .ToList();
                 query = filters.ExcludeMyRoles
@@ -148,6 +150,7 @@ namespace JuCheap.Core.Services.AppServices
             if (adds.AnyOne())
             {
                 var roleMenus = _mapper.Map<List<RoleMenuDto>, List<RoleMenuEntity>>(adds);
+                roleMenus.ForEach(r => r.Id = BaseIdGenerator.Instance.GetId());
                 _context.RoleMenus.AddRange(roleMenus);
             }
             if (removes.AnyOne())
@@ -163,9 +166,9 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        public bool ClearRoleMenus(int roleId)
+        public bool ClearRoleMenus(string roleId)
         {
-            if (roleId <= 0) return false;
+            if (roleId.IsBlank()) return false;
 
             var list = _context.RoleMenus.Where(item => item.RoleId == roleId);
             _context.RoleMenus.RemoveRange(list);
@@ -178,13 +181,14 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="dto">角色模型</param>
         /// <returns></returns>
-        public async Task<int> AddAsync(RoleDto dto)
+        public async Task<string> AddAsync(RoleDto dto)
         {
             var entity = _mapper.Map<RoleDto, RoleEntity>(dto);
+            entity.Id = BaseIdGenerator.Instance.GetId();
             var dbSet = _context.Roles;
             dbSet.Add(entity);
 
-            return await _context.SaveChangesAsync() > 0 ? entity.Id : 0;
+            return await _context.SaveChangesAsync() > 0 ? entity.Id : string.Empty;
         }
 
         /// <summary>
@@ -205,7 +209,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task<RoleDto> FindAsync(int id)
+        public async Task<RoleDto> FindAsync(string id)
         {
             var dbSet = _context.Roles;
             var entity = await dbSet.FirstOrDefaultAsync(r => r.Id == id);
@@ -218,7 +222,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        public async Task<bool> DeleteAsync(IEnumerable<int> ids)
+        public async Task<bool> DeleteAsync(IEnumerable<string> ids)
         {
             var dbSet = _context.Roles;
             var entities = dbSet.Where(item => ids.Contains(item.Id));
@@ -242,10 +246,10 @@ namespace JuCheap.Core.Services.AppServices
             if (filters.keywords.IsNotBlank())
                 query = query.Where(item => item.Name.Contains(filters.keywords));
 
-            if (filters.UserId.HasValue && filters.UserId.Value > 0)
+            if (filters.UserId.IsNotBlank())
             {
                 var userRoles = _context.UserRoles;
-                var myRoleIds = userRoles.Where(item => item.UserId == filters.UserId.Value)
+                var myRoleIds = userRoles.Where(item => item.UserId == filters.UserId)
                                 .Select(item => item.RoleId)
                                 .ToList();
                 query = filters.ExcludeMyRoles
@@ -289,6 +293,7 @@ namespace JuCheap.Core.Services.AppServices
             if (adds.AnyOne())
             {
                 var roleMenus = _mapper.Map<List<RoleMenuDto>, List<RoleMenuEntity>>(adds);
+                roleMenus.ForEach(r => r.Id = BaseIdGenerator.Instance.GetId());
                 _context.RoleMenus.AddRange(roleMenus);
             }
             if (removes.AnyOne())
@@ -304,9 +309,9 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        public async Task<bool> ClearRoleMenusAsync(int roleId)
+        public async Task<bool> ClearRoleMenusAsync(string roleId)
         {
-            if (roleId <= 0) return false;
+            if (roleId.IsBlank()) return false;
 
             var list = await _context.RoleMenus.Where(item => item.RoleId == roleId).ToListAsync();
             _context.RoleMenus.RemoveRange(list);

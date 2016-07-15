@@ -49,7 +49,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IActionResult Edit(int id)
+        public IActionResult Edit(string id)
         {
             var model = _roleService.Find(id);
             return View(model);
@@ -88,7 +88,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 获取角色下的菜单
         /// </summary>
         /// <returns></returns>
-        public IActionResult AuthenRoleMenus(int id)
+        public IActionResult AuthenRoleMenus(string id)
         {
             var list = _menuService.GetMenusByRoleId(id);
             var menuIds = list?.Select(item => item.Id);
@@ -120,7 +120,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="id">角色ID</param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult ClearRoleMenus(int id)
+        public IActionResult ClearRoleMenus(string id)
         {
             var result = new JsonResultModel<bool>
             {
@@ -139,7 +139,7 @@ namespace JuCheap.Core.Web.Controllers
             if (ModelState.IsValid)
             {
                 var result = _roleService.Add(dto);
-                if (result > 0)
+                if (result.IsNotBlank())
                     return RedirectToAction("Index");
             }
             return View(dto);
@@ -166,7 +166,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public JsonResult Delete([FromBody]IEnumerable<int> ids)
+        public JsonResult Delete([FromBody]IEnumerable<string> ids)
         {
             var result = new JsonResultModel<bool>();
             if (ids.AnyOne())

@@ -18,6 +18,7 @@ namespace JuCheap.Core.Services.AppServices
     {
         private readonly JuCheapContext _context;
         private readonly DateTime _now = new DateTime(2016, 06, 06, 0, 0, 0);
+        private readonly BaseIdGenerator _instance = BaseIdGenerator.Instance;
 
         /// <summary>
         /// ctor
@@ -40,6 +41,7 @@ namespace JuCheap.Core.Services.AppServices
 
             var admin = new UserEntity
             {
+                Id = _instance.GetId(),
                 LoginName = "jucheap",
                 RealName = "超级管理员",
                 Password = "qwaszx12".ToMd5(),
@@ -49,6 +51,7 @@ namespace JuCheap.Core.Services.AppServices
             };
             var guest = new UserEntity
             {
+                Id = _instance.GetId(),
                 LoginName = "admin",
                 RealName = "游客",
                 Password = "qwaszx".ToMd5(),
@@ -64,10 +67,10 @@ namespace JuCheap.Core.Services.AppServices
             #endregion
 
             #region 菜单
-
+            
             var system = new MenuEntity
             {
-                Id = 1,
+                Id = _instance.GetId(),
                 Name = "系统设置",
                 Url = "#",
                 CreateDateTime = _now,
@@ -78,8 +81,8 @@ namespace JuCheap.Core.Services.AppServices
             };//1
             var menuMgr = new MenuEntity
             {
-                Id = 2,
-                ParentId = 1,
+                Id = _instance.GetId(),
+                ParentId = system.Id,
                 Name = "菜单管理",
                 Url = "/Menu/Index",
                 CreateDateTime = _now,
@@ -90,8 +93,8 @@ namespace JuCheap.Core.Services.AppServices
             };//2
             var roleMgr = new MenuEntity
             {
-                Id = 3,
-                ParentId = 1,
+                Id = _instance.GetId(),
+                ParentId = system.Id,
                 Name = "角色管理",
                 Url = "/Role/Index",
                 CreateDateTime = _now,
@@ -102,8 +105,8 @@ namespace JuCheap.Core.Services.AppServices
             };//3
             var userMgr = new MenuEntity
             {
-                Id = 4,
-                ParentId = 1,
+                Id = _instance.GetId(),
+                ParentId = system.Id,
                 Name = "用户管理",
                 Url = "/User/Index",
                 CreateDateTime = _now,
@@ -114,8 +117,8 @@ namespace JuCheap.Core.Services.AppServices
             };//4
             var userRoleMgr = new MenuEntity
             {
-                Id = 5,
-                ParentId = 1,
+                Id = _instance.GetId(),
+                ParentId = system.Id,
                 Name = "用户授权",
                 Url = "/User/Authen",
                 CreateDateTime = _now,
@@ -126,8 +129,8 @@ namespace JuCheap.Core.Services.AppServices
             };//5
             var roleMenuMgr = new MenuEntity
             {
-                Id = 6,
-                ParentId = 1,
+                Id = _instance.GetId(),
+                ParentId = system.Id,
                 Name = "角色授权",
                 Url = "/Role/Authen",
                 CreateDateTime = _now,
@@ -138,8 +141,8 @@ namespace JuCheap.Core.Services.AppServices
             };//6
             var sysConfig = new MenuEntity
             {
-                Id = 7,
-                ParentId = 1,
+                Id = _instance.GetId(),
+                ParentId = system.Id,
                 Name = "系统配置",
                 Url = "/System/Index",
                 CreateDateTime = _now,
@@ -150,8 +153,8 @@ namespace JuCheap.Core.Services.AppServices
             };//7
             var sysConfigReloadPathCode = new MenuEntity
             {
-                Id = 8,
-                ParentId = 7,
+                Id = _instance.GetId(),
+                ParentId = sysConfig.Id,
                 Name = "重置路径码",
                 Url = "/System/ReloadPathCode",
                 CreateDateTime = _now,
@@ -162,7 +165,7 @@ namespace JuCheap.Core.Services.AppServices
             };//8
             var log = new MenuEntity
             {
-                Id = 9,
+                Id = _instance.GetId(),
                 Name = "日志查看",
                 Url = "#",
                 CreateDateTime = _now,
@@ -173,8 +176,8 @@ namespace JuCheap.Core.Services.AppServices
             };//9
             var logLogin = new MenuEntity
             {
-                Id = 10,
-                ParentId = 9,
+                Id = _instance.GetId(),
+                ParentId = log.Id,
                 Name = "登录日志",
                 Url = "/Log/Logins",
                 CreateDateTime = _now,
@@ -185,8 +188,8 @@ namespace JuCheap.Core.Services.AppServices
             };//10
             var logView = new MenuEntity
             {
-                Id = 11,
-                ParentId = 9,
+                Id = _instance.GetId(),
+                ParentId = log.Id,
                 Name = "访问日志",
                 Url = "/Log/Visits",
                 CreateDateTime = _now,
@@ -211,17 +214,17 @@ namespace JuCheap.Core.Services.AppServices
                 logLogin,
                 logView
             };
-            var menuBtns = GetMenuButtons(2, "Menu", "菜单", "AAAA", 12);//14
-            var rolwBtns = GetMenuButtons(3, "Role", "角色", "AAAB", 15);//17
-            var userBtns = GetMenuButtons(4, "User", "用户", "AAAC", 18);//20
+            var menuBtns = GetMenuButtons(menuMgr.Id, "Menu", "菜单", "AAAA", 12);//14
+            var rolwBtns = GetMenuButtons(roleMgr.Id, "Role", "角色", "AAAB", 15);//17
+            var userBtns = GetMenuButtons(userMgr.Id, "User", "用户", "AAAC", 18);//20
 
             menus.AddRange(menuBtns);//14
             menus.AddRange(rolwBtns);//17
             menus.AddRange(userBtns);//20
             menus.Add(new MenuEntity
             {
-                Id = 21,
-                ParentId = 6,
+                Id = _instance.GetId(),
+                ParentId = roleMenuMgr.Id,
                 Order = 6,
                 Name = "授权",
                 Type = (byte)MenuType.Button,
@@ -232,8 +235,8 @@ namespace JuCheap.Core.Services.AppServices
             });
             menus.Add(new MenuEntity
             {
-                Id = 22,
-                ParentId = 6,
+                Id = _instance.GetId(),
+                ParentId = roleMenuMgr.Id,
                 Order = 6,
                 Name = "清空权限",
                 Type = (byte)MenuType.Button,
@@ -247,8 +250,18 @@ namespace JuCheap.Core.Services.AppServices
 
             #region 角色
 
-            var superAdminRole = new RoleEntity { Name = "超级管理员", Description = "超级管理员" };
-            var guestRole = new RoleEntity { Name = "guest", Description = "游客" };
+            var superAdminRole = new RoleEntity
+            {
+                Id = _instance.GetId(),
+                Name = "超级管理员",
+                Description = "超级管理员"
+            };
+            var guestRole = new RoleEntity
+            {
+                Id = _instance.GetId(),
+                Name = "guest",
+                Description = "游客"
+            };
             var roles = new List<RoleEntity>
             {
                 superAdminRole,
@@ -261,8 +274,16 @@ namespace JuCheap.Core.Services.AppServices
 
             var userRoles = new List<UserRoleEntity>
             {
-                new UserRoleEntity { UserId = 1, RoleId = 1, CreateDateTime = _now },
-                new UserRoleEntity { UserId = 2, RoleId = 2, CreateDateTime = _now }
+                new UserRoleEntity
+                {
+                    Id = _instance.GetId(),
+                    UserId = admin.Id, RoleId = superAdminRole.Id, CreateDateTime = _now
+                },
+                new UserRoleEntity
+                {
+                    Id = _instance.GetId(),
+                    UserId = guest.Id, RoleId = guestRole.Id, CreateDateTime = _now
+                }
             };
 
             #endregion
@@ -273,12 +294,20 @@ namespace JuCheap.Core.Services.AppServices
             //管理员授权(管理员有所有权限)
             menus.ForEach(m =>
             {
-                roleMenus.Add(new RoleMenuEntity { RoleId = 1, MenuId = m.Id, CreateDateTime = _now });
+                roleMenus.Add(new RoleMenuEntity
+                {
+                    Id = _instance.GetId(),
+                    RoleId = superAdminRole.Id, MenuId = m.Id, CreateDateTime = _now
+                });
             });
             //guest授权(guest只有查看权限，没有按钮操作权限)
             menus.Where(item=>item.Type!=(byte)MenuType.Button).ForEach(m =>
             {
-                roleMenus.Add(new RoleMenuEntity {RoleId = 2, MenuId = m.Id, CreateDateTime = _now});
+                roleMenus.Add(new RoleMenuEntity
+                {
+                    Id = _instance.GetId(),
+                    RoleId = guestRole.Id, MenuId = m.Id, CreateDateTime = _now
+                });
             });
 
             #endregion
@@ -293,6 +322,7 @@ namespace JuCheap.Core.Services.AppServices
 
             var systemConfig = new SystemConfigEntity
             {
+                Id = _instance.GetId(),
                 SystemName = "JuCheap Core",
                 IsDataInited = true,
                 DataInitedDate = _now,
@@ -305,17 +335,7 @@ namespace JuCheap.Core.Services.AppServices
             _context.Menus.AddRange(menus.OrderBy(m => m.Order).ToArray());
             _context.Roles.AddRange(roles);
             _context.Users.AddRange(user);
-            _context.Database.OpenConnection();
-            try
-            {
-                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Menus ON");
-                _context.SaveChanges();
-                _context.Database.ExecuteSqlCommand("SET IDENTITY_INSERT Menus OFF");
-            }
-            finally
-            {
-                _context.Database.CloseConnection();
-            }
+            _context.SaveChanges();
             _context.UserRoles.AddRange(userRoles);
             _context.RoleMenus.AddRange(roleMenus);
             _context.SystemConfigs.Add(systemConfig);
@@ -341,11 +361,13 @@ namespace JuCheap.Core.Services.AppServices
             {
                 list.Add(new PathCodeEntity
                 {
+                    Id = _instance.GetId(),
                     Code = string.Join(string.Empty, item),
                     Len = len
                 });
                 list.Add(new PathCodeEntity
                 {
+                    Id = _instance.GetId(),
                     Code = string.Join(string.Empty, item.Reverse()),
                     Len = len
                 });
@@ -354,6 +376,7 @@ namespace JuCheap.Core.Services.AppServices
             {
                 return codes.Select(key => new PathCodeEntity
                 {
+                    Id = _instance.GetId(),
                     Code = string.Join(string.Empty, key, key),
                     Len = len
                 });
@@ -361,7 +384,7 @@ namespace JuCheap.Core.Services.AppServices
             list.AddRange(getSameKeyFunc());
             list = list.OrderBy(item => item.Code).ToList();
 
-            _context.Database.ExecuteSqlCommand("TRUNCATE TABLE PathCodes");
+            _context.Database.ExecuteSqlCommand("DELETE FROM PathCodes");
             _context.PathCodes.AddRange(list);
 
             return _context.SaveChanges() > 0;
@@ -378,13 +401,13 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="parentPathCode">父级路径码</param>
         /// <param name="order">排序</param>
         /// <returns></returns>
-        private IEnumerable<MenuEntity> GetMenuButtons(int parentId, string controllerName, string controllerShowName, string parentPathCode,int order)
+        private IEnumerable<MenuEntity> GetMenuButtons(string parentId, string controllerName, string controllerShowName, string parentPathCode,int order)
         {
             return new List<MenuEntity>
             {
                 new MenuEntity
                 {
-                    Id = order,
+                    Id = _instance.GetId(),
                     ParentId = parentId,
                     Name = string.Concat("添加",controllerShowName),
                     Url = string.Format("/{0}/Add",controllerName),
@@ -396,7 +419,7 @@ namespace JuCheap.Core.Services.AppServices
                 },
                 new MenuEntity
                 {
-                    Id = order + 1,
+                    Id = _instance.GetId(),
                     ParentId = parentId,
                     Name = string.Concat("修改",controllerShowName),
                     Url = string.Format("/{0}/Edit",controllerName),
@@ -408,7 +431,7 @@ namespace JuCheap.Core.Services.AppServices
                 },
                 new MenuEntity
                 {
-                    Id = order + 2,
+                    Id = _instance.GetId(),
                     ParentId = parentId,
                     Name = string.Concat("删除",controllerShowName),
                     Url = string.Format("/{0}/Delete",controllerName),

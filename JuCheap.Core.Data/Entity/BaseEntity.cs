@@ -13,7 +13,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 主键
         /// </summary>
-        public int Id { get; set; }
+        public string Id { get; set; }
 
 
         /// <summary>

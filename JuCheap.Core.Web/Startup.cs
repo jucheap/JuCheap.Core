@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Security.Claims;
 using System.Security.Principal;
+using System.Threading.Tasks;
 using JuCheap.Core.Data;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Services.AppServices;
@@ -114,7 +115,7 @@ namespace JuCheap.Core.Web
             
             //init database
             var dbService = app.ApplicationServices.GetRequiredService<IDatabaseInitService>();
-            dbService.InitAsync();
+            Task.Run(() => dbService.InitAsync());
         }
     }
 

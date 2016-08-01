@@ -1,4 +1,5 @@
 ﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
 using JuCheap.Core.Models.Enum;
@@ -32,9 +33,9 @@ namespace JuCheap.Core.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var myMenus = _menuService.GetMyMenus(User.Identity.GetLoginUserId());
+            var myMenus = await _menuService.GetMyMenusAsync(User.Identity.GetLoginUserId());
             ViewBag.Menus = myMenus;
             return View();
         }
@@ -43,7 +44,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 欢迎页面
         /// </summary>
         /// <returns></returns>
-        public ActionResult Welcome()
+        public IActionResult Welcome()
         {
             return View();
         }
@@ -53,7 +54,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [AllowAnonymous]
-        public ActionResult Login()
+        public IActionResult Login()
         {
 
             var model = new LoginDto
@@ -71,7 +72,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Login(LoginDto model)
+        public async Task<IActionResult> Login(LoginDto model)
         {
 
             if (!ModelState.IsValid) return View(model);
@@ -84,7 +85,7 @@ namespace JuCheap.Core.Web.Controllers
             //var remotePort = connection.RemotePort;            //本地IP端口
 
             model.LoginIP = remoteIpAddress.ToString();
-            var loginDto = _userService.Login(model);
+            var loginDto = await _userService.LoginAsync(model);
             if (loginDto.LoginSuccess)
             {
                 var authenType = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -93,7 +94,7 @@ namespace JuCheap.Core.Web.Controllers
                 identity.AddClaim(new Claim("LoginUserId", loginDto.User.Id.ToString()));
                 var properties = new AuthenticationProperties() {IsPersistent = true};
                 var principal = new ClaimsPrincipal(identity);
-                HttpContext.Authentication.SignInAsync(authenType, principal, properties);
+                await HttpContext.Authentication.SignInAsync(authenType, principal, properties);
                 model.ReturnUrl = model.ReturnUrl.IsNotBlank() ? model.ReturnUrl : "/";
                 return Redirect(model.ReturnUrl);
             }
@@ -106,9 +107,9 @@ namespace JuCheap.Core.Web.Controllers
         /// 退出登录
         /// </summary>
         /// <returns></returns>
-        public ActionResult Logout()
+        public async Task<IActionResult> Logout()
         {
-            HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
         }
 

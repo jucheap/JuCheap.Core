@@ -30,7 +30,7 @@ namespace JuCheap.Core.Web.Filters
             var controller = routeData["controller"];
             var action = routeData["action"];
             var url = string.Format("/{0}/{1}", controller, action);
-            var hasRight = userService.HasRight(identity.GetLoginUserId(), url);
+            var hasRight = userService.HasRightAsync(identity.GetLoginUserId(), url).Result;
 
             if (hasRight) return;
 

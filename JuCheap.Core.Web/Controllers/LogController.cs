@@ -1,4 +1,5 @@
-﻿using JuCheap.Core.Interfaces;
+﻿using System.Threading.Tasks;
+using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models.Filters;
 using JuCheap.Core.Web.Filters;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +24,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 登录日志
         /// </summary>
         /// <returns></returns>
-        public ActionResult Logins()
+        public IActionResult Logins()
         {
             return View();
         }
@@ -32,7 +33,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 访问记录
         /// </summary>
         /// <returns></returns>
-        public ActionResult Visits()
+        public IActionResult Visits()
         {
             return View();
         }
@@ -43,9 +44,9 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="filters"></param>
         /// <returns></returns>
         [IgnoreRightFilter]
-        public JsonResult LoginsList(LogFilters filters)
+        public async Task<IActionResult> LoginsList(LogFilters filters)
         {
-            var result = _logService.SearchLoginLogs(filters);
+            var result = await _logService.SearchLoginLogsAsync(filters);
             return Json(result);
         }
 
@@ -55,9 +56,9 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="filters"></param>
         /// <returns></returns>
         [IgnoreRightFilter]
-        public JsonResult VisitsList(LogFilters filters)
+        public async Task<IActionResult> VisitsList(LogFilters filters)
         {
-            var result = _logService.SearchVisitLogs(filters);
+            var result = await _logService.SearchVisitLogsAsync(filters);
             return Json(result);
         }
     }

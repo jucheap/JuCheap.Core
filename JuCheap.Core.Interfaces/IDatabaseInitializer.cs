@@ -1,4 +1,6 @@
-﻿namespace JuCheap.Core.Interfaces
+﻿using System.Threading.Tasks;
+
+namespace JuCheap.Core.Interfaces
 {
     /// <summary>
     /// 数据库初始化契约
@@ -8,11 +10,11 @@
         /// <summary>
         /// 初始化数据库数据
         /// </summary>
-        void Init();
+        Task<bool> InitAsync();
 
         /// <summary>
         /// 初始化路径码
         /// </summary>
-        bool InitPathCode();
+        Task<bool> InitPathCodeAsync();
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using JuCheap.Core.Data;
 using JuCheap.Core.Data.Entity;
 using JuCheap.Core.Infrastructure.Extentions;
@@ -32,10 +33,10 @@ namespace JuCheap.Core.Services.AppServices
         /// <summary>
         /// 初始化
         /// </summary>
-        public void Init()
+        public async Task<bool> InitAsync()
         {
             _context.Database.Migrate();
-            if (_context.SystemConfigs.Any(item => item.IsDataInited)) return;
+            if (_context.SystemConfigs.Any(item => item.IsDataInited)) return false;
 
             #region 用户
 
@@ -314,7 +315,7 @@ namespace JuCheap.Core.Services.AppServices
 
             #region 路径码
 
-            InitPathCode();
+            await InitPathCodeAsync();
 
             #endregion
 
@@ -335,17 +336,17 @@ namespace JuCheap.Core.Services.AppServices
             _context.Menus.AddRange(menus.OrderBy(m => m.Order).ToArray());
             _context.Roles.AddRange(roles);
             _context.Users.AddRange(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             _context.UserRoles.AddRange(userRoles);
             _context.RoleMenus.AddRange(roleMenus);
             _context.SystemConfigs.Add(systemConfig);
-            _context.SaveChanges();
+            return await _context.SaveChangesAsync() > 0;
         }
 
         /// <summary>
         /// 初始化路径码
         /// </summary>
-        public bool InitPathCode()
+        public async Task<bool> InitPathCodeAsync()
         {
             //生成路径码
             var codes = new List<string>(26);
@@ -384,10 +385,10 @@ namespace JuCheap.Core.Services.AppServices
             list.AddRange(getSameKeyFunc());
             list = list.OrderBy(item => item.Code).ToList();
 
-            _context.Database.ExecuteSqlCommand("DELETE FROM PathCodes");
+            await _context.Database.ExecuteSqlCommandAsync("DELETE FROM PathCodes");
             _context.PathCodes.AddRange(list);
 
-            return _context.SaveChanges() > 0;
+            return await _context.SaveChangesAsync() > 0;
         }
 
         #region Private

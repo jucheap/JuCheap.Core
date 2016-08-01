@@ -1,4 +1,5 @@
 ﻿
+using System.Threading.Tasks;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Web.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -23,7 +24,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 系统管理首页
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
@@ -33,11 +34,11 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult ReloadPathCode()
+        public async Task<IActionResult> ReloadPathCode()
         {
             var result = new JsonResultModel<bool>
             {
-                flag = _databaseInitService.InitPathCode()
+                flag = await _databaseInitService.InitPathCodeAsync()
             };
             return Json(result);
         }

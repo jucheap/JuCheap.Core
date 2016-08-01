@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
@@ -33,7 +34,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
         }
@@ -42,7 +43,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 用户角色授权
         /// </summary>
         /// <returns></returns>
-        public ActionResult Authen()
+        public IActionResult Authen()
         {
             return View();
         }
@@ -51,7 +52,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 添加
         /// </summary>
         /// <returns></returns>
-        public ActionResult Add()
+        public IActionResult Add()
         {
             return View(new UserAddDto());
         }
@@ -61,9 +62,9 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var dto = _userService.Find(id);
+            var dto = await _userService.FindAsync(id);
             var model = _mapper.Map<UserDto, UserUpdateDto>(dto);
             return View(model);
         }
@@ -73,11 +74,11 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Add(UserAddDto dto)
+        public async Task<IActionResult> Add(UserAddDto dto)
         {
             if (ModelState.IsValid)
             {
-                var result = _userService.Add(dto);
+                var result = await _userService.AddAsync(dto);
                 if (result.IsNotBlank())
                     return RedirectToAction("Index");
             }
@@ -90,11 +91,11 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(UserUpdateDto dto)
+        public async Task<IActionResult> Edit(UserUpdateDto dto)
         {
             if (ModelState.IsValid)
             {
-                var result = _userService.Update(dto);
+                var result = await _userService.UpdateAsync(dto);
                 if (result)
                     return RedirectToAction("Index");
             }
@@ -106,13 +107,13 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public JsonResult Delete([FromBody]IEnumerable<string> ids)
+        public async Task<IActionResult> Delete([FromBody]IEnumerable<string> ids)
         {
             var result = new JsonResultModel<bool>();
             var enumerable = ids as IList<string> ?? ids.ToList();
             if (enumerable.AnyOne())
             {
-                result.flag = _userService.Delete(enumerable);
+                result.flag = await _userService.DeleteAsync(enumerable);
             }
             return Json(result);
         }
@@ -123,9 +124,9 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="filters">查询参数</param>
         /// <returns></returns>
         [IgnoreRightFilter]
-        public JsonResult GetListWithPager(UserFilters filters)
+        public async Task<IActionResult> GetListWithPager(UserFilters filters)
         {
-            var result = _userService.Search(filters);
+            var result = await _userService.SearchAsync(filters);
             return Json(result);
         }
 
@@ -135,10 +136,10 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="filters">查询参数</param>
         /// <returns></returns>
         [IgnoreRightFilter]
-        public JsonResult GetMyRoles(RoleFilters filters)
+        public async Task<IActionResult> GetMyRoles(RoleFilters filters)
         {
             filters.UserId = User.Identity.GetLoginUserId();
-            var result = _roleService.Search(filters);
+            var result = await _roleService.SearchAsync(filters);
             return Json(result);
         }
 
@@ -148,11 +149,11 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="filters">查询参数</param>
         /// <returns></returns>
         [IgnoreRightFilter]
-        public JsonResult GetNotMyRoles(RoleFilters filters)
+        public async Task<IActionResult> GetNotMyRoles(RoleFilters filters)
         {
             filters.UserId = User.Identity.GetLoginUserId();
             filters.ExcludeMyRoles = true;
-            var result = _roleService.Search(filters);
+            var result = await _roleService.SearchAsync(filters);
             return Json(result);
         }
 
@@ -162,11 +163,11 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="id">角色ID</param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult GiveRight(string id)
+        public async Task<IActionResult> GiveRight(string id)
         {
             var result = new JsonResultModel<bool>
             {
-                flag = _userService.Give(User.Identity.GetLoginUserId(), id)
+                flag = await _userService.GiveAsync(User.Identity.GetLoginUserId(), id)
             };
             return Json(result);
         }
@@ -177,11 +178,11 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="id">角色ID</param>
         /// <returns></returns>
         [HttpPost]
-        public JsonResult CancelRight(string id)
+        public async Task<IActionResult> CancelRight(string id)
         {
             var result = new JsonResultModel<bool>
             {
-                flag = _userService.Cancel(User.Identity.GetLoginUserId(), id)
+                flag = await _userService.CancelAsync(User.Identity.GetLoginUserId(), id)
             };
             return Json(result);
         }

@@ -31,13 +31,13 @@ namespace JuCheap.Core.Web.Filters
 
                 var connection = context.Features.Get<IHttpConnectionFeature>();
                 var user = context.User;
-                var isLogined = user != null && user.Identity != null && user.Identity.IsAuthenticated;
+                var isLogined = user?.Identity != null && user.Identity.IsAuthenticated;
                 var visit = new VisitDto
                 {
                     Ip = connection.RemoteIpAddress.ToString(),
                     LoginName = isLogined ? user.Identity.Name : string.Empty,
                     Url = context.Request.Path,
-                    UserId = isLogined ? user.Identity.GetLoginUserId().ToString() : "0"
+                    UserId = isLogined ? user.Identity.GetLoginUserId() : "0"
                 };
                 await userService.VisitAsync(visit);
             }

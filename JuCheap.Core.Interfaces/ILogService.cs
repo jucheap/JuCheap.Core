@@ -18,24 +18,10 @@ namespace JuCheap.Core.Interfaces
         Task<PagedResult<LoginLogDto>> SearchLoginLogsAsync(LogFilters filters);
 
         /// <summary>
-        /// 获取登录日志
-        /// </summary>
-        /// <param name="filters">过滤器</param>
-        /// <returns></returns>
-        PagedResult<LoginLogDto> SearchLoginLogs(LogFilters filters);
-
-        /// <summary>
         /// 获取访问日志
         /// </summary>
         /// <param name="filters">过滤器</param>
         /// <returns></returns>
         Task<PagedResult<VisitDto>> SearchVisitLogsAsync(LogFilters filters);
-
-        /// <summary>
-        /// 获取访问日志
-        /// </summary>
-        /// <param name="filters">过滤器</param>
-        /// <returns></returns>
-        PagedResult<VisitDto> SearchVisitLogs(LogFilters filters);
     }
 }

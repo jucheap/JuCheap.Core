@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
 using JuCheap.Core.Models.Enum;
@@ -28,25 +29,16 @@ namespace JuCheap.Core.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        public ActionResult Index()
+        public IActionResult Index()
         {
             return View();
-        }
-
-        /// <summary>
-        /// 首页
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult RightTest()
-        {
-            return Content("权限测试");
         }
 
         /// <summary>
         /// 添加
         /// </summary>
         /// <returns></returns>
-        public ActionResult Add()
+        public IActionResult Add()
         {
             return View(new MenuDto());
         }
@@ -56,9 +48,9 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult Edit(string id)
+        public async Task<IActionResult> Edit(string id)
         {
-            var model = _menuService.Find(id);
+            var model = await _menuService.FindAsync(id);
             return View(model);
         }
 
@@ -67,11 +59,11 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Add(MenuDto dto)
+        public async Task<IActionResult> Add(MenuDto dto)
         {
             if (ModelState.IsValid)
             {
-                var result = _menuService.Add(dto);
+                var result = await _menuService.AddAsync(dto);
                 if (result.IsNotBlank())
                     return RedirectToAction("Index");
             }
@@ -84,11 +76,11 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult Edit(MenuDto dto)
+        public async Task<IActionResult> Edit(MenuDto dto)
         {
             if (ModelState.IsValid)
             {
-                var result = _menuService.Update(dto);
+                var result = await _menuService.UpdateAsync(dto);
                 if (result)
                     return RedirectToAction("Index");
             }
@@ -100,12 +92,12 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public JsonResult Delete([FromBody]IEnumerable<string> ids)
+        public async Task<IActionResult> Delete([FromBody]IEnumerable<string> ids)
         {
             var result = new JsonResultModel<bool>();
             if (ids.AnyOne())
             {
-                result.flag = _menuService.Delete(ids);
+                result.flag = await _menuService.DeleteAsync(ids);
             }
             return Json(result);
         }
@@ -116,9 +108,9 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="filters">查询参数</param>
         /// <returns></returns>
         [IgnoreRightFilter]
-        public JsonResult GetListWithPager(MenuFilters filters)
+        public async Task<IActionResult> GetListWithPager(MenuFilters filters)
         {
-            var result = _menuService.Search(filters);
+            var result = await _menuService.SearchAsync(filters);
             return Json(result);
         }
 
@@ -128,12 +120,12 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="filters">查询参数</param>
         /// <returns></returns>
         [IgnoreRightFilter]
-        public JsonResult GetListWithKeywords(MenuFilters filters)
+        public async Task<IActionResult> GetListWithKeywords(MenuFilters filters)
         {
             filters.page = 1;
             filters.rows = 10;
             filters.ExcludeType = MenuType.Button; 
-            var result = _menuService.Search(filters);
+            var result = await _menuService.SearchAsync(filters);
             return Json(new {value = result.rows});
         }
     }

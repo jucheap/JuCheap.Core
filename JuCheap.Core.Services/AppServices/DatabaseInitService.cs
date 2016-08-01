@@ -123,8 +123,8 @@ namespace JuCheap.Core.Services.AppServices
                 Url = "/User/Authen",
                 CreateDateTime = _now,
                 Order = 5,
-                Code = "AC",
-                PathCode = "AAAC",
+                Code = "AD",
+                PathCode = "AAAD",
                 Type = 2
             };//5
             var roleMenuMgr = new MenuEntity
@@ -135,8 +135,8 @@ namespace JuCheap.Core.Services.AppServices
                 Url = "/Role/Authen",
                 CreateDateTime = _now,
                 Order = 6,
-                Code = "AC",
-                PathCode = "AAAC",
+                Code = "AE",
+                PathCode = "AAAE",
                 Type = 2
             };//6
             var sysConfig = new MenuEntity
@@ -147,8 +147,8 @@ namespace JuCheap.Core.Services.AppServices
                 Url = "/System/Index",
                 CreateDateTime = _now,
                 Order = 7,
-                Code = "AD",
-                PathCode = "AAAD",
+                Code = "AF",
+                PathCode = "AAAF",
                 Type = 2
             };//7
             var sysConfigReloadPathCode = new MenuEntity
@@ -159,8 +159,8 @@ namespace JuCheap.Core.Services.AppServices
                 Url = "/System/ReloadPathCode",
                 CreateDateTime = _now,
                 Order = 8,
-                Code = "AAAD",
-                PathCode = "AAADAA",
+                Code = "AAAF",
+                PathCode = "AAAFAA",
                 Type = 3
             };//8
             var log = new MenuEntity

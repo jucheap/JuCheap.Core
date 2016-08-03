@@ -84,5 +84,13 @@ namespace JuCheap.Core.Interfaces
         /// <param name="dto"></param>
         /// <returns></returns>
         Task<bool> VisitAsync(VisitDto dto);
+
+        /// <summary>
+        /// 检测是否存在用户名
+        /// </summary>
+        /// <param name="userId">用户ID，可以为空</param>
+        /// <param name="loginName">用户名</param>
+        /// <returns></returns>
+        Task<bool> ExistsLoginNameAsync(string userId, string loginName);
     }
 }

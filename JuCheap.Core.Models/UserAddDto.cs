@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace JuCheap.Core.Models
 {
@@ -17,6 +18,7 @@ namespace JuCheap.Core.Models
         /// </summary>
         [Display(Name = "登录账号"), Required, MinLength(4), MaxLength(20)]
         [RegularExpression("^[^_][a-zA-Z0-9_]*$",ErrorMessage = "登录账号必须是字母、数字或者下划线的组合")]
+        [Remote("VerifyLoginName", "User",ErrorMessage = "登录帐号已经存在")]
         public string LoginName { get; set; }
 
         /// <summary>

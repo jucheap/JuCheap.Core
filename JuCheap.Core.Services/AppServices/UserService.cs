@@ -238,5 +238,19 @@ namespace JuCheap.Core.Services.AppServices
             dbSet.Add(entity);
             return await _context.SaveChangesAsync() > 0;
         }
+
+        /// <summary>
+        /// 检测是否存在用户名
+        /// </summary>
+        /// <param name="userId">用户ID，可以为空</param>
+        /// <param name="loginName">用户名</param>
+        /// <returns></returns>
+        public async Task<bool> ExistsLoginNameAsync(string userId, string loginName)
+        {
+            var query = _context.Users.Where(u => !u.IsDeleted && u.LoginName == loginName);
+            if (userId.IsNotBlank())
+                query = query.Where(u => u.Id != userId);
+            return await query.AnyAsync();
+        }
     }
 }

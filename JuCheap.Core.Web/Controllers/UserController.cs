@@ -186,5 +186,18 @@ namespace JuCheap.Core.Web.Controllers
             };
             return Json(result);
         }
+
+        /// <summary>
+        /// 验证登录名是否重复
+        /// </summary>
+        /// <param name="loginName">登录名</param>
+        /// <returns></returns>
+        [HttpGet]
+        [IgnoreRightFilter]
+        public async Task<IActionResult> VerifyLoginName(string loginName)
+        {
+            var isExists = await _userService.ExistsLoginNameAsync(string.Empty, loginName);
+            return isExists ? Json("登录帐号已存在") : Json(data: true);
+        }
     }
 }

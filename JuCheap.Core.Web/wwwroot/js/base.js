@@ -39,7 +39,7 @@ var XPage = {
                     url: url,
                     type: "POST",
                     dataType: "json",
-                    data: JSON.stringify({ ids: delDatas.Data }),
+                    data: JSON.stringify(delDatas.Data),
                     contentType: "application/json, charset=utf-8",
                     success: function (res) {
                         btn.button('reset');

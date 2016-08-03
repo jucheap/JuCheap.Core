@@ -74,6 +74,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(UserAddDto dto)
         {
             if (ModelState.IsValid)
@@ -91,6 +92,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="dto"></param>
         /// <returns></returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UserUpdateDto dto)
         {
             if (ModelState.IsValid)
@@ -107,13 +109,12 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Delete([FromBody]IEnumerable<string> ids)
+        public async Task<IActionResult> Delete([FromBody]List<string> ids)
         {
             var result = new JsonResultModel<bool>();
-            var enumerable = ids as IList<string> ?? ids.ToList();
-            if (enumerable.AnyOne())
+            if (ids.AnyOne())
             {
-                result.flag = await _userService.DeleteAsync(enumerable);
+                result.flag = await _userService.DeleteAsync(ids);
             }
             return Json(result);
         }

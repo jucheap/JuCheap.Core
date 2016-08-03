@@ -37,6 +37,7 @@ var paths = {
         webroot + "js/plugins/jqgrid/jquery.jqGrid.js",
         webroot + "js/plugins/jqgrid/i18n/grid.locale-cn.js",
         webroot + "js/jqgrid-list.js",
+        webroot + "js/json2.js",
         webroot + "js/base.js",
         "!" + webroot + "js/grid.min.js"
     ],

@@ -1,4 +1,4 @@
-﻿@model JuCheap.Models.UserUpdateDto
+﻿@model JuCheap.Core.Models.UserUpdateDto
 
 @{
     ViewBag.Title = "编辑用户";
@@ -16,38 +16,41 @@
             </div>
         </div>
         <div class="ibox-content">
-            @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { @class = "form-horizontal" }))
-            {
+            <form asp-controller="User" asp-action="Edit" class="form-horizontal" method="POST">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">@Html.LabelFor(m => m.LoginName)：</label>
+                    <label class="col-sm-3 control-label" asp-for="LoginName"></label>
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(m => m.LoginName, new { @class = "form-control", placeholder = "登录账号名", @readonly = "readonly" })
+                        <input asp-for="LoginName" class="form-control" placeholder="登录账号名" readonly="readonly"/>
+                        <input asp-for="Id" type="hidden"/>
+                        <span asp-validation-for="LoginName"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">@Html.LabelFor(m => m.RealName)：</label>
+                    <label class="col-sm-3 control-label" asp-for="RealName"></label>
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(m => m.RealName, new { @class = "form-control", placeholder = "真实姓名" })
+                        <input asp-for="RealName" class="form-control" placeholder="真实姓名" />
+                        <span asp-validation-for="RealName"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">@Html.LabelFor(m => m.Email)：</label>
+                    <label class="col-sm-3 control-label" asp-for="Email"></label>
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "邮箱" })
+                        <input asp-for="Email" class="form-control" placeholder="邮箱" />
+                        <span asp-validation-for="Email"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">@Html.LabelFor(m => m.Password)：</label>
+                    <label class="col-sm-3 control-label" asp-for="Password"></label>
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(m => m.Password, new { @class = "form-control", placeholder = "登录密码(不修改密码可以不填写)" })
-                        @Html.ValidationMessageFor(m => m.Password)
+                        <input asp-for="Password" class="form-control" placeholder="登录密码" type="password" />
+                        <span asp-validation-for="Password"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">@Html.LabelFor(m => m.ConfirmPwd)：</label>
+                    <label class="col-sm-3 control-label" asp-for="ConfirmPwd"></label>
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(m => m.ConfirmPwd, new { @class = "form-control", placeholder = "请再次输入登录密码(不修改密码可以不填写)" })
-                        @Html.ValidationMessageFor(m => m.ConfirmPwd)
+                        <input asp-for="ConfirmPwd" class="form-control" placeholder="请再次输入登录密码" type="password" />
+                        <span asp-validation-for="ConfirmPwd"></span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -56,7 +59,7 @@
                         <button class="btn btn-white" type="button" id="btnBack">返回</button>
                     </div>
                 </div>
-            }
+            </form>
         </div>
     </div>
 </div>

@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using JuCheap.Core.Services;
 using JuCheap.Core.Web.Filters;
 using Microsoft.AspNetCore.Http;
+using MySQL.Data.EntityFrameworkCore.Extensions;
 
 namespace JuCheap.Core.Web
 {
@@ -45,8 +46,23 @@ namespace JuCheap.Core.Web
             // Add framework services.
             services.AddDbContext<JuCheapContext>(options =>
             {
-                //options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
-                options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
+                var databaseType = Configuration.GetSection("DatabaseType").Value;
+                switch (databaseType)
+                {
+                    case "SqlServer":
+                        //使用sql server配置
+                        options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
+                        break;
+                    case "Sqlite":
+                        //使用sqlite配置
+                        options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
+                        break;
+                    case "MySql":
+                        //使用mysql配置
+                        options.UseMySQL(Configuration.GetConnectionString("Connection_MySql"),
+                            m => m.MigrationsAssembly("JuCheap.Core.Web"));
+                        break;
+                }
             });
 
             services.AddMvc(cfg =>

@@ -36,7 +36,8 @@ namespace JuCheap.Core.Services.AppServices
         public async Task<bool> InitAsync()
         {
             _context.Database.Migrate();
-            if (_context.SystemConfigs.Any(item => item.IsDataInited)) return false;
+            if (_context.SystemConfigs.Any(item => item.IsDataInited))
+                return false;
 
             #region 用户
 

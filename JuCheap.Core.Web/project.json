@@ -38,6 +38,7 @@
       "type": "platform"
     },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0",
+    "MySql.Data.EntityFrameworkCore": "7.0.5-IR21",
     "System.Reflection.Extensions": "4.0.1"
   },
   "frameworks": {

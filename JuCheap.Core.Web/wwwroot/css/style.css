@@ -41,7 +41,7 @@ a:focus {
 	color:#fff
 }
 .navbar-default .nav>li>a:focus,.navbar-default .nav>li>a:hover {
-	background-color:#293846;
+	background-color:#172D44;
 	color:#fff
 }
 .nav .open>a,.nav .open>a:focus,.nav .open>a:hover {
@@ -141,11 +141,32 @@ body.body-small .navbar-top-links li:last-child {
 }
 .nav-header {
 	padding:17px 25px;
-	background:url(/css/patterns/header-profile.png) no-repeat
+    background: #2A3F54;
 }
 .nav>li.active {
-	border-left:4px solid #19aa8d;
-	background:#293846
+	border-bottom:4px solid #19aa8d;
+    background: #172D44;
+}
+.nav.nav-second-level>li:before {
+	background: #425668;
+    bottom: auto;
+    content: "";
+    height: 8px;
+    left: 28px;
+    margin-top: 13px;
+    position: absolute;
+    right: auto;
+    width: 8px;
+    z-index: 1;
+    border-radius: 50%;
+}
+.nav.nav-second-level>li:after {
+    border-left: 1px solid #425668;
+    bottom: 0;
+    content: "";
+    left: 32px;
+    position: absolute;
+    top: 0;
 }
 .nav.nav-second-level>li.active {
 	border:none
@@ -237,7 +258,7 @@ body.mini-navbar .navbar-default .nav>li>.nav-second-level li a {
 	padding:10px 10px 10px 15px
 }
 .canvas-menu.mini-navbar .nav-second-level {
-	background:#293846
+	background:#2A3F54
 }
 .mini-navbar li.active .nav-second-level {
 	left:65px
@@ -319,7 +340,7 @@ body.canvas-menu .logo-element {
 }
 body.mini-navbar .nav-header {
 	padding:0;
-	background-color:#1ab394
+	background-color:#172D44
 }
 body.canvas-menu .nav-header {
 	padding:33px 25px
@@ -4871,7 +4892,10 @@ body.rtls .navbar-top-links li:last-child {
 }
 body.rtls .minimalize-styl-2 {
 	float:right;
-	margin:14px 20px 5px 5px
+    margin: 14px 20px 5px 5px;
+}
+.minimalize-styl-2 i {
+    font-size: 2em;
 }
 body.rtls .feed-element>.pull-left {
 	margin-left:10px;
@@ -5051,14 +5075,14 @@ body.rtls .top-navigation #page-wrapper,body.rtls .top-navigation .footer.fixed,
 }
 .blue-skin {
 	font-weight:600;
-	background:url(/css/patterns/header-profile-skin-1.png) repeat scroll 0 0
+	background:url(/content/css/patterns/header-profile-skin-1.png) repeat scroll 0 0
 }
 .blue-skin:hover {
 	background:#0d8ddb
 }
 .yellow-skin {
 	font-weight:600;
-	background:url(/css/patterns/header-profile-skin-3.png) repeat scroll 0 100%
+	background:url(/content/css/patterns/header-profile-skin-3.png) repeat scroll 0 100%
 }
 .yellow-skin:hover {
 	background:#ce8735
@@ -5073,11 +5097,11 @@ body.rtls .top-navigation #page-wrapper,body.rtls .top-navigation .footer.fixed,
 	color:#ccc
 }
 .page-tabs a.active {
-	background:#2f4050;
+    background:#2A3F54;
 	color:#a7b1c2
 }
 .page-tabs a.active i:hover,.page-tabs a.active:hover {
-	background:#293846;
+	background:#172D44;
 	color:#fff
 }
 .skin-1 .minimalize-styl-2 {
@@ -5093,8 +5117,7 @@ body.rtls .top-navigation #page-wrapper,body.rtls .top-navigation .footer.fixed,
 	background:#0e9aef!important
 }
 .skin-1 .nav-header {
-	background:#0e9aef;
-	background:url(/css/patterns/header-profile-skin-1.png)
+	background:#2A3F54;
 }
 .skin-1.mini-navbar .nav-second-level {
 	background:#3e495f
@@ -5203,7 +5226,7 @@ body.boxed-layout.skin-3 #wrapper {
 }
 .skin-3 .nav-header {
 	background:#ecba52;
-	background:url(/css/patterns/header-profile-skin-3.png)
+	background:url(/content/css/patterns/header-profile-skin-3.png)
 }
 .skin-3.mini-navbar .nav-second-level {
 	background:#3e2c42
@@ -5601,4 +5624,38 @@ body.fixed-sidebar.mini-navbar .navbar-static-side {
 }
 .field-validation-error {
     color:red;
+}
+
+.sidebar-footer {
+    bottom: 0px;
+    clear: both;
+    display: block;
+    padding: 5px 0 0 0;
+    position: fixed;
+    width: 220px;
+    background: #2A3F54;
+    font-weight: 600;
+}
+.sidebar-footer a {
+    padding: 7px 0 3px;
+    text-align: center;
+    width: 25%;
+    font-size: 17px;
+    display: block;
+    float: left;
+    background: #172D44;
+}
+.sidebar-collapse {
+    background: #2A3F54;
+}
+.mini-navbar .hidden-small {
+    visibility: hidden;
+}
+.mini-navbar .sidebar-footer {
+    width: 70px;
+    height: 37px;
+    overflow: hidden;
+}
+.mini-navbar .sidebar-footer a {
+    width: 100%;
 }

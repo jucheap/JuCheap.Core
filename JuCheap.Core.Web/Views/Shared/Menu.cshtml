@@ -33,7 +33,7 @@
                             @foreach (var menu in menus.Where(item => item.ParentId == module.Id))
                             {
                                 <li>
-                                    <a class="J_menuItem" href="@menu.Url" data-index="0">@menu.Name</a>
+                                    <a class="J_menuItem" href="@menu.Url" data-index="@module.Id">@menu.Name</a>
                                 </li>
                             }
                         </ul>
@@ -42,5 +42,11 @@
                 }
             }
         </ul>
+    </div>
+    <div class="sidebar-footer">
+        <a id="btnChangeMenu"><span class="fa fa-reorder"></span></a>
+        <a class="hidden-small"><span class="fa fa-desktop"></span></a>
+        <a class="hidden-small"><span class="fa fa-lock"></span></a>
+        <a class="hidden-small" asp-controller="User" asp-action="Add"><span class="fa fa-power-off"></span></a>
     </div>
 </nav>

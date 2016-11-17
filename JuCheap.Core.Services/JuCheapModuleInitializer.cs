@@ -14,7 +14,7 @@ namespace JuCheap.Core.Services
         /// 加载AutoMapper配置
         /// </summary>
         /// <param name="config"></param>
-        public override void LoadAutoMapper(IMapperConfiguration config)
+        public override void LoadAutoMapper(IMapperConfigurationExpression config)
         {
             config.CreateMap<UserEntity, UserDto>().ReverseMap();
             config.CreateMap<UserEntity, UserAddDto>().ReverseMap();

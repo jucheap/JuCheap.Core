@@ -12,6 +12,6 @@ namespace JuCheap.Core.Services
         /// 加载AutoMapper配置
         /// </summary>
         /// <param name="cofig"></param>
-        public abstract void LoadAutoMapper(IMapperConfiguration cofig);
+        public abstract void LoadAutoMapper(IMapperConfigurationExpression cofig);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using JuCheap.Core.Infrastructure.Extentions;
 
 namespace JuCheap.Core.Services
 {
@@ -22,7 +21,10 @@ namespace JuCheap.Core.Services
 
             _mapperConfiguration = new MapperConfiguration(cfg =>
             {
-                moduleInitializers.ForEach(m => m.LoadAutoMapper(cfg));
+                foreach (var m in moduleInitializers)
+                {
+                    m.LoadAutoMapper(cfg);
+                }
             });
         }
 

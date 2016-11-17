@@ -1,8 +1,12 @@
-﻿{
+{
   "version": "1.0.0-*",
 
   "dependencies": {
-    "AutoMapper": "4.2.1",
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.1.0"
+    },
+    "AutoMapper": "5.1.1",
     "JuCheap.Core.Data": "1.0.0-*",
     "JuCheap.Core.Infrastructure": "1.0.0-*",
     "JuCheap.Core.Interfaces": "1.0.0-*",
@@ -10,13 +14,7 @@
   },
 
   "frameworks": {
-     "netcoreapp1.0": {
-      "dependencies": {
-        "Microsoft.NETCore.App": {
-          "type": "platform",
-          "version": "1.0.0"
-        }
-      },
+     "netcoreapp1.1": {
       "imports": [ "dnxcore50", "portable-net45+win8" ]
     }
   }

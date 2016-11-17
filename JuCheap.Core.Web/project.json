@@ -4,11 +4,11 @@
     "preserveCompilationContext": true
   },
   "dependencies": {
-    "JuCheap.Core.Data": "1.0.0-*",
-    "JuCheap.Core.Infrastructure": "1.0.0-*",
-    "JuCheap.Core.Interfaces": "1.0.0-*",
-    "JuCheap.Core.Models": "1.0.0-*",
-    "JuCheap.Core.Services": "1.0.0-*",
+    "JuCheap.Core.Data": "1.1.0-*",
+    "JuCheap.Core.Infrastructure": "1.1.0-*",
+    "JuCheap.Core.Interfaces": "1.1.0-*",
+    "JuCheap.Core.Models": "1.1.0-*",
+    "JuCheap.Core.Services": "1.1.0-*",
     "Microsoft.AspNetCore.Authentication.Cookies": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.1.0",

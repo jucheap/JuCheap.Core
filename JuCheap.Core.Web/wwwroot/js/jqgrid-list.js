@@ -1,7 +1,7 @@
 ﻿var JucheapGrid = {
     Load: function (config) {
         var jqGrid = !config.id ? $("#table_list") : $("#" + config.id);
-        jqGrid.jqGrid({
+        var defaultConfig = {
             caption: config.title,
             url: config.url,
             mtype: "GET",
@@ -22,12 +22,18 @@
                     alert(xhr.msg);
                 }
             },
-            loadError: function (xhr, status, error) { console.log(xhr); console.log(status); console.log(error); },
+            loadError: function (xhr, status, error) {
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            },
             pager: !config.pagerId ? "#pager_list" : "#" + config.pagerId,
             subGrid: config.subGrid ? true : false,
             subGridRowExpanded: config.subGridRowExpanded ? config.subGridRowExpanded : null,
             gridComplete: config.gridComplete ? config.gridComplete : function () { }
-        });
+        };
+        $.extend(defaultConfig, config);
+        jqGrid.jqGrid(defaultConfig);
 
         // Add responsive to jqGrid
         $(window).bind('resize', function () {

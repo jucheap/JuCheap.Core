@@ -43,9 +43,13 @@ namespace JuCheap.Core.Web.Controllers
         /// 用户角色授权
         /// </summary>
         /// <returns></returns>
-        public IActionResult Authen()
+        public IActionResult Authen(string id)
         {
-            return View();
+            var user = new UserDto
+            {
+                Id = id
+            };
+            return View(user);
         }
 
         /// <summary>
@@ -139,7 +143,6 @@ namespace JuCheap.Core.Web.Controllers
         [IgnoreRightFilter]
         public async Task<IActionResult> GetMyRoles(RoleFilters filters)
         {
-            filters.UserId = User.Identity.GetLoginUserId();
             var result = await _roleService.SearchAsync(filters);
             return Json(result);
         }
@@ -152,7 +155,6 @@ namespace JuCheap.Core.Web.Controllers
         [IgnoreRightFilter]
         public async Task<IActionResult> GetNotMyRoles(RoleFilters filters)
         {
-            filters.UserId = User.Identity.GetLoginUserId();
             filters.ExcludeMyRoles = true;
             var result = await _roleService.SearchAsync(filters);
             return Json(result);
@@ -162,13 +164,14 @@ namespace JuCheap.Core.Web.Controllers
         /// 用户角色授权
         /// </summary>
         /// <param name="id">角色ID</param>
+        /// <param name="userId">用户Id</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> GiveRight(string id)
+        public async Task<IActionResult> GiveRight(string id, string userId)
         {
             var result = new JsonResultModel<bool>
             {
-                flag = await _userService.GiveAsync(User.Identity.GetLoginUserId(), id)
+                flag = await _userService.GiveAsync(userId, id)
             };
             return Json(result);
         }
@@ -177,13 +180,14 @@ namespace JuCheap.Core.Web.Controllers
         /// 用户角色取消
         /// </summary>
         /// <param name="id">角色ID</param>
+        /// <param name="userId">用户Id</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CancelRight(string id)
+        public async Task<IActionResult> CancelRight(string id,string userId)
         {
             var result = new JsonResultModel<bool>
             {
-                flag = await _userService.CancelAsync(User.Identity.GetLoginUserId(), id)
+                flag = await _userService.CancelAsync(userId, id)
             };
             return Json(result);
         }

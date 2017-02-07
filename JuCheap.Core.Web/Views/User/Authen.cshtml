@@ -1,4 +1,4 @@
-﻿
+﻿@model JuCheap.Core.Models.UserDto
 @{
     ViewBag.Title = "用户角色授权";
     Layout = "~/Views/Shared/_Layout_Content.cshtml";
@@ -55,7 +55,7 @@
     </environment>
     <script>
         function cancelRight(roleId) {
-            XPage.DoPost(null,"@Url.Action("CancelRight")" + "/" + roleId, null, function(res) {
+            XPage.DoPost(null,"@Url.Action("CancelRight")?id=" + roleId + "&userId=@Model.Id", null, function(res) {
                 if (res && res.flag) {
                     reloadGrid("table_list_my");
                     reloadGrid("table_list_notmy");
@@ -66,7 +66,7 @@
         }
 
         function giveRight(roleId) {
-            XPage.DoPost(null, "@Url.Action("GiveRight")" + "/" + roleId, null, function(res) {
+            XPage.DoPost(null, "@Url.Action("GiveRight")?id=" + roleId + "&userId=@Model.Id", null, function (res) {
                 if (res && res.flag) {
                     reloadGrid("table_list_my");
                     reloadGrid("table_list_notmy");
@@ -83,7 +83,7 @@
                 id: "table_list_my",
                 pagerId: "pager_list_my",
                 title: '我的角色',
-                url: '@Url.Action("GetMyRoles")',
+                url: '@Url.Action("GetMyRoles")?UserId=@Model.Id',
                 colNames: ['主键', '角色名称', '操作'],
                 colModel: [
                     { name: 'id', index: 'id', width: 30, key: true, hidden: true },
@@ -103,7 +103,7 @@
                 id: "table_list_notmy",
                 pagerId: "pager_list_notmy",
                 title: '尚未分配德角色',
-                url: '@Url.Action("GetNotMyRoles")',
+                url: '@Url.Action("GetNotMyRoles")?UserId=@Model.Id',
                 colNames: ['主键', '角色名称', '操作'],
                 colModel: [
                     { name: 'id', index: 'id', width: 30, key: true, hidden: true },

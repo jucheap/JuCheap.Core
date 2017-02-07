@@ -13,20 +13,13 @@
     "Microsoft.AspNetCore.Diagnostics": "1.1.0",
     "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": "1.1.0",
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.1.0",
-    "Microsoft.AspNetCore.Mvc": "1.1.0",
-    "Microsoft.AspNetCore.Razor.Tools": {
-      "version": "1.0.0-preview2-final",
-      "type": "build"
-    },
+    "Microsoft.AspNetCore.Mvc": "1.1.1",
+    "Microsoft.AspNetCore.Razor.Tools": "1.1.0-preview4-final",
     "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
     "Microsoft.AspNetCore.StaticFiles": "1.1.0",
     "Microsoft.EntityFrameworkCore.Sqlite": "1.1.0",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
-    "Microsoft.EntityFrameworkCore.Tools": {
-      "type": "build",
-      "version": "1.0.0-preview2-final"
-    },
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.1.0",
     "Microsoft.Extensions.Configuration.Json": "1.1.0",
     "Microsoft.Extensions.Configuration.UserSecrets": "1.1.0",
@@ -38,7 +31,7 @@
       "version": "1.1.0"
     },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
-    "MySql.Data.EntityFrameworkCore": "7.0.5-IR21",
+    "MySql.Data.EntityFrameworkCore": "7.0.6-IR31",
     "System.Reflection.Extensions": "4.3.0"
   },
   "frameworks": {
@@ -62,21 +55,6 @@
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   },
   "tools": {
-    "Microsoft.AspNetCore.Razor.Tools": {
-      "version": "1.0.0-preview2-final"
-    },
-    "Microsoft.AspNetCore.Server.IISIntegration.Tools": {
-      "version": "1.0.0-preview2-final"
-    },
-    "Microsoft.EntityFrameworkCore.Tools": {
-      "version": "1.0.0-preview2-final"
-    },
-    "Microsoft.Extensions.SecretManager.Tools": {
-      "version": "1.0.0-preview2-final"
-    },
-    "Microsoft.VisualStudio.Web.CodeGeneration.Tools": {
-      "version": "1.0.0-preview2-final"
-    }
   },
   "userSecretsId": "aspnet-JuCheap.Core.Web-aee5ec90-88a3-4b6d-9c04-b37a348dd513"
 }

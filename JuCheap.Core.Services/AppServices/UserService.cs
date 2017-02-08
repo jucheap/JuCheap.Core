@@ -108,7 +108,8 @@ namespace JuCheap.Core.Services.AppServices
             var reslt = new UserLoginDto();
             var dbSet = _context.Users;
             var logDbSet = _context.LoginLogs;
-            var entity = await dbSet.FirstOrDefaultAsync(item => item.LoginName == dto.LoginName.Trim());
+            var loginName = dto.LoginName.Trim();
+            var entity = await dbSet.FirstOrDefaultAsync(item => item.LoginName == loginName);
             var loginLog = new LoginLogEntity
             {
                 Id = BaseIdGenerator.Instance.GetId(),

@@ -42,7 +42,7 @@ namespace JuCheap.Core.Infrastructure.Extentions
                     ? des[0].ConstructorArguments[0].Value.ToString()
                     : value.ToString();
             }
-            catch (Exception ex)
+            catch
             {
                 return string.Empty;
             }

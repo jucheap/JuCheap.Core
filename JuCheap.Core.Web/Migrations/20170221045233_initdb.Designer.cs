@@ -8,14 +8,13 @@ using JuCheap.Core.Data;
 namespace JuCheap.Core.Web.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    [Migration("20160715045651_FirstMigration")]
-    partial class FirstMigration
+    [Migration("20170221045233_initdb")]
+    partial class initdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.0.0-rtm-21431")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752");
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.LoginLogEntity", b =>
                 {

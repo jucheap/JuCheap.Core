@@ -20,6 +20,11 @@ namespace JuCheap.Core.Data
     /// </summary>
     public class JuCheapContext : DbContext
     {
+        public JuCheapContext()
+        {
+            
+        }
+
         /// <summary>
         /// JuCheapContext
         /// </summary>
@@ -139,6 +144,11 @@ namespace JuCheap.Core.Data
                 m.Property(e => e.IsDeleted).IsRequired();
                 m.ToTable("SystemConfigs");
             });
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
         }
 
         #region DbSets

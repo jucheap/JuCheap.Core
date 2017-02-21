@@ -48,8 +48,7 @@ namespace JuCheap.Core.Services.AppServices
                 entity.UserRoles.ForEach(r => r.UserId = entity.Id);
             }
             entity.Password = entity.Password.ToMd5();
-            var dbSet = _context.Users;
-            dbSet.Add(entity);
+            _context.Users.Add(entity);
 
             return await _context.SaveChangesAsync() > 0 ? entity.Id : string.Empty;
         }
@@ -61,14 +60,12 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> UpdateAsync(UserUpdateDto dto)
         {
-            var dbSet = _context.Users;
-            var entity = dbSet.FirstOrDefault(u => u.Id == dto.Id);
+            var entity = _context.Users.FirstOrDefault(u => u.Id == dto.Id);
             entity.LoginName = dto.LoginName;
             entity.RealName = dto.RealName;
             entity.Email = dto.Email;
             if (dto.Password.IsNotBlank())
                 entity.Password = dto.Password.ToMd5();
-            //_mapper.Map(dto, entity);
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -79,8 +76,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<UserDto> FindAsync(string id)
         {
-            var dbSet = _context.Users;
-            var entity = await dbSet.FirstOrDefaultAsync(u => u.Id == id);
+            var entity = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
             var dto = _mapper.Map<UserEntity, UserDto>(entity);
             return dto;
         }
@@ -92,8 +88,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> DeleteAsync(IEnumerable<string> ids)
         {
-            var dbSet = _context.Users;
-            var entities = dbSet.Where(item => ids.Contains(item.Id));
+            var entities = _context.Users.Where(item => ids.Contains(item.Id));
             entities.ForEach(item => item.IsDeleted = true);
             return await _context.SaveChangesAsync() > 0;
         }
@@ -106,10 +101,9 @@ namespace JuCheap.Core.Services.AppServices
         public async Task<UserLoginDto> LoginAsync(LoginDto dto)
         {
             var reslt = new UserLoginDto();
-            var dbSet = _context.Users;
             var logDbSet = _context.LoginLogs;
             var loginName = dto.LoginName.Trim();
-            var entity = await dbSet.FirstOrDefaultAsync(item => item.LoginName == loginName);
+            var entity = await _context.Users.FirstOrDefaultAsync(item => item.LoginName == loginName);
             var loginLog = new LoginLogEntity
             {
                 Id = BaseIdGenerator.Instance.GetId(),
@@ -152,10 +146,9 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> GiveAsync(string userId, string roleId)
         {
-            var dbSet = _context.UserRoles;
-            if (await dbSet.AnyAsync(item => item.UserId == userId && item.RoleId == roleId))
+            if (await _context.UserRoles.AnyAsync(item => item.UserId == userId && item.RoleId == roleId))
                 return true;
-            dbSet.Add(new UserRoleEntity
+            _context.UserRoles.Add(new UserRoleEntity
             {
                 UserId = userId,
                 RoleId = roleId
@@ -171,9 +164,8 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> CancelAsync(string userId, string roleId)
         {
-            var dbSet = _context.UserRoles;
-            var userRole = await dbSet.FirstOrDefaultAsync(item => item.UserId == userId && item.RoleId == roleId);
-            dbSet.Remove(userRole);
+            var userRole = await _context.UserRoles.FirstOrDefaultAsync(item => item.UserId == userId && item.RoleId == roleId);
+            _context.UserRoles.Remove(userRole);
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -187,8 +179,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters == null)
                 return new PagedResult<UserDto>(1, 0);
 
-            var dbSet = _context.Users;
-            var query = dbSet.Where(item => !item.IsDeleted);
+            var query = _context.Users.Where(item => !item.IsDeleted);
 
             if (filters.keywords.IsNotBlank())
                 query =
@@ -214,13 +205,13 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> HasRightAsync(string userId, string url)
         {
-            var dbSet = _context.Menus;
-            var dbSetUserRoles = _context.UserRoles;
-            var dbSetRoleMenus = _context.RoleMenus;
-            var query = dbSet.Where(item => !item.IsDeleted);
-            var roleIds = await dbSetUserRoles.Where(item => item.UserId == userId)
+            var menus = _context.Menus;
+            var userRoles = _context.UserRoles;
+            var roleMenus = _context.RoleMenus;
+            var query = menus.Where(item => !item.IsDeleted);
+            var roleIds = await userRoles.Where(item => item.UserId == userId)
                 .Select(item => item.RoleId).ToListAsync();
-            var menuIds = await dbSetRoleMenus.Where(item => roleIds.Contains(item.RoleId))
+            var menuIds = await roleMenus.Where(item => roleIds.Contains(item.RoleId))
                 .Select(item => item.MenuId)
                 .ToListAsync();
             return await query.AnyAsync(item => menuIds.Contains(item.Id) && url.StartsWith(item.Url));
@@ -233,10 +224,9 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> VisitAsync(VisitDto dto)
         {
-            var dbSet = _context.PageViews;
             var entity = _mapper.Map<VisitDto, PageViewEntity>(dto);
             entity.Id = BaseIdGenerator.Instance.GetId();
-            dbSet.Add(entity);
+            _context.PageViews.Add(entity);
             return await _context.SaveChangesAsync() > 0;
         }
 

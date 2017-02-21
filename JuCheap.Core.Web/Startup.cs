@@ -14,7 +14,6 @@ using Microsoft.Extensions.Logging;
 using JuCheap.Core.Services;
 using JuCheap.Core.Web.Filters;
 using Microsoft.AspNetCore.Http;
-using MySQL.Data.EntityFrameworkCore.Extensions;
 
 namespace JuCheap.Core.Web
 {
@@ -43,28 +42,30 @@ namespace JuCheap.Core.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // Add framework services.
-            services.AddDbContext<JuCheapContext>(options =>
-            {
-                var databaseType = Configuration.GetSection("DatabaseType").Value;
-                switch (databaseType)
-                {
-                    case "SqlServer":
-                        //使用sql server配置
-                        options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
-                        break;
-                    case "Sqlite":
-                        //使用sqlite配置
-                        options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite"), b => b.MigrationsAssembly("JuCheap.Core.Web"));
-                        break;
-                    case "MySql":
-                        //使用mysql配置
-                        options.UseMySQL(Configuration.GetConnectionString("Connection_MySql"),
-                            m => m.MigrationsAssembly("JuCheap.Core.Web"));
-                        break;
-                }
-            });
+            ////使用Sql Server数据库
+            //services.AddEntityFrameworkSqlServer()
+            //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"),
+            //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
+            //            .UseInternalServiceProvider(serviceProvider));
 
+            ////使用Sqlite数据库
+            //services.AddEntityFrameworkSqlite()
+            //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
+            //        options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite"),
+            //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
+            //            .UseInternalServiceProvider(serviceProvider));
+
+            //使用MySql数据库
+            services.AddEntityFrameworkMySql()
+                .AddDbContext<JuCheapContext>((serviceProvider, options) =>
+                    options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
+                        b => b.MigrationsAssembly("JuCheap.Core.Web"))
+                        .UseInternalServiceProvider(serviceProvider));
+            
+            services.AddSingleton<DbContext, JuCheapContext>();
+
+            //权限验证filter
             services.AddMvc(cfg =>
             {
                 cfg.Filters.Add(new RightFilter());
@@ -102,8 +103,6 @@ namespace JuCheap.Core.Web
 
             app.UseStaticFiles();
 
-            //app.UseIdentity();
-
             var option = new CookieAuthenticationOptions
             {
                 AutomaticAuthenticate = true,
@@ -112,7 +111,7 @@ namespace JuCheap.Core.Web
                 ExpireTimeSpan = TimeSpan.FromMinutes(43200),
                 LoginPath = new PathString("/Home/Login"),
                 LogoutPath = new PathString("/Home/Logout"),
-                CookieName = ".JuCheapCore",
+                CookieName = ".JuCheapCore.Identity",
                 CookiePath = "/",
                 //DataProtectionProvider = null//如果需要做负载均衡，就需要提供一个Key
             };

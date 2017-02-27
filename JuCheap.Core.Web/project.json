@@ -31,7 +31,7 @@
       "version": "1.0.0-preview2-final"
     },
     "Microsoft.NETCore.App": {
-      "type": "platform",
+      //"type": "platform",
       "version": "1.1.0"
     },
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
@@ -53,6 +53,14 @@
   },
   "runtimeOptions": {
     "gcServer": true
+  },
+  "runtimes": {
+    "win7-x64": {},
+    "win7-x86": {},
+    "osx.10.10-x64": {},
+    "osx.10.11-x64": {},
+    "ubuntu.14.04-x64":{},
+    "centos.7-x64":{}
   },
   "scripts": {
     "prepublish": [ "npm install", "bower install", "gulp clean", "gulp min" ],

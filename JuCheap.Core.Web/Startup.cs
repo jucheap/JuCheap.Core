@@ -49,20 +49,20 @@ namespace JuCheap.Core.Web
             //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
             //            .UseInternalServiceProvider(serviceProvider));
 
-            ////使用Sqlite数据库
-            //services.AddEntityFrameworkSqlite()
+            //使用Sqlite数据库
+            services.AddEntityFrameworkSqlite()
+                .AddDbContext<JuCheapContext>((serviceProvider, options) =>
+                    options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite"),
+                        b => b.MigrationsAssembly("JuCheap.Core.Web"))
+                        .UseInternalServiceProvider(serviceProvider));
+
+            //使用MySql数据库
+            //services.AddEntityFrameworkMySql()
             //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-            //        options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite"),
+            //        options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
             //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
             //            .UseInternalServiceProvider(serviceProvider));
 
-            //使用MySql数据库
-            services.AddEntityFrameworkMySql()
-                .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-                    options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
-                        b => b.MigrationsAssembly("JuCheap.Core.Web"))
-                        .UseInternalServiceProvider(serviceProvider));
-            
             services.AddSingleton<DbContext, JuCheapContext>();
 
             //权限验证filter

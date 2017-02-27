@@ -49,19 +49,19 @@ namespace JuCheap.Core.Web
             //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
             //            .UseInternalServiceProvider(serviceProvider));
 
-            //使用Sqlite数据库
-            services.AddEntityFrameworkSqlite()
-                .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-                    options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite"),
-                        b => b.MigrationsAssembly("JuCheap.Core.Web"))
-                        .UseInternalServiceProvider(serviceProvider));
-
-            //使用MySql数据库
-            //services.AddEntityFrameworkMySql()
+            ////使用Sqlite数据库
+            //services.AddEntityFrameworkSqlite()
             //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-            //        options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
+            //        options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite"),
             //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
             //            .UseInternalServiceProvider(serviceProvider));
+
+            //使用MySql数据库
+            services.AddEntityFrameworkMySql()
+                .AddDbContext<JuCheapContext>((serviceProvider, options) =>
+                    options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
+                        b => b.MigrationsAssembly("JuCheap.Core.Web"))
+                        .UseInternalServiceProvider(serviceProvider));
 
             services.AddSingleton<DbContext, JuCheapContext>();
 
@@ -79,6 +79,7 @@ namespace JuCheap.Core.Web
             // 2.service
             services.AddScoped<IDatabaseInitService, DatabaseInitService>();
             services.AddScoped<ILogService, LogService>();
+            services.AddScoped<IPathCodeService, PathCodeService>();
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
@@ -119,7 +120,7 @@ namespace JuCheap.Core.Web
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-            app.UseMiddleware<VisitMiddleware>();
+            //app.UseMiddleware<VisitMiddleware>();
 
             app.UseMvc(routes =>
             {
@@ -127,7 +128,7 @@ namespace JuCheap.Core.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            
+
             //init database
             var dbService = app.ApplicationServices.GetRequiredService<IDatabaseInitService>();
             Task.Run(() => dbService.InitAsync());

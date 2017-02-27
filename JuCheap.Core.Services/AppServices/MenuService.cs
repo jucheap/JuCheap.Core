@@ -22,15 +22,20 @@ namespace JuCheap.Core.Services.AppServices
     {
         private readonly JuCheapContext _context;
         private readonly IMapper _mapper;
+        private readonly IPathCodeService _pathCodeService;
 
         /// <summary>
         /// ctor
         /// </summary>
         /// <param name="context"></param>
         /// <param name="mapper"></param>
-        public MenuService(JuCheapContext context, IMapper mapper)
+        /// <param name="pathCodeService"></param>
+        public MenuService(JuCheapContext context, 
+            IMapper mapper,
+            IPathCodeService pathCodeService)
         {
             _mapper = mapper;
+            _pathCodeService = pathCodeService;
             _context = context;
         }
 
@@ -44,12 +49,12 @@ namespace JuCheap.Core.Services.AppServices
             var entity = _mapper.Map<MenuDto, MenuEntity>(dto);
             entity.Id = BaseIdGenerator.Instance.GetId();
             var dbSet = _context.Menus;
-            var pathCodeDbSet = _context.PathCodes;
+            var pathCodeDbSet = _pathCodeService.GetPathCodes();
 
             var existsCode = await dbSet.Where(item => item.ParentId == dto.ParentId)
                 .Select(item => item.Code).ToListAsync();
-            var pathCode = await pathCodeDbSet.FirstOrDefaultAsync(item => !existsCode.Contains(item.Code));
-            entity.Code = pathCode.Code.Trim();
+            var pathCode = pathCodeDbSet.FirstOrDefault(item => !existsCode.Contains(item));
+            entity.Code = pathCode.Trim();
             if (entity.ParentId.IsNotBlank())
             {
                 var parent = await dbSet.FirstOrDefaultAsync(m => m.Id == entity.ParentId);

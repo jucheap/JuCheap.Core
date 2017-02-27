@@ -18,6 +18,8 @@
     "Microsoft.AspNetCore.Server.IISIntegration": "1.1.0",
     "Microsoft.AspNetCore.Server.Kestrel": "1.1.0",
     "Microsoft.AspNetCore.StaticFiles": "1.1.0",
+    "Microsoft.EntityFrameworkCore": "1.1.0",
+    "Pomelo.EntityFrameworkCore.MySql": "1.1.0",
     "Microsoft.EntityFrameworkCore.Sqlite": "1.1.0",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",
     "Microsoft.Extensions.Configuration.EnvironmentVariables": "1.1.0",
@@ -26,16 +28,9 @@
     "Microsoft.Extensions.Logging": "1.1.0",
     "Microsoft.Extensions.Logging.Console": "1.1.0",
     "Microsoft.Extensions.Logging.Debug": "1.1.0",
-    "Microsoft.EntityFrameworkCore.Design": {
-      "type": "build",
-      "version": "1.0.0-preview2-final"
-    },
-    "Microsoft.NETCore.App": {
-      //"type": "platform",
-      "version": "1.1.0"
-    },
+    "Microsoft.EntityFrameworkCore.Design": "1.1.0",
+    "Microsoft.NETCore.App": "1.1.0",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.1.0",
-    "Pomelo.EntityFrameworkCore.MySql": "1.0.0",
     "System.Reflection.Extensions": "4.3.0"
   },
   "frameworks": {

@@ -314,12 +314,6 @@ namespace JuCheap.Core.Services.AppServices
 
             #endregion
 
-            #region 路径码
-
-            await InitPathCodeAsync();
-
-            #endregion
-
             #region 系统配置
 
             var systemConfig = new SystemConfigEntity
@@ -337,7 +331,7 @@ namespace JuCheap.Core.Services.AppServices
             _context.Menus.AddRange(menus.OrderBy(m => m.Order).ToArray());
             _context.Roles.AddRange(roles);
             _context.Users.AddRange(user);
-            await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
             _context.UserRoles.AddRange(userRoles);
             _context.RoleMenus.AddRange(roleMenus);
             _context.SystemConfigs.Add(systemConfig);
@@ -355,36 +349,14 @@ namespace JuCheap.Core.Services.AppServices
             {
                 codes.Add(((char)i).ToString());
             }
-            var len = 2;
             //求组合
-            var ermutation = PermutationAndCombination<string>.GetCombination(codes.ToArray(), len);
-            var list = new List<PathCodeEntity>();
-            ermutation.ForEach(item =>
-            {
-                list.Add(new PathCodeEntity
+            var list = (from a in codes
+                from b in codes
+                select new PathCodeEntity
                 {
-                    Id = _instance.GetId(),
-                    Code = string.Join(string.Empty, item),
-                    Len = len
-                });
-                list.Add(new PathCodeEntity
-                {
-                    Id = _instance.GetId(),
-                    Code = string.Join(string.Empty, item.Reverse()),
-                    Len = len
-                });
-            });
-            Func<IEnumerable<PathCodeEntity>> getSameKeyFunc = () =>
-            {
-                return codes.Select(key => new PathCodeEntity
-                {
-                    Id = _instance.GetId(),
-                    Code = string.Join(string.Empty, key, key),
-                    Len = len
-                });
-            };
-            list.AddRange(getSameKeyFunc());
-            list = list.OrderBy(item => item.Code).ToList();
+                    Code = a + b,
+                    Len = 2
+                }).OrderBy(item => item.Code).ToList();
 
             await _context.Database.ExecuteSqlCommandAsync("DELETE FROM PathCodes");
             _context.PathCodes.AddRange(list);

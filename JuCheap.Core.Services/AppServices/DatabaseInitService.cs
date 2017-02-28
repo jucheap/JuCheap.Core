@@ -123,7 +123,7 @@ namespace JuCheap.Core.Services.AppServices
                 var userRoleMgr = new MenuEntity
                 {
                     Id = _instance.GetId(),
-                    ParentId = system.Id,
+                    ParentId = userMgr.Id,
                     Name = "用户授权",
                     Url = "/User/Authen",
                     CreateDateTime = _now,
@@ -132,6 +132,30 @@ namespace JuCheap.Core.Services.AppServices
                     PathCode = "AAAD",
                     Type = 2
                 };//5
+                var giveRight = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = userRoleMgr.Id,
+                    Name = "授权",
+                    Url = "/User/GiveRight",
+                    CreateDateTime = _now,
+                    Order = 1,
+                    Code = "AA",
+                    PathCode = "AAADAA",
+                    Type = 3
+                };
+                var cancelRight = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = userRoleMgr.Id,
+                    Name = "取消授权",
+                    Url = "/User/CancelRight",
+                    CreateDateTime = _now,
+                    Order = 2,
+                    Code = "AB",
+                    PathCode = "AAADAB",
+                    Type = 3
+                };
                 var roleMenuMgr = new MenuEntity
                 {
                     Id = _instance.GetId(),
@@ -212,6 +236,8 @@ namespace JuCheap.Core.Services.AppServices
                     roleMgr,
                     userMgr,
                     userRoleMgr,
+                    giveRight,
+                    cancelRight,
                     roleMenuMgr,
                     sysConfig,
                     sysConfigReloadPathCode,

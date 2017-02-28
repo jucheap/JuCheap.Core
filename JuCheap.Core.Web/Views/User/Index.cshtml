@@ -30,6 +30,7 @@
                 <button id="btnDel" type="button" class="btn btn-danger " onclick="delData()">
                     <i class="fa fa-dedent"></i>&nbsp;&nbsp;<span class="bold">删除</span>
                 </button>
+                <button id="btnSetRole" type="button" class="btn btn-info "><i class="fa fa-user"></i> 角色设置</button>
             </div>
 
             <div class="form-group">
@@ -110,6 +111,22 @@
             };
             JucheapGrid.Load(config);
             $("#btnSearch").bind("click", searchData);
+            $("#btnSetRole").bind("click", function () {
+                var row = JucheapGrid.GetData();
+                if (row != null) {
+                    //弹出即全屏
+                    var layerIndex = parent.layer.open({
+                        title: "用户角色授权",
+                        type: 2,
+                        content: '@Url.Action("Authen")/' + row.id + "?username=" + row.loginName,
+                        area: ['800px', '600px'],
+                        maxmin: true
+                    });
+                    parent.layer.full(layerIndex);
+                } else {
+                    parent.layer.alert("请选择要授权的用户");
+                }
+            });
         });
     </script>
 }

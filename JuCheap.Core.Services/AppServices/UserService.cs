@@ -150,6 +150,7 @@ namespace JuCheap.Core.Services.AppServices
                 return true;
             _context.UserRoles.Add(new UserRoleEntity
             {
+                Id = BaseIdGenerator.Instance.GetId(),
                 UserId = userId,
                 RoleId = roleId
             });

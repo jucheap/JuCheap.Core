@@ -35,307 +35,323 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         public async Task<bool> InitAsync()
         {
-            await _context.Database.MigrateAsync();
-            if (await _context.SystemConfigs.AnyAsync(item => item.IsDataInited))
-                return false;
+            try
+            {
+                await _context.Database.EnsureCreatedAsync();
+                //await _context.Database.MigrateAsync();
+                if (await _context.SystemConfigs.AnyAsync(item => item.IsDataInited))
+                    return false;
 
-            #region 用户
+                #region 用户
 
-            var admin = new UserEntity
-            {
-                Id = _instance.GetId(),
-                LoginName = "jucheap",
-                RealName = "超级管理员",
-                Password = "qwaszx12".ToMd5(),
-                Email = "service@jucheap.com",
-                IsSuperMan = true,
-                CreateDateTime = _now
-            };
-            var guest = new UserEntity
-            {
-                Id = _instance.GetId(),
-                LoginName = "admin",
-                RealName = "游客",
-                Password = "qwaszx".ToMd5(),
-                Email = "service@jucheap.com",
-                CreateDateTime = _now
-            };
-            //用户
-            var user = new List<UserEntity>
-            {
-                admin,
-                guest
-            };
-            #endregion
+                var admin = new UserEntity
+                {
+                    Id = _instance.GetId(),
+                    LoginName = "jucheap",
+                    RealName = "超级管理员",
+                    Password = "qwaszx12".ToMd5(),
+                    Email = "service@jucheap.com",
+                    IsSuperMan = true,
+                    CreateDateTime = _now
+                };
+                var guest = new UserEntity
+                {
+                    Id = _instance.GetId(),
+                    LoginName = "admin",
+                    RealName = "游客",
+                    Password = "qwaszx".ToMd5(),
+                    Email = "service@jucheap.com",
+                    CreateDateTime = _now
+                };
+                //用户
+                var user = new List<UserEntity>
+                {
+                    admin,
+                    guest
+                };
+                #endregion
 
-            #region 菜单
-            
-            var system = new MenuEntity
-            {
-                Id = _instance.GetId(),
-                Name = "系统设置",
-                Url = "#",
-                CreateDateTime = _now,
-                Order = 1,
-                Code = "AA",
-                PathCode = "AA",
-                Type = 1
-            };//1
-            var menuMgr = new MenuEntity
-            {
-                Id = _instance.GetId(),
-                ParentId = system.Id,
-                Name = "菜单管理",
-                Url = "/Menu/Index",
-                CreateDateTime = _now,
-                Order = 2,
-                Code = "AA",
-                PathCode = "AAAA",
-                Type = 2
-            };//2
-            var roleMgr = new MenuEntity
-            {
-                Id = _instance.GetId(),
-                ParentId = system.Id,
-                Name = "角色管理",
-                Url = "/Role/Index",
-                CreateDateTime = _now,
-                Order = 3,
-                Code = "AB",
-                PathCode = "AAAB",
-                Type = 2
-            };//3
-            var userMgr = new MenuEntity
-            {
-                Id = _instance.GetId(),
-                ParentId = system.Id,
-                Name = "用户管理",
-                Url = "/User/Index",
-                CreateDateTime = _now,
-                Order = 4,
-                Code = "AC",
-                PathCode = "AAAC",
-                Type = 2
-            };//4
-            var userRoleMgr = new MenuEntity
-            {
-                Id = _instance.GetId(),
-                ParentId = system.Id,
-                Name = "用户授权",
-                Url = "/User/Authen",
-                CreateDateTime = _now,
-                Order = 5,
-                Code = "AD",
-                PathCode = "AAAD",
-                Type = 2
-            };//5
-            var roleMenuMgr = new MenuEntity
-            {
-                Id = _instance.GetId(),
-                ParentId = system.Id,
-                Name = "角色授权",
-                Url = "/Role/Authen",
-                CreateDateTime = _now,
-                Order = 6,
-                Code = "AE",
-                PathCode = "AAAE",
-                Type = 2
-            };//6
-            var sysConfig = new MenuEntity
-            {
-                Id = _instance.GetId(),
-                ParentId = system.Id,
-                Name = "系统配置",
-                Url = "/System/Index",
-                CreateDateTime = _now,
-                Order = 7,
-                Code = "AF",
-                PathCode = "AAAF",
-                Type = 2
-            };//7
-            var sysConfigReloadPathCode = new MenuEntity
-            {
-                Id = _instance.GetId(),
-                ParentId = sysConfig.Id,
-                Name = "重置路径码",
-                Url = "/System/ReloadPathCode",
-                CreateDateTime = _now,
-                Order = 8,
-                Code = "AAAF",
-                PathCode = "AAAFAA",
-                Type = 3
-            };//8
-            var log = new MenuEntity
-            {
-                Id = _instance.GetId(),
-                Name = "日志查看",
-                Url = "#",
-                CreateDateTime = _now,
-                Order = 9,
-                Code = "AB",
-                PathCode = "AB",
-                Type = 1
-            };//9
-            var logLogin = new MenuEntity
-            {
-                Id = _instance.GetId(),
-                ParentId = log.Id,
-                Name = "登录日志",
-                Url = "/Log/Logins",
-                CreateDateTime = _now,
-                Order = 10,
-                Code = "AA",
-                PathCode = "ABAA",
-                Type = 2
-            };//10
-            var logView = new MenuEntity
-            {
-                Id = _instance.GetId(),
-                ParentId = log.Id,
-                Name = "访问日志",
-                Url = "/Log/Visits",
-                CreateDateTime = _now,
-                Order = 11,
-                Code = "AB",
-                PathCode = "ABAB",
-                Type = 2
-            };//11
+                #region 菜单
 
-            //菜单
-            var menus = new List<MenuEntity>
-            {
-                system,
-                menuMgr,
-                roleMgr,
-                userMgr,
-                userRoleMgr,
-                roleMenuMgr,
-                sysConfig,
-                sysConfigReloadPathCode,
-                log,
-                logLogin,
-                logView
-            };
-            var menuBtns = GetMenuButtons(menuMgr.Id, "Menu", "菜单", "AAAA", 12);//14
-            var rolwBtns = GetMenuButtons(roleMgr.Id, "Role", "角色", "AAAB", 15);//17
-            var userBtns = GetMenuButtons(userMgr.Id, "User", "用户", "AAAC", 18);//20
+                var system = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    Name = "系统设置",
+                    Url = "#",
+                    CreateDateTime = _now,
+                    Order = 1,
+                    Code = "AA",
+                    PathCode = "AA",
+                    Type = 1
+                };//1
+                var menuMgr = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = system.Id,
+                    Name = "菜单管理",
+                    Url = "/Menu/Index",
+                    CreateDateTime = _now,
+                    Order = 2,
+                    Code = "AA",
+                    PathCode = "AAAA",
+                    Type = 2
+                };//2
+                var roleMgr = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = system.Id,
+                    Name = "角色管理",
+                    Url = "/Role/Index",
+                    CreateDateTime = _now,
+                    Order = 3,
+                    Code = "AB",
+                    PathCode = "AAAB",
+                    Type = 2
+                };//3
+                var userMgr = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = system.Id,
+                    Name = "用户管理",
+                    Url = "/User/Index",
+                    CreateDateTime = _now,
+                    Order = 4,
+                    Code = "AC",
+                    PathCode = "AAAC",
+                    Type = 2
+                };//4
+                var userRoleMgr = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = system.Id,
+                    Name = "用户授权",
+                    Url = "/User/Authen",
+                    CreateDateTime = _now,
+                    Order = 5,
+                    Code = "AD",
+                    PathCode = "AAAD",
+                    Type = 2
+                };//5
+                var roleMenuMgr = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = system.Id,
+                    Name = "角色授权",
+                    Url = "/Role/Authen",
+                    CreateDateTime = _now,
+                    Order = 6,
+                    Code = "AE",
+                    PathCode = "AAAE",
+                    Type = 2
+                };//6
+                var sysConfig = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = system.Id,
+                    Name = "系统配置",
+                    Url = "/System/Index",
+                    CreateDateTime = _now,
+                    Order = 7,
+                    Code = "AF",
+                    PathCode = "AAAF",
+                    Type = 2
+                };//7
+                var sysConfigReloadPathCode = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = sysConfig.Id,
+                    Name = "重置路径码",
+                    Url = "/System/ReloadPathCode",
+                    CreateDateTime = _now,
+                    Order = 8,
+                    Code = "AAAF",
+                    PathCode = "AAAFAA",
+                    Type = 3
+                };//8
+                var log = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    Name = "日志查看",
+                    Url = "#",
+                    CreateDateTime = _now,
+                    Order = 9,
+                    Code = "AB",
+                    PathCode = "AB",
+                    Type = 1
+                };//9
+                var logLogin = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = log.Id,
+                    Name = "登录日志",
+                    Url = "/Log/Logins",
+                    CreateDateTime = _now,
+                    Order = 10,
+                    Code = "AA",
+                    PathCode = "ABAA",
+                    Type = 2
+                };//10
+                var logView = new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = log.Id,
+                    Name = "访问日志",
+                    Url = "/Log/Visits",
+                    CreateDateTime = _now,
+                    Order = 11,
+                    Code = "AB",
+                    PathCode = "ABAB",
+                    Type = 2
+                };//11
 
-            menus.AddRange(menuBtns);//14
-            menus.AddRange(rolwBtns);//17
-            menus.AddRange(userBtns);//20
-            menus.Add(new MenuEntity
-            {
-                Id = _instance.GetId(),
-                ParentId = roleMenuMgr.Id,
-                Order = 6,
-                Name = "授权",
-                Type = (byte)MenuType.Button,
-                Url = "/Role/SetRoleMenus",
-                CreateDateTime = _now,
-                Code = "AA",
-                PathCode = "AAACAA"
-            });
-            menus.Add(new MenuEntity
-            {
-                Id = _instance.GetId(),
-                ParentId = roleMenuMgr.Id,
-                Order = 6,
-                Name = "清空权限",
-                Type = (byte)MenuType.Button,
-                Url = "/Role/ClearRoleMenus",
-                CreateDateTime = _now,
-                Code = "AB",
-                PathCode = "AAACAB"
-            });
+                //菜单
+                var menus = new List<MenuEntity>
+                {
+                    system,
+                    menuMgr,
+                    roleMgr,
+                    userMgr,
+                    userRoleMgr,
+                    roleMenuMgr,
+                    sysConfig,
+                    sysConfigReloadPathCode,
+                    log,
+                    logLogin,
+                    logView
+                };
+                var menuBtns = GetMenuButtons(menuMgr.Id, "Menu", "菜单", "AAAA", 12);//14
+                var rolwBtns = GetMenuButtons(roleMgr.Id, "Role", "角色", "AAAB", 15);//17
+                var userBtns = GetMenuButtons(userMgr.Id, "User", "用户", "AAAC", 18);//20
 
-            #endregion
+                menus.AddRange(menuBtns);//14
+                menus.AddRange(rolwBtns);//17
+                menus.AddRange(userBtns);//20
+                menus.Add(new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = roleMenuMgr.Id,
+                    Order = 6,
+                    Name = "授权",
+                    Type = (byte)MenuType.Button,
+                    Url = "/Role/SetRoleMenus",
+                    CreateDateTime = _now,
+                    Code = "AA",
+                    PathCode = "AAACAA"
+                });
+                menus.Add(new MenuEntity
+                {
+                    Id = _instance.GetId(),
+                    ParentId = roleMenuMgr.Id,
+                    Order = 6,
+                    Name = "清空权限",
+                    Type = (byte)MenuType.Button,
+                    Url = "/Role/ClearRoleMenus",
+                    CreateDateTime = _now,
+                    Code = "AB",
+                    PathCode = "AAACAB"
+                });
 
-            #region 角色
+                #endregion
 
-            var superAdminRole = new RoleEntity
-            {
-                Id = _instance.GetId(),
-                Name = "超级管理员",
-                Description = "超级管理员"
-            };
-            var guestRole = new RoleEntity
-            {
-                Id = _instance.GetId(),
-                Name = "guest",
-                Description = "游客"
-            };
-            var roles = new List<RoleEntity>
+                #region 角色
+
+                var superAdminRole = new RoleEntity
+                {
+                    Id = _instance.GetId(),
+                    Name = "超级管理员",
+                    Description = "超级管理员"
+                };
+                var guestRole = new RoleEntity
+                {
+                    Id = _instance.GetId(),
+                    Name = "guest",
+                    Description = "游客"
+                };
+                var roles = new List<RoleEntity>
             {
                 superAdminRole,
                 guestRole
             };
 
-            #endregion
+                #endregion
 
-            #region 用户角色关系
+                #region 用户角色关系
 
-            var userRoles = new List<UserRoleEntity>
-            {
-                new UserRoleEntity
+                var userRoles = new List<UserRoleEntity>
                 {
-                    Id = _instance.GetId(),
-                    UserId = admin.Id, RoleId = superAdminRole.Id, CreateDateTime = _now
-                },
-                new UserRoleEntity
+                    new UserRoleEntity
+                    {
+                        Id = _instance.GetId(),
+                        UserId = admin.Id,
+                        RoleId = superAdminRole.Id,
+                        CreateDateTime = _now
+                    },
+                    new UserRoleEntity
+                    {
+                        Id = _instance.GetId(),
+                        UserId = guest.Id,
+                        RoleId = guestRole.Id,
+                        CreateDateTime = _now
+                    }
+                };
+
+                #endregion
+
+                #region 角色菜单权限关系
+
+                var roleMenus = new List<RoleMenuEntity>();
+                //管理员授权(管理员有所有权限)
+                menus.ForEach(m =>
                 {
-                    Id = _instance.GetId(),
-                    UserId = guest.Id, RoleId = guestRole.Id, CreateDateTime = _now
-                }
-            };
-
-            #endregion
-
-            #region 角色菜单权限关系
-
-            var roleMenus = new List<RoleMenuEntity>();
-            //管理员授权(管理员有所有权限)
-            menus.ForEach(m =>
-            {
-                roleMenus.Add(new RoleMenuEntity
-                {
-                    Id = _instance.GetId(),
-                    RoleId = superAdminRole.Id, MenuId = m.Id, CreateDateTime = _now
+                    roleMenus.Add(new RoleMenuEntity
+                    {
+                        Id = _instance.GetId(),
+                        RoleId = superAdminRole.Id,
+                        MenuId = m.Id,
+                        CreateDateTime = _now
+                    });
                 });
-            });
-            //guest授权(guest只有查看权限，没有按钮操作权限)
-            menus.Where(item=>item.Type!=(byte)MenuType.Button).ForEach(m =>
-            {
-                roleMenus.Add(new RoleMenuEntity
+                //guest授权(guest只有查看权限，没有按钮操作权限)
+                menus.Where(item => item.Type != (byte)MenuType.Button).ForEach(m =>
+                {
+                    roleMenus.Add(new RoleMenuEntity
+                    {
+                        Id = _instance.GetId(),
+                        RoleId = guestRole.Id,
+                        MenuId = m.Id,
+                        CreateDateTime = _now
+                    });
+                });
+
+                #endregion
+
+                #region 系统配置
+
+                var systemConfig = new SystemConfigEntity
                 {
                     Id = _instance.GetId(),
-                    RoleId = guestRole.Id, MenuId = m.Id, CreateDateTime = _now
-                });
-            });
+                    SystemName = "JuCheap Core",
+                    IsDataInited = true,
+                    DataInitedDate = _now,
+                    CreateDateTime = _now,
+                    IsDeleted = false
+                };
 
-            #endregion
+                #endregion
 
-            #region 系统配置
-
-            var systemConfig = new SystemConfigEntity
+                _context.Menus.AddRange(menus.OrderBy(m => m.Order).ToArray());
+                _context.Roles.AddRange(roles);
+                _context.Users.AddRange(user);
+                _context.UserRoles.AddRange(userRoles);
+                _context.RoleMenus.AddRange(roleMenus);
+                _context.SystemConfigs.Add(systemConfig);
+                return await _context.SaveChangesAsync() > 0;
+            }
+            catch(Exception ex)
             {
-                Id = _instance.GetId(),
-                SystemName = "JuCheap Core",
-                IsDataInited = true,
-                DataInitedDate = _now,
-                CreateDateTime = _now,
-                IsDeleted = false
-            };
-
-            #endregion
-            
-            _context.Menus.AddRange(menus.OrderBy(m => m.Order).ToArray());
-            _context.Roles.AddRange(roles);
-            _context.Users.AddRange(user);
-            //await _context.SaveChangesAsync();
-            _context.UserRoles.AddRange(userRoles);
-            _context.RoleMenus.AddRange(roleMenus);
-            _context.SystemConfigs.Add(systemConfig);
-            return await _context.SaveChangesAsync() > 0;
+                //todo log
+            }
+            return false;
         }
 
         /// <summary>
@@ -351,12 +367,12 @@ namespace JuCheap.Core.Services.AppServices
             }
             //求组合
             var list = (from a in codes
-                from b in codes
-                select new PathCodeEntity
-                {
-                    Code = a + b,
-                    Len = 2
-                }).OrderBy(item => item.Code).ToList();
+                        from b in codes
+                        select new PathCodeEntity
+                        {
+                            Code = a + b,
+                            Len = 2
+                        }).OrderBy(item => item.Code).ToList();
 
             await _context.Database.ExecuteSqlCommandAsync("DELETE FROM PathCodes");
             _context.PathCodes.AddRange(list);
@@ -375,7 +391,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="parentPathCode">父级路径码</param>
         /// <param name="order">排序</param>
         /// <returns></returns>
-        private IEnumerable<MenuEntity> GetMenuButtons(string parentId, string controllerName, string controllerShowName, string parentPathCode,int order)
+        private IEnumerable<MenuEntity> GetMenuButtons(string parentId, string controllerName, string controllerShowName, string parentPathCode, int order)
         {
             return new List<MenuEntity>
             {

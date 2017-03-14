@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_Infrastructure", "01_Infrastructure", "{FE4E929F-D14C-4249-AFA0-DD01C13B0828}"
 EndProject
@@ -11,17 +11,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03_Service", "03_Service", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04_Web", "04_Web", "{B8548CF5-97ED-490A-A046-5426F2ABEE88}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "JuCheap.Core.Infrastructure", "JuCheap.Core.Infrastructure\JuCheap.Core.Infrastructure.xproj", "{9BCBD96F-8398-481E-8C82-5AD8164DD2BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JuCheap.Core.Infrastructure", "JuCheap.Core.Infrastructure\JuCheap.Core.Infrastructure.csproj", "{9BCBD96F-8398-481E-8C82-5AD8164DD2BD}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "JuCheap.Core.Web", "JuCheap.Core.Web\JuCheap.Core.Web.xproj", "{D31FBF82-5EF9-43EB-ABDC-81EC9C9BC3EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JuCheap.Core.Web", "JuCheap.Core.Web\JuCheap.Core.Web.csproj", "{D31FBF82-5EF9-43EB-ABDC-81EC9C9BC3EC}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "JuCheap.Core.Data", "JuCheap.Core.Data\JuCheap.Core.Data.xproj", "{C3281238-30A4-4174-B373-78DABCC56877}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JuCheap.Core.Data", "JuCheap.Core.Data\JuCheap.Core.Data.csproj", "{C3281238-30A4-4174-B373-78DABCC56877}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "JuCheap.Core.Models", "JuCheap.Core.Models\JuCheap.Core.Models.xproj", "{CFC610F3-702F-43D1-985C-04DF98EB0D41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JuCheap.Core.Models", "JuCheap.Core.Models\JuCheap.Core.Models.csproj", "{CFC610F3-702F-43D1-985C-04DF98EB0D41}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "JuCheap.Core.Interfaces", "JuCheap.Core.Interfaces\JuCheap.Core.Interfaces.xproj", "{460F83CB-7545-4507-ACAC-B4AAAEE48C2E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JuCheap.Core.Interfaces", "JuCheap.Core.Interfaces\JuCheap.Core.Interfaces.csproj", "{460F83CB-7545-4507-ACAC-B4AAAEE48C2E}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "JuCheap.Core.Services", "JuCheap.Core.Services\JuCheap.Core.Services.xproj", "{87797680-70C1-4345-B46C-431059646A7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JuCheap.Core.Services", "JuCheap.Core.Services\JuCheap.Core.Services.csproj", "{87797680-70C1-4345-B46C-431059646A7C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

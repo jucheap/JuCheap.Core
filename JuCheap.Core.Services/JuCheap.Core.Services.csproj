@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <VersionPrefix>1.1.0</VersionPrefix>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <AssemblyName>JuCheap.Core.Services</AssemblyName>
+    <PackageId>JuCheap.Core.Services</PackageId>
+    <RuntimeFrameworkVersion>1.1.1</RuntimeFrameworkVersion>
+    <PackageTargetFallback>$(PackageTargetFallback);dnxcore50;portable-net45+win8</PackageTargetFallback>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JuCheap.Core.Data\JuCheap.Core.Data.csproj" />
+    <ProjectReference Include="..\JuCheap.Core.Infrastructure\JuCheap.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\JuCheap.Core.Interfaces\JuCheap.Core.Interfaces.csproj" />
+    <ProjectReference Include="..\JuCheap.Core.Models\JuCheap.Core.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="5.1.1" />
+  </ItemGroup>
+
+</Project>

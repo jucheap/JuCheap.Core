@@ -373,7 +373,7 @@ namespace JuCheap.Core.Services.AppServices
                 _context.SystemConfigs.Add(systemConfig);
                 return await _context.SaveChangesAsync() > 0;
             }
-            catch(Exception ex)
+            catch
             {
                 //todo log
             }

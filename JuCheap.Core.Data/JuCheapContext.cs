@@ -20,10 +20,6 @@ namespace JuCheap.Core.Data
     /// </summary>
     public class JuCheapContext : DbContext
     {
-        public JuCheapContext()
-        {
-            
-        }
 
         /// <summary>
         /// JuCheapContext

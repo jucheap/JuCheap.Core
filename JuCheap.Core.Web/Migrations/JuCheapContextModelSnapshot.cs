@@ -13,7 +13,8 @@ namespace JuCheap.Core.Web.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752");
+                .HasAnnotation("ProductVersion", "1.1.1")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.LoginLogEntity", b =>
                 {
@@ -24,17 +25,17 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("IP")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LoginName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<string>("Mac")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 200);
+                        .HasMaxLength(200);
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -52,7 +53,7 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 6);
+                        .HasMaxLength(6);
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -60,7 +61,7 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<int>("Order");
 
@@ -69,13 +70,13 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("PathCode")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<byte>("Type");
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 300);
+                        .HasMaxLength(300);
 
                     b.HasKey("Id");
 
@@ -91,22 +92,22 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("IP")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LoginName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 300);
+                        .HasMaxLength(300);
 
                     b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("varchar(20)")
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
@@ -120,7 +121,7 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 4);
+                        .HasMaxLength(4);
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -142,13 +143,13 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 50);
+                        .HasMaxLength(50);
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
@@ -196,7 +197,7 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("SystemName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 50);
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -212,7 +213,7 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 36);
+                        .HasMaxLength(36);
 
                     b.Property<bool>("IsDeleted");
 
@@ -220,15 +221,15 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("LoginName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 50);
+                        .HasMaxLength(50);
 
                     b.Property<string>("RealName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 

@@ -42,12 +42,12 @@ namespace JuCheap.Core.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ////使用Sql Server数据库
-            //services.AddEntityFrameworkSqlServer()
-            //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-            //        options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"),
-            //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
-            //            .UseInternalServiceProvider(serviceProvider));
+            //使用Sql Server数据库
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<JuCheapContext>((serviceProvider, options) =>
+                    options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"),
+                        b => b.MigrationsAssembly("JuCheap.Core.Web"))
+                        .UseInternalServiceProvider(serviceProvider));
 
             ////使用Sqlite数据库
             //services.AddEntityFrameworkSqlite()
@@ -56,12 +56,12 @@ namespace JuCheap.Core.Web
             //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
             //            .UseInternalServiceProvider(serviceProvider));
 
-            //使用MySql数据库
-            services.AddEntityFrameworkMySql()
-                .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-                    options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
-                        b => b.MigrationsAssembly("JuCheap.Core.Web"))
-                        .UseInternalServiceProvider(serviceProvider));
+            ////使用MySql数据库
+            //services.AddEntityFrameworkMySql()
+            //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
+            //        options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
+            //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
+            //            .UseInternalServiceProvider(serviceProvider));
 
             services.AddSingleton<DbContext, JuCheapContext>();
 

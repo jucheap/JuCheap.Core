@@ -29,11 +29,11 @@ namespace JuCheap.Core.Web
             if (env.IsDevelopment())
             {
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets();
+                builder.AddUserSecrets<Startup>();
             }
 
             builder.AddEnvironmentVariables();
-            
+
             Configuration = builder.Build();
         }
 
@@ -120,7 +120,7 @@ namespace JuCheap.Core.Web
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-            //app.UseMiddleware<VisitMiddleware>();
+            app.UseMiddleware<VisitMiddleware>();
 
             app.UseMvc(routes =>
             {

@@ -60,7 +60,7 @@ var paths = {
         webroot + "css/bootstrap.css",
         webroot + "css/style.css",
         webroot + "css/font-awesome.css",
-        webroot + "css/js/plugins/layer/skin/layer.css",
+        webroot + "css/js/plugins/layer/skin/default/layer.css",
         "!" + webroot + "css/site.min.css"
     ],
     contentCss: [

@@ -13,6 +13,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="wwwroot\js\plugins\layer\layer.js" />
+    <Content Include="wwwroot\js\plugins\layer\mobile\layer.js" />
+    <Content Include="wwwroot\js\plugins\layer\mobile\need\layer.css" />
+    <Content Include="wwwroot\js\plugins\layer\skin\default\icon-ext.png" />
+    <Content Include="wwwroot\js\plugins\layer\skin\default\icon.png" />
+    <Content Include="wwwroot\js\plugins\layer\skin\default\layer.css" />
+    <Content Include="wwwroot\js\plugins\layer\skin\default\loading-0.gif" />
+    <Content Include="wwwroot\js\plugins\layer\skin\default\loading-1.gif" />
+    <Content Include="wwwroot\js\plugins\layer\skin\default\loading-2.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="wwwroot\**\*;Views\**\*">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </None>

@@ -72,6 +72,8 @@ namespace JuCheap.Core.Web.Controllers
         public async Task<IActionResult> AuthenMenuDatas()
         {
             var list = await _menuService.GetTreesAsync();
+            //默认tree节点是展开的
+            list.ForEach(x => x.open = true);
             return Json(list);
         }
 

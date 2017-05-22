@@ -10,6 +10,8 @@
 *
 *********************************************************************************/
 
+using System;
+
 namespace JuCheap.Core.Data.Entity
 {
     /// <summary>
@@ -21,12 +23,12 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// 角色ID
         /// </summary>
-        public string RoleId { get; set; }
+        public Guid RoleId { get; set; }
 
         /// <summary>
         /// 所属用户

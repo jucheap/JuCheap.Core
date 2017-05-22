@@ -8,38 +8,36 @@ using JuCheap.Core.Data;
 namespace JuCheap.Core.Web.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    [Migration("20170221045233_initdb")]
-    partial class initdb
+    [Migration("20170522065951_InitDatabase")]
+    partial class InitDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.0-rtm-22752");
+                .HasAnnotation("ProductVersion", "1.1.2")
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.LoginLogEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<string>("IP")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LoginName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<string>("Mac")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 200);
+                        .HasMaxLength(200);
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -48,12 +46,11 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.MenuEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 6);
+                        .HasMaxLength(6);
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -61,22 +58,21 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<int>("Order");
 
-                    b.Property<string>("ParentId")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid?>("ParentId");
 
                     b.Property<string>("PathCode")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<byte>("Type");
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 300);
+                        .HasMaxLength(300);
 
                     b.HasKey("Id");
 
@@ -85,29 +81,27 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.PageViewEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<string>("IP")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("LoginName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 300);
+                        .HasMaxLength(300);
 
-                    b.Property<string>("UserId")
+                    b.Property<Guid?>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
@@ -116,12 +110,11 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.PathCodeEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 4);
+                        .HasMaxLength(4);
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -136,20 +129,19 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.RoleEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 50);
+                        .HasMaxLength(50);
 
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
@@ -158,20 +150,15 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.RoleMenuEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("MenuId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("MenuId");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("Id");
 
@@ -184,8 +171,7 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.SystemConfigEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -197,7 +183,7 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("SystemName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 50);
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -206,14 +192,13 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.UserEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 36);
+                        .HasMaxLength(36);
 
                     b.Property<bool>("IsDeleted");
 
@@ -221,15 +206,15 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<string>("LoginName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 50);
+                        .HasMaxLength(50);
 
                     b.Property<string>("RealName")
                         .IsRequired()
-                        .HasAnnotation("MaxLength", 20);
+                        .HasMaxLength(20);
 
                     b.HasKey("Id");
 
@@ -238,20 +223,15 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.UserRoleEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("RoleId");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 

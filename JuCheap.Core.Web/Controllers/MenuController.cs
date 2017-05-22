@@ -9,6 +9,7 @@ using JuCheap.Core.Web.Filters;
 using JuCheap.Core.Web.Models;
 using JuCheap.Core.Infrastructure.Extentions;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -48,7 +49,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             var model = await _menuService.FindAsync(id);
             return View(model);
@@ -64,7 +65,7 @@ namespace JuCheap.Core.Web.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _menuService.AddAsync(dto);
-                if (result.IsNotBlank())
+                if (result != Guid.Empty)
                     return RedirectToAction("Index");
             }
             return View(dto);
@@ -92,7 +93,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Delete([FromBody]IEnumerable<string> ids)
+        public async Task<IActionResult> Delete([FromBody]IEnumerable<Guid> ids)
         {
             var result = new JsonResultModel<bool>();
             if (ids.AnyOne())

@@ -12,6 +12,7 @@ using JuCheap.Core.Models.Filters;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace JuCheap.Core.Services.AppServices
 {
@@ -44,10 +45,10 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="dto">菜单模型</param>
         /// <returns></returns>
-        public async Task<string> AddAsync(MenuDto dto)
+        public async Task<Guid> AddAsync(MenuDto dto)
         {
             var entity = _mapper.Map<MenuDto, MenuEntity>(dto);
-            entity.Id = BaseIdGenerator.Instance.GetId();
+            entity.Init();
             var dbSet = _context.Menus;
             var pathCodeDbSet = _pathCodeService.GetPathCodes();
 
@@ -55,7 +56,7 @@ namespace JuCheap.Core.Services.AppServices
                 .Select(item => item.Code).ToListAsync();
             var pathCode = pathCodeDbSet.FirstOrDefault(item => !existsCode.Contains(item));
             entity.Code = pathCode.Trim();
-            if (entity.ParentId.IsNotBlank())
+            if (entity.ParentId.HasValue)
             {
                 var parent = await dbSet.FirstOrDefaultAsync(m => m.Id == entity.ParentId);
                 entity.PathCode = string.Concat(parent.PathCode.Trim(), entity.Code.Trim());
@@ -68,7 +69,7 @@ namespace JuCheap.Core.Services.AppServices
             }
             dbSet.Add(entity);
 
-            return await _context.SaveChangesAsync() > 0 ? entity.Id : string.Empty;
+            return await _context.SaveChangesAsync() > 0 ? entity.Id : Guid.Empty;
         }
 
         /// <summary>
@@ -93,12 +94,12 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task<MenuDto> FindAsync(string id)
+        public async Task<MenuDto> FindAsync(Guid id)
         {
             var dbSet = _context.Menus;
             var entity = await dbSet.FirstOrDefaultAsync(m => m.Id == id);
             var dto = _mapper.Map<MenuEntity, MenuDto>(entity);
-            if (dto.ParentId.IsNotBlank())
+            if (dto.ParentId.HasValue)
             {
                 var parent = await dbSet.FirstOrDefaultAsync(m => m.Id == dto.ParentId);
                 dto.ParentName = parent.Name;
@@ -111,7 +112,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        public async Task<bool> DeleteAsync(IEnumerable<string> ids)
+        public async Task<bool> DeleteAsync(IEnumerable<Guid> ids)
         {
             var dbSet = _context.Menus;
             var entities = await dbSet.Where(item => ids.Contains(item.Id)).ToListAsync();
@@ -157,7 +158,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="userId">用户Id</param>
         /// <returns></returns>
-        public async Task<List<MenuDto>> GetMyMenusAsync(string userId)
+        public async Task<List<MenuDto>> GetMyMenusAsync(Guid userId)
         {
             var dbSet = _context.Menus;
             var dbSetUserRoles = _context.UserRoles;
@@ -194,7 +195,7 @@ namespace JuCheap.Core.Services.AppServices
         /// 获取菜单树
         /// </summary>
         /// <returns></returns>
-        public async Task<List<MenuDto>> GetMenusByRoleIdAsync(string roleId)
+        public async Task<List<MenuDto>> GetMenusByRoleIdAsync(Guid roleId)
         {
             var list = await _context.Menus.Where(m => !m.IsDeleted)
                 .Join(_context.RoleMenus, m => m.Id, rm => rm.MenuId, (menu, roleMenu) => new { menu, roleMenu })

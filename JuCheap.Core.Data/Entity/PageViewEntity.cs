@@ -10,6 +10,8 @@
 *
 *********************************************************************************/
 
+using System;
+
 namespace JuCheap.Core.Data.Entity
 {
     /// <summary>
@@ -21,7 +23,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// UserId
         /// </summary>
-        public string UserId { get; set; }
+        public Guid? UserId { get; set; }
         /// <summary>
         /// UserName
         /// </summary>

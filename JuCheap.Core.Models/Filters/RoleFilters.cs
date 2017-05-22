@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace JuCheap.Core.Models.Filters
 {
@@ -10,7 +11,7 @@ namespace JuCheap.Core.Models.Filters
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string UserId { get; set; }
+        public Guid? UserId { get; set; }
 
         /// <summary>
         /// 是否排除当前UserId拥有的角色

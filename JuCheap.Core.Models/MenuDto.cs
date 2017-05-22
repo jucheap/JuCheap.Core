@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using JuCheap.Core.Models.Enum;
 using JuCheap.Core.Infrastructure.Extentions;
+using System;
 
 namespace JuCheap.Core.Models
 {
@@ -12,13 +13,13 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 菜单ID
         /// </summary>
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// 上级ID
         /// </summary>
         [Display(Name = "上级菜单")]
-        public string ParentId { get; set; }
+        public Guid? ParentId { get; set; }
 
         /// <summary>
         /// 上级菜单名称

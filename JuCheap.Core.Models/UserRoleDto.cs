@@ -1,4 +1,6 @@
-﻿namespace JuCheap.Core.Models
+﻿using System;
+
+namespace JuCheap.Core.Models
 {
     /// <summary>
     /// 用户角色
@@ -8,11 +10,11 @@
         /// <summary>
         /// 角色ID
         /// </summary>
-        public string RoleId { get; set; }
+        public Guid RoleId { get; set; }
 
         /// <summary>
         /// 角色名称
         /// </summary>
-        public string RoleName { get; set; }
+        public Guid RoleName { get; set; }
     }
 }

@@ -11,6 +11,7 @@
 *********************************************************************************/
 
 
+using System;
 using System.Collections.Generic;
 
 namespace JuCheap.Core.Data.Entity
@@ -23,7 +24,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 上级ID
         /// </summary>
-        public string ParentId { get; set; }
+        public Guid? ParentId { get; set; }
 
         /// <summary>
         /// 编码

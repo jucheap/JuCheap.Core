@@ -10,6 +10,8 @@
 *
 *********************************************************************************/
 
+using System;
+
 namespace JuCheap.Core.Data.Entity
 {
     /// <summary>
@@ -21,12 +23,12 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 角色ID
         /// </summary>
-        public string RoleId { get; set; }
+        public Guid RoleId { get; set; }
 
         /// <summary>
         /// 菜单ID
         /// </summary>
-        public string MenuId { get; set; }
+        public Guid MenuId { get; set; }
 
         /// <summary>
         /// 角色

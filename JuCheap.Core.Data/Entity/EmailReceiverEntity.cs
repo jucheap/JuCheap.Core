@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace JuCheap.Core.Data.Entity
 {
     /// <summary>
@@ -9,7 +11,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 邮件ID
         /// </summary>
-        public string EmailId { get; set; }
+        public Guid EmailId { get; set; }
 
         /// <summary>
         /// 邮件地址

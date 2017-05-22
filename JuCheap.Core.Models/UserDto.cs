@@ -11,7 +11,7 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         /// <summary>
         /// 登录账号

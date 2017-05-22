@@ -37,7 +37,7 @@ namespace JuCheap.Core.Web.Filters
                     Ip = connection.RemoteIpAddress.ToString(),
                     LoginName = isLogined ? user.Identity.Name : string.Empty,
                     Url = context.Request.Path,
-                    UserId = isLogined ? user.Identity.GetLoginUserId() : "0"
+                    UserId = user.Identity.GetLoginUserId()
                 };
                 await userService.VisitAsync(visit);
             }

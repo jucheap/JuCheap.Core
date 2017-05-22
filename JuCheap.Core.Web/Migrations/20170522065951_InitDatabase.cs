@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace JuCheap.Core.Web.Migrations
 {
-    public partial class initdb : Migration
+    public partial class InitDatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,13 +12,13 @@ namespace JuCheap.Core.Web.Migrations
                 name: "LoginLogs",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IP = table.Column<string>(maxLength: 20, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     LoginName = table.Column<string>(maxLength: 20, nullable: false),
                     Mac = table.Column<string>(maxLength: 200, nullable: false),
-                    UserId = table.Column<string>(type: "varchar(20)", nullable: false)
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,13 +29,13 @@ namespace JuCheap.Core.Web.Migrations
                 name: "Menus",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Code = table.Column<string>(maxLength: 6, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
                     Order = table.Column<int>(nullable: false),
-                    ParentId = table.Column<string>(type: "varchar(20)", nullable: true),
+                    ParentId = table.Column<Guid>(nullable: true),
                     PathCode = table.Column<string>(maxLength: 20, nullable: false),
                     Type = table.Column<byte>(nullable: false),
                     Url = table.Column<string>(maxLength: 300, nullable: false)
@@ -49,13 +49,13 @@ namespace JuCheap.Core.Web.Migrations
                 name: "PageViews",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IP = table.Column<string>(maxLength: 20, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     LoginName = table.Column<string>(maxLength: 20, nullable: false),
                     Url = table.Column<string>(maxLength: 300, nullable: false),
-                    UserId = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                    UserId = table.Column<Guid>(maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,7 +66,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "PathCodes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     Code = table.Column<string>(maxLength: 4, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -81,7 +81,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     Description = table.Column<string>(maxLength: 50, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -96,7 +96,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "SystemConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     DataInitedDate = table.Column<DateTime>(nullable: false),
                     IsDataInited = table.Column<bool>(nullable: false),
@@ -112,7 +112,7 @@ namespace JuCheap.Core.Web.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     Email = table.Column<string>(maxLength: 36, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -130,11 +130,11 @@ namespace JuCheap.Core.Web.Migrations
                 name: "RoleMenus",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    MenuId = table.Column<string>(type: "varchar(20)", nullable: false),
-                    RoleId = table.Column<string>(type: "varchar(20)", nullable: false)
+                    MenuId = table.Column<Guid>(nullable: false),
+                    RoleId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,11 +157,11 @@ namespace JuCheap.Core.Web.Migrations
                 name: "UserRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "varchar(20)", nullable: false),
+                    Id = table.Column<Guid>(nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    RoleId = table.Column<string>(type: "varchar(20)", nullable: false),
-                    UserId = table.Column<string>(type: "varchar(20)", nullable: false)
+                    RoleId = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

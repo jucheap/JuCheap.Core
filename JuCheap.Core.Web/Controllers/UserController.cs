@@ -10,6 +10,7 @@ using JuCheap.Core.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using JuCheap.Core.Infrastructure.Extentions;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -43,7 +44,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 用户角色授权
         /// </summary>
         /// <returns></returns>
-        public IActionResult Authen(string id)
+        public IActionResult Authen(Guid id)
         {
             var user = new UserDto
             {
@@ -66,7 +67,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             var dto = await _userService.FindAsync(id);
             var model = _mapper.Map<UserDto, UserUpdateDto>(dto);
@@ -84,7 +85,7 @@ namespace JuCheap.Core.Web.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _userService.AddAsync(dto);
-                if (result.IsNotBlank())
+                if (result != Guid.Empty)
                     return RedirectToAction("Index");
             }
             return View(dto);
@@ -113,7 +114,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Delete([FromBody]List<string> ids)
+        public async Task<IActionResult> Delete([FromBody]List<Guid> ids)
         {
             var result = new JsonResultModel<bool>();
             if (ids.AnyOne())
@@ -167,7 +168,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="userId">用户Id</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> GiveRight(string id, string userId)
+        public async Task<IActionResult> GiveRight(Guid id, Guid userId)
         {
             var result = new JsonResultModel<bool>
             {
@@ -183,7 +184,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="userId">用户Id</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> CancelRight(string id,string userId)
+        public async Task<IActionResult> CancelRight(Guid id, Guid userId)
         {
             var result = new JsonResultModel<bool>
             {
@@ -201,7 +202,7 @@ namespace JuCheap.Core.Web.Controllers
         [IgnoreRightFilter]
         public async Task<IActionResult> VerifyLoginName(string loginName)
         {
-            var isExists = await _userService.ExistsLoginNameAsync(string.Empty, loginName);
+            var isExists = await _userService.ExistsLoginNameAsync(null, loginName);
             return isExists ? Json("登录帐号已存在") : Json(data: true);
         }
     }

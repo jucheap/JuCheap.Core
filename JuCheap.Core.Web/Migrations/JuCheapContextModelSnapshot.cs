@@ -13,13 +13,12 @@ namespace JuCheap.Core.Web.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .HasAnnotation("ProductVersion", "1.1.1")
+                .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.LoginLogEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -37,9 +36,7 @@ namespace JuCheap.Core.Web.Migrations
                         .IsRequired()
                         .HasMaxLength(200);
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 
@@ -48,8 +45,7 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.MenuEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -65,8 +61,7 @@ namespace JuCheap.Core.Web.Migrations
 
                     b.Property<int>("Order");
 
-                    b.Property<string>("ParentId")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid?>("ParentId");
 
                     b.Property<string>("PathCode")
                         .IsRequired()
@@ -85,8 +80,7 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.PageViewEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -104,9 +98,8 @@ namespace JuCheap.Core.Web.Migrations
                         .IsRequired()
                         .HasMaxLength(300);
 
-                    b.Property<string>("UserId")
+                    b.Property<Guid?>("UserId")
                         .IsRequired()
-                        .HasColumnType("varchar(20)")
                         .HasMaxLength(20);
 
                     b.HasKey("Id");
@@ -116,8 +109,7 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.PathCodeEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<string>("Code")
                         .IsRequired()
@@ -136,8 +128,7 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.RoleEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -158,20 +149,15 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.RoleMenuEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("MenuId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("MenuId");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("RoleId");
 
                     b.HasKey("Id");
 
@@ -184,8 +170,7 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.SystemConfigEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -206,8 +191,7 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.UserEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -238,20 +222,15 @@ namespace JuCheap.Core.Web.Migrations
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.UserRoleEntity", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("Id");
 
                     b.Property<DateTime>("CreateDateTime");
 
                     b.Property<bool>("IsDeleted");
 
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("RoleId");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("varchar(20)");
+                    b.Property<Guid>("UserId");
 
                     b.HasKey("Id");
 

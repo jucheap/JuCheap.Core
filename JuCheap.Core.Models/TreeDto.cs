@@ -1,4 +1,6 @@
-﻿namespace JuCheap.Core.Models
+﻿using System;
+
+namespace JuCheap.Core.Models
 {
     /// <summary>
     /// ztree模型
@@ -8,12 +10,12 @@
         /// <summary>
         /// Id
         /// </summary>
-        public string id { get; set; }
+        public Guid id { get; set; }
 
         /// <summary>
         /// 父类ID
         /// </summary>
-        public string pId { get; set; }
+        public Guid? pId { get; set; }
 
         /// <summary>
         /// 名称

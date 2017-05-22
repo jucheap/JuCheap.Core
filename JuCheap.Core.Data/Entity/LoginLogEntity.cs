@@ -11,6 +11,8 @@
 *********************************************************************************/
 
 
+using System;
+
 namespace JuCheap.Core.Data.Entity
 {
     /// <summary>
@@ -21,7 +23,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 用户ID
         /// </summary>
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
 
         /// <summary>
         /// 登录账号

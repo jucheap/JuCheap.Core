@@ -9,6 +9,7 @@ using JuCheap.Core.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using JuCheap.Core.Infrastructure.Extentions;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -50,7 +51,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Edit(string id)
+        public async Task<IActionResult> Edit(Guid id)
         {
             var model = await _roleService.FindAsync(id);
             return View(model);
@@ -91,7 +92,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 获取角色下的菜单
         /// </summary>
         /// <returns></returns>
-        public async Task<IActionResult> AuthenRoleMenus(string id)
+        public async Task<IActionResult> AuthenRoleMenus(Guid id)
         {
             var list = await _menuService.GetMenusByRoleIdAsync(id);
             var menuIds = list?.Select(item => item.Id);
@@ -123,7 +124,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="id">角色ID</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> ClearRoleMenus(string id)
+        public async Task<IActionResult> ClearRoleMenus(Guid id)
         {
             var result = new JsonResultModel<bool>
             {
@@ -142,7 +143,7 @@ namespace JuCheap.Core.Web.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _roleService.AddAsync(dto);
-                if (result.IsNotBlank())
+                if (result != Guid.Empty)
                     return RedirectToAction("Index");
             }
             return View(dto);
@@ -169,7 +170,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Delete([FromBody]IEnumerable<string> ids)
+        public async Task<IActionResult> Delete([FromBody]IEnumerable<Guid> ids)
         {
             var result = new JsonResultModel<bool>();
             if (ids.AnyOne())

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using JuCheap.Core.Infrastructure;
 using JuCheap.Core.Models;
 using JuCheap.Core.Models.Filters;
+using System;
 
 namespace JuCheap.Core.Interfaces
 {
@@ -17,7 +18,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="dto">菜单模型</param>
         /// <returns></returns>
-        Task<string> AddAsync(MenuDto dto);
+        Task<Guid> AddAsync(MenuDto dto);
 
         /// <summary>
         /// 更新菜单
@@ -31,14 +32,14 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task<MenuDto> FindAsync(string id);
+        Task<MenuDto> FindAsync(Guid id);
 
         /// <summary>
         /// 批量删除
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        Task<bool> DeleteAsync(IEnumerable<string> ids);
+        Task<bool> DeleteAsync(IEnumerable<Guid> ids);
 
         /// <summary>
         /// 分页搜索
@@ -52,7 +53,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="userId">用户Id</param>
         /// <returns></returns>
-        Task<List<MenuDto>> GetMyMenusAsync(string userId);
+        Task<List<MenuDto>> GetMyMenusAsync(Guid userId);
 
         /// <summary>
         /// 获取菜单树
@@ -65,6 +66,6 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        Task<List<MenuDto>> GetMenusByRoleIdAsync(string roleId);
+        Task<List<MenuDto>> GetMenusByRoleIdAsync(Guid roleId);
     }
 }

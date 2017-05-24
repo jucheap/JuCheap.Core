@@ -8,9 +8,10 @@ using JuCheap.Core.Data;
 namespace JuCheap.Core.Web.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    partial class JuCheapContextModelSnapshot : ModelSnapshot
+    [Migration("20170524032226_Add-Table-Area")]
+    partial class AddTableArea
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2");

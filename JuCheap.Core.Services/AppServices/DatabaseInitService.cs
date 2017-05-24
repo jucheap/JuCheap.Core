@@ -37,7 +37,8 @@ namespace JuCheap.Core.Services.AppServices
         {
             try
             {
-                await _context.Database.EnsureCreatedAsync();
+                //await _context.Database.EnsureCreatedAsync();
+                await _context.Database.MigrateAsync();
                 if (await _context.SystemConfigs.AnyAsync(item => item.IsDataInited))
                     return false;
 

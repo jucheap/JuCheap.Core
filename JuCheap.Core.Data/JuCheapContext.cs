@@ -139,6 +139,15 @@ namespace JuCheap.Core.Data
                 m.Property(e => e.IsDeleted).IsRequired();
                 m.ToTable("SystemConfigs");
             });
+            modelBuilder.Entity<AreaEntity>(m =>
+            {
+                m.HasKey(e => e.Id);
+                m.Property(e => e.Id).ValueGeneratedNever();
+                m.Property(e => e.Name).HasMaxLength(50).IsRequired();
+                m.Property(e => e.CreateDateTime).IsRequired();
+                m.Property(e => e.IsDeleted).IsRequired();
+                m.ToTable("Areas");
+            });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -192,6 +201,11 @@ namespace JuCheap.Core.Data
         /// 系统配置
         /// </summary>
         public DbSet<SystemConfigEntity> SystemConfigs { get; set; } 
+
+        /// <summary>
+        /// 区域
+        /// </summary>
+        public DbSet<AreaEntity> Areas { get; set; }
 
         #endregion
     }

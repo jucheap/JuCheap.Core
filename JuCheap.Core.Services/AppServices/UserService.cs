@@ -109,7 +109,8 @@ namespace JuCheap.Core.Services.AppServices
             {
                 Id = Guid.NewGuid(),
                 LoginName = dto.LoginName,
-                IP = dto.LoginIP
+                IP = dto.LoginIP,
+                CreateDateTime = DateTime.Now
             };
             if (entity == null)
             {

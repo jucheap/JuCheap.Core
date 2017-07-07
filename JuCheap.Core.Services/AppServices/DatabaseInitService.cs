@@ -24,7 +24,7 @@ namespace JuCheap.Core.Services.AppServices
             _context = context;
         }
         
-        public DateTime Now => new DateTime(2016, 06, 06, 0, 0, 0);
+        public DateTime Now => new DateTime(2017, 07, 07, 0, 0, 0);
 
         /// <summary>
         /// 初始化
@@ -42,13 +42,21 @@ namespace JuCheap.Core.Services.AppServices
                     Id = Guid.NewGuid(),
                     LoginName = "jucheap",
                     RealName = "超级管理员",
-                    Password = "qwaszx12".ToMd5(),
+                    Password = "qwaszx..".ToMd5(),
                     Email = "service@jucheap.com",
                     IsSuperMan = true,
                     CreateDateTime = Now
                 };
 
                 _context.Users.Add(admin);
+                var system = new SystemConfigEntity
+                {
+                    SystemName = "JuCheap.SSO",
+                    IsDataInited=true,
+                    DataInitedDate = DateTime.Now
+                };
+                system.Init();
+                _context.SystemConfigs.Add(system);
                 return await _context.SaveChangesAsync() > 0;
             }
             catch(Exception ex)

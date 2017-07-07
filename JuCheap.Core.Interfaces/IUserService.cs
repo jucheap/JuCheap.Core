@@ -8,7 +8,7 @@ using System;
 namespace JuCheap.Core.Interfaces
 {
     /// <summary>
-    /// 用户契约
+    /// 用户服务接口
     /// </summary>
     public interface IUserService
     {

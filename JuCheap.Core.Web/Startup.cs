@@ -71,6 +71,7 @@ namespace JuCheap.Core.Web
             // 2.service
             services.AddScoped<IDatabaseInitService, DatabaseInitService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAppService, AppService>();
 
             services.AddIdentityServer(options =>
             {
@@ -81,7 +82,8 @@ namespace JuCheap.Core.Web
                 options.Events.RaiseSuccessEvents = true;
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseErrorEvents = true;
-            }).AddInMemoryClients(Clients.Get())
+            })
+                .AddInMemoryClients(Clients.Get())
                 .AddInMemoryIdentityResources(Resources.GetIdentityResources())
                 .AddInMemoryApiResources(Resources.GetApiResources())
                 .AddDeveloperSigningCredential()

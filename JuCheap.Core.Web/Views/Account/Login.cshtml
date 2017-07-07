@@ -1,86 +1,146 @@
 ﻿@model LoginViewModel
 
-<div class="login-page">
-    <div class="page-header">
-        <h1>Login</h1>
-    </div>
+@{
+    Layout = null;
+}
 
-    @Html.Partial("_ValidationSummary")
+<!DOCTYPE html>
+<html>
 
-    <div class="row">
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8" />
+    <title>登录 - JuCheap SSO</title>
+    <meta name="keywords" content="JuCheap SSO,JuCheap单点登录系统,JuCheap" />
+    <meta name="description" content="JuCheap SSO 单点登录系统" />
+    <meta name="author" content="jucheap" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/skin/default_skin/css/googlefonts.css" rel="stylesheet" />
+    <link href="~/skin/default_skin/css/theme.css" rel="stylesheet" />
+    <link href="~/admin-tools/admin-forms/css/admin-forms.css" rel="stylesheet" />
 
-        @if (Model.EnableLocalLogin)
-        {
-            <div class="col-sm-6">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Local Login</h3>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+     <![endif]-->
+</head>
+
+<body class="external-page sb-l-c sb-r-c">
+
+    <!-- Start: Main -->
+    <div id="main" class="animated fadeIn">
+
+        <!-- Start: Content-Wrapper -->
+        <section id="content_wrapper">
+
+            <!-- begin canvas animation bg -->
+            @Html.Partial("_ValidationSummary")
+
+            <!-- Begin: Content -->
+            <section id="content">
+
+                <div class="admin-form theme-info" id="login1">
+
+                    <div class="row mb15 table-layout">
+
+                        <div class="col-xs-6 va-m pln">
+                            <a href="/" title="Home">
+                                <img src="~/img/logos/logo_white.png" title="JuCheap SSO" class="img-responsive w250">
+                            </a>
+                        </div>
+
+                        <div class="col-xs-6 text-right va-b pr5">
+                            <div class="login-links">
+                                <a href="/user/reg" class="" title="Register">注册</a>
+                            </div>
+
+                        </div>
+
                     </div>
-                    <div class="panel-body">
 
-                        <form asp-route="Login">
+                    <div class="panel panel-info mt10 br-n">
+
+                        <div class="panel-heading heading-border bg-white">
+                            <span class="panel-title hidden">
+                                <i class="fa fa-sign-in"></i>注册
+                            </span>
+                        </div>
+
+                        <!-- end .form-header section -->
+                        <form method="post" asp-route="Login" id="contact">
                             <input type="hidden" asp-for="ReturnUrl" />
+                            <div class="panel-body bg-light p30">
+                                <div class="row">
+                                    @*<div class="alert alert-danger">
+                                        <strong>错误:</strong>
+                                        error
+                                    </div>*@
+                                    <div class="col-sm-7 pr30">
+                                        <div class="section">
+                                            <label class="field-label text-muted fs18 mb10">账号</label>
+                                            <label asp-for="Username" class="field prepend-icon">
+                                                <input asp-for="Username" autofocus type="text" class="gui-input" placeholder="请输入用户名" value="@Model.Username" maxlength="100">
+                                                <label asp-for="Username" class="field-icon">
+                                                    <i class="fa fa-user"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
 
-                            <fieldset>
-                                <div class="form-group">
-                                    <label asp-for="Username"></label>
-                                    <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
+                                        <div class="section">
+                                            <label class="field-label text-muted fs18 mb10">密码</label>
+
+                                            <label asp-for="Password" class="field prepend-icon">
+                                                <input asp-for="Password" autocomplete="off" class="gui-input" placeholder="请输入密码" maxlength="100" type="password">
+                                                <label asp-for="Password" class="field-icon">
+                                                    <i class="fa fa-lock"></i>
+                                                </label>
+                                            </label>
+                                        </div>
+                                        <!-- end section -->
+
+                                    </div>
+                                    <div class="col-sm-5 br-l br-grey pl30">
+                                        <h3 class="mb25"> 你可以使用SSO做以下事情:</h3>
+                                        <p class="mb15">
+                                            <span class="fa fa-check text-success pr5"></span> 管理您的用户
+                                        </p>
+                                        <p class="mb15">
+                                            <span class="fa fa-check text-success pr5"></span> 管理您的认证网站
+                                        </p>
+                                        <p class="mb15">
+                                            <span class="fa fa-check text-success pr5"></span> 您所有的系统都可以接入SSO
+                                        </p>
+                                        <p class="mb15">
+                                            <span class="fa fa-check text-success pr5"></span> <a href="@Url.Action("Join", "App")">立即接入</a>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="form-group">
-                                    <label asp-for="Password"></label>
-                                    <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
-                                </div>
+                            </div>
+                            <!-- end .form-body section -->
+                            <div class="panel-footer clearfix p10 ph15">
+                                <input type="submit" class="btn btn-primary mr10 pull-right" value="登录" />
                                 @if (Model.AllowRememberLogin)
                                 {
-                                    <div class="form-group login-remember">
-                                        <label asp-for="RememberLogin">
-                                            <input asp-for="RememberLogin">
-                                            <strong>Remember My Login</strong>
-                                        </label>
-                                    </div>
+                                    <label asp-for="RememberLogin">
+                                        <input asp-for="RememberLogin">
+                                        <strong>记住我</strong>
+                                    </label>
                                 }
-                                <div class="form-group">
-                                    <button class="btn btn-primary">Login</button>
-                                </div>
-                            </fieldset>
+                            </div>
+                            <!-- end .form-footer section -->
                         </form>
                     </div>
                 </div>
-            </div>
-        }
 
-        @if (Model.VisibleExternalProviders.Any())
-        {
-            <div class="col-md-6 col-sm-6 external-providers">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">External Login</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-inline">
-                            @foreach (var provider in Model.VisibleExternalProviders)
-                            {
-                                <li>
-                                    <a class="btn btn-default"
-                                       asp-action="ExternalLogin"
-                                       asp-route-provider="@provider.AuthenticationScheme"
-                                       asp-route-returnUrl="@Model.ReturnUrl">
-                                        @provider.DisplayName
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        }
+            </section>
+            <!-- End: Content -->
 
-        @if (!Model.EnableLocalLogin && !Model.VisibleExternalProviders.Any())
-        {
-            <div class="alert alert-warning">
-                <strong>Invalid login request</strong>
-                There are no login schemes configured for this client.
-            </div>
-        }
+        </section>
+        <!-- End: Content-Wrapper -->
+
     </div>
-</div>
+</body>
+
+</html>

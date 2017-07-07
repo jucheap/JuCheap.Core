@@ -1,45 +1,62 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-    <title>JuCheap 后台主题UI框架 - 主页</title>
-
-    <meta name="keywords" content="JuCheap后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台管理系统">
-    <meta name="description" content="JuCheap是一个完全响应式，基于Bootstrap3开发的扁平化主题，采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术搭建的一个快速开发后台管理系统MVC框架">
-    <!--[if lt IE 9]>
-    <meta http-equiv="refresh" content="0;ie.html" />
-    <![endif]-->
-    
-    <environment names="Development">
-        <link href="~/css/bootstrap.css" rel="stylesheet" />
-        <link href="~/css/style.css" rel="stylesheet" />
-        <link href="~/css/font-awesome.css" rel="stylesheet"/>
-        <link href="~/js/plugins/layer/skin/default/layer.css" rel="stylesheet" />
-    </environment>
-    <environment names="Staging,Production">
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+    <title>@ViewBag.Title - JuCheap SSO 单点登录系统</title>
+    <meta name="keywords" content="JuCheap SSO,JuCheap单点登录系统,JuCheap" />
+    <meta name="description" content="JuCheap SSO 单点登录系统" />
+    <link href="~/skin/default_skin/css/theme.css" rel="stylesheet" />
+    <link href="~/skin/default_skin/css/googlefonts.css" rel="stylesheet" />
+    <style>
+        .field-validation-error {
+            color: red;
+        }
+    </style>
+    @RenderSection("styles", false)
 </head>
+<body class="dashboard-page">
+    <header class="navbar navbar-fixed-top navbar-shadow">
+        <div class="navbar-branding hidden-phone">
+            <a class="navbar-brand" href="/">
+                <b>JuCheap</b> SSO
+            </a>
+        </div>
+        <ul class="nav navbar-nav navbar-right">
+            @if (User != null && User.Identity.IsAuthenticated)
+            {
+                <li class="dropdown menu-merge">
+                    <a href="#" class="dropdown-toggle fw600 p15" data-toggle="dropdown">
+                        <img class="mw30 br64" alt="avatar" src="~/img/avatars/1.jpg">
+                        <span class="hidden-xs pl15"> @User.Identity.Name </span>
+                        <span class="caret caret-tp hidden-xs"></span>
+                    </a>
+                    <ul class="dropdown-menu list-group dropdown-persist w250" role="menu">
+                        <li class="list-group-item">
+                            <a class="animated animated-short fadeInUp" href="@Url.Action("List","App")">
+                                <span class="fa fa-desktop"></span> 我的网站
+                            </a>
+                        </li>
+                        <li class="dropdown-footer">
+                            <a href="/Account/Logout" class="">
+                                <span class="fa fa-power-off pr5"></span> 登出
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            }
+        </ul>
+    </header>
 
-<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
-    <div id="wrapper">
+    <div class="container body-content">
         @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; 2012 - @DateTime.Now.Year - JuCheap</p>
+        </footer>
     </div>
-    
-    <environment names="Development">
-        <script src="~/js/jquery.js"></script>
-        <script src="~/js/bootstrap.js"></script>
-        <script src="~/js/plugins/metisMenu/jquery.metisMenu.js"></script>
-        <script src="~/js/plugins/slimscroll/jquery.slimscroll.js"></script>
-        <script src="~/js/jucheap.js"></script>
-        <script src="~/js/contabs.js"></script>
-    </environment>
-    <environment names="Staging,Production">
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
-    <script src="~/js/plugins/layer/layer.js"></script>
+    <script src="~/js/jquery.js"></script>
+    <script src="~/js/bootstrap.js"></script>
+    @RenderSection("scripts", required: false)
 </body>
 </html>

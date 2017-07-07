@@ -3,7 +3,7 @@
 namespace JuCheap.Core.Interfaces
 {
     /// <summary>
-    /// 数据库初始化契约
+    /// 数据库初始服务接口
     /// </summary>
     public interface IDatabaseInitService
     {

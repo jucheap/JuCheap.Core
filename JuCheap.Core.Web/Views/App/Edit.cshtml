@@ -1,0 +1,59 @@
+﻿@model JuCheap.Core.Models.AppDto
+
+@{
+    ViewBag.Title = "编辑网站";
+}
+
+@section styles
+{
+    <link href="~/admin-tools/admin-forms/css/admin-forms.css" rel="stylesheet" />
+}
+@section scripts
+{
+    <script>
+            $("#btnSave").click(function () {
+                $(this).button("loading");
+                return true;
+            });
+    </script>
+}
+
+<div class="row mt70">
+    <div class="col-sm-12">
+        <div class="admin-form theme-primary">
+            <div class="panel heading-border panel-primary">
+                <div class="panel-body bg-light">
+                    <form id="form-ui" action="@Url.Action("Edit")" method="post">
+                        <div id="spy1" class="section-divider mb40">
+                            <span>编辑接入网站</span>
+                        </div>
+                        <div class="row">
+                            <div class="section">
+                                <label class="field">
+                                    @Html.TextBoxFor(model => model.ClientId, new {@class = "gui-input", disabled = "disabled"})
+                                    @Html.HiddenFor(model => model.Id)
+                                </label>
+                            </div>
+                            <div class="section">
+                                <label class="field">
+                                    @Html.TextBoxFor(model => model.ClientName, new {@class = "gui-input", placeholder = "网站名称"})
+                                    @Html.ValidationMessageFor(model => model.ClientName)
+                                </label>
+                            </div>
+                            <div class="section">
+                                <label class="field">
+                                    @Html.TextBoxFor(model => model.ClientUri, new {@class = "gui-input", placeholder = "网站地址：http://www.jucheap.com"})
+                                    @Html.ValidationMessageFor(model => model.ClientUri)
+                                </label>
+                            </div>
+                            <div class="section">
+                                <button id="btnSave" type="submit" class="btn btn-success">保存</button>
+                                <span class="text-danger">@ViewBag.Error</span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

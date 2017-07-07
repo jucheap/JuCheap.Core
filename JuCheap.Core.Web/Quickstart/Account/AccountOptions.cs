@@ -12,7 +12,7 @@ namespace JuCheap.Core.Web
         public static bool AllowRememberLogin = true;
         public static TimeSpan RememberMeLoginDuration = TimeSpan.FromDays(30);
 
-        public static bool ShowLogoutPrompt = true;
+        public static bool ShowLogoutPrompt = false;//不显示登出确认页面，直接登出
         public static bool AutomaticRedirectAfterSignOut = false;
 
         // to enable windows authentication, the host (IIS or IIS Express) also must have 

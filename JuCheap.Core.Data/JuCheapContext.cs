@@ -61,6 +61,17 @@ namespace JuCheap.Core.Data
                 m.Property(e => e.IsDeleted).IsRequired();
                 m.ToTable("SystemConfigs");
             });
+            modelBuilder.Entity<AppEntity>(m =>
+            {
+                m.HasKey(e => e.Id);
+                m.Property(e => e.Id).ValueGeneratedNever();
+                m.Property(e => e.ClientId).HasMaxLength(50).IsRequired();
+                m.Property(e => e.ClientName).HasMaxLength(50).IsRequired();
+                m.Property(e => e.Enabled).IsRequired();
+                m.Property(e => e.UserId).IsRequired();
+                m.Property(e => e.IsDeleted).IsRequired();
+                m.ToTable("Apps");
+            });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -74,6 +85,11 @@ namespace JuCheap.Core.Data
         /// 用户
         /// </summary>
         public DbSet<UserEntity> Users { get; set; }
+
+        /// <summary>
+        /// 应用系统
+        /// </summary>
+        public DbSet<AppEntity> Apps { get; set; }
 
         /// <summary>
         /// 系统配置

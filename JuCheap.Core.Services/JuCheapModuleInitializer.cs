@@ -19,6 +19,7 @@ namespace JuCheap.Core.Services
             config.CreateMap<UserEntity, UserAddDto>().ReverseMap();
             config.CreateMap<UserEntity, UserUpdateDto>().ReverseMap();
             config.CreateMap<UserDto, UserUpdateDto>().ReverseMap();
+            config.CreateMap<AppEntity, AppDto>().ReverseMap();
         }
     }
 }

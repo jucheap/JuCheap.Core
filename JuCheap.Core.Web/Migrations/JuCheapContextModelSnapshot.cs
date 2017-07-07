@@ -16,6 +16,35 @@ namespace JuCheap.Core.Web.Migrations
                 .HasAnnotation("ProductVersion", "1.1.2")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("JuCheap.Core.Data.Entity.AppEntity", b =>
+                {
+                    b.Property<Guid>("Id");
+
+                    b.Property<string>("ClientId")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("ClientName")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<string>("ClientUri")
+                        .IsRequired()
+                        .HasMaxLength(256);
+
+                    b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<bool>("Enabled");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<Guid>("UserId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Apps");
+                });
+
             modelBuilder.Entity("JuCheap.Core.Data.Entity.SystemConfigEntity", b =>
                 {
                     b.Property<Guid>("Id");

@@ -32,10 +32,5 @@ namespace JuCheap.Core.Models
         /// 创建日期
         /// </summary>
         public DateTime CreateDateTime { get; set; }
-
-        /// <summary>
-        /// 用户拥有的角色
-        /// </summary>
-        public virtual IList<UserRoleDto> UserRoles { get; set; }
     }
 }

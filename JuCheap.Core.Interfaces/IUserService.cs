@@ -34,13 +34,6 @@ namespace JuCheap.Core.Interfaces
         /// <returns></returns>
         Task<UserDto> FindAsync(Guid id);
 
-        /// <summary>
-        /// 登陆
-        /// </summary>
-        /// <param name="dto">登录信息</param>
-        /// <returns></returns>
-        Task<UserLoginDto> LoginAsync(LoginDto dto);
-
             /// <summary>
         /// 批量删除
         /// </summary>
@@ -49,49 +42,10 @@ namespace JuCheap.Core.Interfaces
         Task<bool> DeleteAsync(IEnumerable<Guid> ids);
 
         /// <summary>
-        /// 用户角色授权
-        /// </summary>
-        /// <param name="userId">用户ID</param>
-        /// <param name="roleId">角色ID</param>
-        /// <returns></returns>
-        Task<bool> GiveAsync(Guid userId, Guid roleId);
-
-        /// <summary>
-        /// 用户角色取消
-        /// </summary>
-        /// <param name="userId">用户ID</param>
-        /// <param name="roleId">角色ID</param>
-        /// <returns></returns>
-        Task<bool> CancelAsync(Guid userId, Guid roleId);
-
-        /// <summary>
         /// 分页搜索
         /// </summary>
         /// <param name="filters">查询过滤参数</param>
         /// <returns></returns>
         Task<PagedResult<UserDto>> SearchAsync(UserFilters filters);
-
-        /// <summary>
-        /// 是否拥有此权限
-        /// </summary>
-        /// <param name="userId">用户ID</param>
-        /// <param name="url">url地址</param>
-        /// <returns></returns>
-        Task<bool> HasRightAsync(Guid userId, string url);
-
-        /// <summary>
-        /// 记录访问记录
-        /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
-        Task<bool> VisitAsync(VisitDto dto);
-
-        /// <summary>
-        /// 检测是否存在用户名
-        /// </summary>
-        /// <param name="userId">用户ID，可以为空</param>
-        /// <param name="loginName">用户名</param>
-        /// <returns></returns>
-        Task<bool> ExistsLoginNameAsync(Guid? userId, string loginName);
     }
 }

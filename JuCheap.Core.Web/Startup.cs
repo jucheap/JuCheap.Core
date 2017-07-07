@@ -1,7 +1,4 @@
-﻿using System;
-using System.Security.Claims;
-using System.Security.Principal;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using JuCheap.Core.Data;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Services.AppServices;
@@ -12,8 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using JuCheap.Core.Services;
-using JuCheap.Core.Web.Filters;
-using Microsoft.AspNetCore.Http;
+using JuCheap.Core.Web.Configuration;
+using JuCheap.Core.Web.Extensions;
+using IdentityServer4.Validation;
 
 namespace JuCheap.Core.Web
 {
@@ -42,12 +40,12 @@ namespace JuCheap.Core.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ////使用Sql Server数据库
-            //services.AddEntityFrameworkSqlServer()
-            //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-            //        options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"),
-            //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
-            //            .UseInternalServiceProvider(serviceProvider));
+            //使用Sql Server数据库
+            services.AddEntityFrameworkSqlServer()
+                .AddDbContext<JuCheapContext>((serviceProvider, options) =>
+                    options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"),
+                        b => b.MigrationsAssembly("JuCheap.Core.Web"))
+                        .UseInternalServiceProvider(serviceProvider));
 
             ////使用Sqlite数据库
             //services.AddEntityFrameworkSqlite()
@@ -56,20 +54,14 @@ namespace JuCheap.Core.Web
             //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
             //            .UseInternalServiceProvider(serviceProvider));
 
-            //使用MySql数据库
-            services.AddEntityFrameworkMySql()
-                .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-                    options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
-                        b => b.MigrationsAssembly("JuCheap.Core.Web"))
-                        .UseInternalServiceProvider(serviceProvider));
+            ////使用MySql数据库
+            //services.AddEntityFrameworkMySql()
+            //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
+            //        options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
+            //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
+            //            .UseInternalServiceProvider(serviceProvider));
 
             services.AddSingleton<DbContext, JuCheapContext>();
-
-            //权限验证filter
-            services.AddMvc(cfg =>
-            {
-                cfg.Filters.Add(new RightFilter());
-            });
 
             // Add application services.
             // 1.automapper
@@ -78,11 +70,29 @@ namespace JuCheap.Core.Web
 
             // 2.service
             services.AddScoped<IDatabaseInitService, DatabaseInitService>();
-            services.AddScoped<ILogService, LogService>();
-            services.AddScoped<IPathCodeService, PathCodeService>();
-            services.AddScoped<IMenuService, MenuService>();
-            services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddIdentityServer(options =>
+            {
+                options.Authentication.FederatedSignOutPaths.Add("/signout-callback-aad");
+                options.Authentication.FederatedSignOutPaths.Add("/signout-callback-idsrv");
+                options.Authentication.FederatedSignOutPaths.Add("/signout-callback-adfs");
+
+                options.Events.RaiseSuccessEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseErrorEvents = true;
+            }).AddInMemoryClients(Clients.Get())
+                .AddInMemoryIdentityResources(Resources.GetIdentityResources())
+                .AddInMemoryApiResources(Resources.GetApiResources())
+                .AddDeveloperSigningCredential()
+                .AddExtensionGrantValidator<Extensions.ExtensionGrantValidator>()
+                .AddExtensionGrantValidator<NoSubjectExtensionGrantValidator>()
+                .AddSecretParser<ClientAssertionSecretParser>()
+                .AddSecretValidator<PrivateKeyJwtSecretValidator>()
+                //.AddRedirectUriValidator<StrictRedirectUriValidatorAppAuth>()
+                .AddTestUsers(TestUsers.Users);
+
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,23 +114,9 @@ namespace JuCheap.Core.Web
 
             app.UseStaticFiles();
 
-            var option = new CookieAuthenticationOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                CookieHttpOnly = true,
-                ExpireTimeSpan = TimeSpan.FromMinutes(43200),
-                LoginPath = new PathString("/Home/Login"),
-                LogoutPath = new PathString("/Home/Logout"),
-                CookieName = ".JuCheapCore.Identity",
-                CookiePath = "/",
-                //DataProtectionProvider = null//如果需要做负载均衡，就需要提供一个Key
-            };
-            app.UseCookieAuthentication(option);
+            app.UseIdentityServer();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-
-            app.UseMiddleware<VisitMiddleware>();
 
             app.UseMvc(routes =>
             {
@@ -132,30 +128,6 @@ namespace JuCheap.Core.Web
             //init database
             var dbService = app.ApplicationServices.GetRequiredService<IDatabaseInitService>();
             Task.Run(() => dbService.InitAsync());
-        }
-    }
-
-    /// <summary>
-    /// IIdentity扩展
-    /// </summary>
-    public static class IdentityExtention
-    {
-        /// <summary>
-        /// 获取登录的用户ID
-        /// </summary>
-        /// <param name="identity">IIdentity</param>
-        /// <returns></returns>
-        public static Guid GetLoginUserId(this IIdentity identity)
-        {
-            var claim = (identity as ClaimsIdentity)?.FindFirst("LoginUserId");
-            if (claim != null)
-            {
-                if (Guid.TryParse(claim.Value, out Guid userId))
-                {
-                    return userId;
-                }
-            }
-            return Guid.Empty;
         }
     }
 }

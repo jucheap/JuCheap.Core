@@ -1,6 +1,5 @@
 ﻿
 
-
 <div id="page-wrapper" class="gray-bg dashbard-1">
     <div class="row border-bottom">
         <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
@@ -49,7 +48,29 @@
         </div>
     </div>
     <div class="row J_mainContent" id="content-main">
-        <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="@Url.Action("Welcome")" frameborder="0" data-id="@Url.Action("Welcome")" seamless></iframe>
+        <div class="row">
+            <div class="col-sm-8">
+                <p>
+                    IdentityServer publishes a
+                    <a href="~/.well-known/openid-configuration">discovery document</a>
+                    where you can find metadata and links to all the endpoints, key material, etc.
+                </p>
+            </div>
+            <div class="col-sm-8">
+                <p>
+                    Click <a href="~/grants">here</a> to manage your stored grants.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8">
+                <p>
+                    Here are links to the
+                    <a href="https://github.com/identityserver/IdentityServer4">source code repository</a>,
+                    and <a href="https://github.com/identityserver/IdentityServer4.Samples">ready to use samples</a>.
+                </p>
+            </div>
+        </div>
     </div>
     <div class="footer">
         <div class="pull-right">

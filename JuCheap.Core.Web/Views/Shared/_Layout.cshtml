@@ -22,18 +22,11 @@
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
-    
-    @Html.Partial("BaiduTongji")
 </head>
 
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
     <div id="wrapper">
-        <!--左侧导航开始-->
-        @Html.Partial("Menu")
-        <!--左侧导航结束-->
-        <!--右侧部分开始-->
         @RenderBody()
-        <!--右侧部分结束-->
     </div>
     
     <environment names="Development">

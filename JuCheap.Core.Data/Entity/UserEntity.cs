@@ -44,11 +44,6 @@ namespace JuCheap.Core.Data.Entity
         /// 是否是超级管理员
         /// </summary>
         public bool IsSuperMan { get; set; }
-        
-        /// <summary>
-        /// 用户拥有的角色
-        /// </summary>
-        public virtual ICollection<UserRoleEntity> UserRoles { get; set; }
 
     }
 }

@@ -37,84 +37,6 @@ namespace JuCheap.Core.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<MenuEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.Code).HasMaxLength(6).IsRequired();
-                m.Property(e => e.PathCode).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Name).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Url).HasMaxLength(300).IsRequired();
-                m.Property(e => e.Order).IsRequired();
-                m.Property(e => e.Type).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("Menus");
-            });
-            modelBuilder.Entity<RoleEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.Name).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Description).HasMaxLength(50).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("Roles");
-            });
-            modelBuilder.Entity<LoginLogEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
-                m.Property(e => e.IP).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Mac).HasMaxLength(200).IsRequired();
-                m.Property(e => e.UserId).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("LoginLogs");
-            });
-            modelBuilder.Entity<PageViewEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
-                m.Property(e => e.IP).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Url).HasMaxLength(300).IsRequired();
-                m.Property(e => e.UserId).HasMaxLength(20).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("PageViews");
-            });
-            modelBuilder.Entity<PathCodeEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.Code).HasMaxLength(4).IsRequired();
-                m.Property(e => e.Len).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("PathCodes");
-            });
-            modelBuilder.Entity<RoleMenuEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.RoleId).IsRequired();
-                m.Property(e => e.MenuId).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("RoleMenus");
-            });
-            modelBuilder.Entity<UserRoleEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.RoleId).IsRequired();
-                m.Property(e => e.UserId).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("UserRoles");
-            });
             modelBuilder.Entity<UserEntity>(m =>
             {
                 m.HasKey(e => e.Id);
@@ -139,15 +61,6 @@ namespace JuCheap.Core.Data
                 m.Property(e => e.IsDeleted).IsRequired();
                 m.ToTable("SystemConfigs");
             });
-            modelBuilder.Entity<AreaEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.Name).HasMaxLength(50).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("Areas");
-            });
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -163,49 +76,9 @@ namespace JuCheap.Core.Data
         public DbSet<UserEntity> Users { get; set; }
 
         /// <summary>
-        /// 角色
-        /// </summary>
-        public DbSet<RoleEntity> Roles { get; set; }
-
-        /// <summary>
-        /// 菜单
-        /// </summary>
-        public DbSet<MenuEntity> Menus { get; set; }
-
-        /// <summary>
-        /// 用户角色关系
-        /// </summary>
-        public DbSet<UserRoleEntity> UserRoles { get; set; }
-
-        /// <summary>
-        /// 角色菜单关系
-        /// </summary>
-        public DbSet<RoleMenuEntity> RoleMenus { get; set; }
-
-        /// <summary>
-        /// 路径码
-        /// </summary>
-        public DbSet<PathCodeEntity> PathCodes { get; set; }
-
-        /// <summary>
-        /// 页面访问记录
-        /// </summary>
-        public DbSet<PageViewEntity> PageViews { get; set; }
-
-        /// <summary>
-        /// 登录日志
-        /// </summary>
-        public DbSet<LoginLogEntity> LoginLogs { get; set; }
-
-        /// <summary>
         /// 系统配置
         /// </summary>
         public DbSet<SystemConfigEntity> SystemConfigs { get; set; } 
-
-        /// <summary>
-        /// 区域
-        /// </summary>
-        public DbSet<AreaEntity> Areas { get; set; }
 
         #endregion
     }

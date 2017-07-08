@@ -5,6 +5,9 @@
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using JuCheap.Core.Interfaces;
+using System.Collections.Generic;
+using JuCheap.Core.Models;
 
 namespace JuCheap.Core.Web
 {
@@ -12,15 +15,23 @@ namespace JuCheap.Core.Web
     public class HomeController : Controller
     {
         private readonly IIdentityServerInteractionService _interaction;
+        private readonly IAppService _appService;
 
-        public HomeController(IIdentityServerInteractionService interaction)
+        public HomeController(IIdentityServerInteractionService interaction,
+            IAppService appService)
         {
             _interaction = interaction;
+            _appService = appService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<AppDto> apps = new List<AppDto>();
+            if (User.Identity.IsAuthenticated)
+            {
+                apps = await _appService.GetByUserId(User.Identity.GetMemberId());
+            }            
+            return View(apps);
         }
 
         /// <summary>

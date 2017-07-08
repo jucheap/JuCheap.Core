@@ -154,6 +154,7 @@
     <Content Include="wwwroot\img\patterns\backgrounds\1.jpg" />
     <Content Include="wwwroot\img\patterns\topbar-bg.jpg" />
     <Content Include="wwwroot\img\patterns\topbar-bg2.jpg" />
+    <Content Include="wwwroot\js\signout-redirect.js" />
     <Content Include="wwwroot\skin\default_skin\css\googlefonts.css" />
     <Content Include="wwwroot\skin\default_skin\css\theme.css" />
   </ItemGroup>

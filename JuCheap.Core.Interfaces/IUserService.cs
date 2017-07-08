@@ -34,6 +34,14 @@ namespace JuCheap.Core.Interfaces
         /// <returns></returns>
         Task<UserDto> FindAsync(Guid id);
 
+        /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        Task<UserDto> LoginAsync(string userName, string password);
+
             /// <summary>
         /// 批量删除
         /// </summary>

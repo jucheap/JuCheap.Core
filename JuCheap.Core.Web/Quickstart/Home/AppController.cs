@@ -23,7 +23,7 @@ namespace JuCheap.Core.Web
         public async Task<IActionResult> List()
         {
             List<AppDto> list = null;
-            var userId = Guid.Parse(User.Identity.GetMemberId());
+            var userId = User.Identity.GetMemberId();
             list = await _appService.GetByUserId(userId);
             return View(list);
         }
@@ -76,12 +76,12 @@ namespace JuCheap.Core.Web
             if (ModelState.IsValid)
             {
                 app.Enabled = true;
-                app.UserId = Guid.Parse(User.Identity.GetMemberId());
+                app.UserId = User.Identity.GetMemberId();
                 app.ClientId = Guid.NewGuid().ToString("N");
                 var id = await _appService.AddOrUpdateAsync(app);
                 if (id != Guid.Empty)
                 {
-                    return RedirectToAction("Add");
+                    return RedirectToAction("List");
                 }
             }
             ViewBag.Error = errorMsg;
@@ -100,6 +100,7 @@ namespace JuCheap.Core.Web
             if (ModelState.IsValid)
             {
                 await _appService.AddOrUpdateAsync(app);
+                return RedirectToAction("List");
             }
             ViewBag.Error = errorMsg;
             return View(app);

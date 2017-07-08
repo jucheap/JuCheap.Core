@@ -3,26 +3,29 @@
 @{ 
     // set this so the layout rendering sees an anonymous user
     ViewData["signed-out"] = true;
+    ViewBag.Title = "登出成功";
 }
 
-<div class="page-header logged-out">
-    <h1>
-        登出
-        <small>您已成功登出</small>
-    </h1>
+<div class="row mt70">
+    <div class="page-header logged-out">
+        <h1>
+            登出
+            <small>您已成功登出,<a href="/">点击返回首页</a></small>
+        </h1>
 
-    @if (Model.PostLogoutRedirectUri != null)
-    {
-        <div>
-            点击 <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">这里</a> 返回
-            <span>@Model.ClientName</span> 应用.
-        </div>
-    }
+        @if (Model.PostLogoutRedirectUri != null)
+        {
+            <div>
+                点击 <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">这里</a> 返回
+                <span>@Model.ClientName</span> 应用.
+            </div>
+        }
 
-    @if (Model.SignOutIframeUrl != null)
-    {
-        <iframe width="0" height="0" class="signout" src="@Model.SignOutIframeUrl"></iframe>
-    }
+        @if (Model.SignOutIframeUrl != null)
+        {
+            <iframe width="0" height="0" class="signout" src="@Model.SignOutIframeUrl"></iframe>
+        }
+    </div>
 </div>
 
 @section scripts

@@ -85,14 +85,11 @@ namespace JuCheap.Core.Web
             })
                 .AddInMemoryClients(Clients.Get())
                 .AddInMemoryIdentityResources(Resources.GetIdentityResources())
-                .AddInMemoryApiResources(Resources.GetApiResources())
                 .AddDeveloperSigningCredential()
                 .AddExtensionGrantValidator<Extensions.ExtensionGrantValidator>()
                 .AddExtensionGrantValidator<NoSubjectExtensionGrantValidator>()
                 .AddSecretParser<ClientAssertionSecretParser>()
-                .AddSecretValidator<PrivateKeyJwtSecretValidator>()
-                //.AddRedirectUriValidator<StrictRedirectUriValidatorAppAuth>()
-                .AddTestUsers(TestUsers.Users);
+                .AddSecretValidator<PrivateKeyJwtSecretValidator>();
 
             services.AddMvc();
         }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<JuCheap.Core.Models.AppDto>
+@{
     ViewBag.Title = "SSO系统资源列表";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -14,12 +15,21 @@
             </div>
 
             <div class="list-group fs14 fw600">
-                @*<a href="#" class="list-group-item sys-title">
-                    <i class="fa fa-desktop text-primary"></i>&nbsp; JuCheap<br />
-                </a>*@
-                <a href="/Account/Login" class="list-group-item sys-title">
-                    <i class="fa fa-gear text-primary"></i>&nbsp; 您未被授权访问任何系统，点击登录
-                </a>
+                @if (Model.Any())
+                {
+                    foreach (var app in Model)
+                    {
+                        <a href="@app.ClientUri" class="list-group-item sys-title">
+                            <i class="fa fa-desktop text-primary"></i>&nbsp; @app.ClientName<br />
+                        </a>
+                    }
+                }
+                else
+                {
+                    <a href="/Account/Login" class="list-group-item sys-title">
+                        <i class="fa fa-gear text-primary"></i>&nbsp; 您未被授权访问任何系统，点击登录
+                    </a>
+                }
             </div>
         </div>
     </div>

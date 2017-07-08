@@ -77,6 +77,26 @@ namespace JuCheap.Core.Services.AppServices
         }
 
         /// <summary>
+        /// 登录
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public async Task<UserDto> LoginAsync(string userName, string password)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.LoginName == userName);
+            if (user == null)
+            {
+                throw new Exception("该用户不存在");
+            }
+            if (user.Password != password.ToMd5())
+            {
+                throw new Exception("登录密码不正确");
+            }
+            return _mapper.Map<UserDto>(user);
+        }
+
+        /// <summary>
         /// 批量逻辑删除
         /// </summary>
         /// <param name="ids">主键ID集合</param>

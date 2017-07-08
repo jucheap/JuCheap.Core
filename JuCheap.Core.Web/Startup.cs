@@ -89,7 +89,8 @@ namespace JuCheap.Core.Web
                 .AddExtensionGrantValidator<Extensions.ExtensionGrantValidator>()
                 .AddExtensionGrantValidator<NoSubjectExtensionGrantValidator>()
                 .AddSecretParser<ClientAssertionSecretParser>()
-                .AddSecretValidator<PrivateKeyJwtSecretValidator>();
+                .AddSecretValidator<PrivateKeyJwtSecretValidator>()
+                .AddProfileService<JuCheapUserProfileService>();
 
             services.AddMvc();
         }

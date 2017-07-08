@@ -5,7 +5,7 @@
 <div class="row" style="margin-top:10px;">
     @if (User.Identity.IsAuthenticated)
     {
-        <p>您已登录成功</p>
+        <p>您已登录成功 @User.Identity.Name</p>
         <ul>
             @foreach (var claim in User.Claims)
             {

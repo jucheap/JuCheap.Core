@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01_Infrastructure", "01_Infrastructure", "{FE4E929F-D14C-4249-AFA0-DD01C13B0828}"
 EndProject
@@ -22,6 +22,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JuCheap.Core.Interfaces", "JuCheap.Core.Interfaces\JuCheap.Core.Interfaces.csproj", "{460F83CB-7545-4507-ACAC-B4AAAEE48C2E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JuCheap.Core.Services", "JuCheap.Core.Services\JuCheap.Core.Services.csproj", "{87797680-70C1-4345-B46C-431059646A7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JuCheap.Core.Web.SSO.Demo", "JuCheap.Core.Web.SSO.Demo\JuCheap.Core.Web.SSO.Demo.csproj", "{4790A4E8-2CE9-460D-A32C-9763FBAEF404}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{87797680-70C1-4345-B46C-431059646A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87797680-70C1-4345-B46C-431059646A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87797680-70C1-4345-B46C-431059646A7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4790A4E8-2CE9-460D-A32C-9763FBAEF404}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4790A4E8-2CE9-460D-A32C-9763FBAEF404}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4790A4E8-2CE9-460D-A32C-9763FBAEF404}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4790A4E8-2CE9-460D-A32C-9763FBAEF404}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -64,5 +70,6 @@ Global
 		{CFC610F3-702F-43D1-985C-04DF98EB0D41} = {31C065E0-8E26-4185-9867-36F2F41F89B1}
 		{460F83CB-7545-4507-ACAC-B4AAAEE48C2E} = {31C065E0-8E26-4185-9867-36F2F41F89B1}
 		{87797680-70C1-4345-B46C-431059646A7C} = {31C065E0-8E26-4185-9867-36F2F41F89B1}
+		{4790A4E8-2CE9-460D-A32C-9763FBAEF404} = {B8548CF5-97ED-490A-A046-5426F2ABEE88}
 	EndGlobalSection
 EndGlobal

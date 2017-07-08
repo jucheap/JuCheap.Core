@@ -19,20 +19,20 @@ namespace JuCheap.Core.Web.Configuration
                 //////////////////////////////////////////
                 new Client
                 {
-                    ClientId = "mvc.hybrid",
-                    ClientName = "MVC Hybrid",
-                    ClientUri = "http://identityserver.io",
+                    ClientId = "JuCheap-SSO-Demo",
+                    ClientName = "JuCheap-SSO-Demo",
+                    ClientUri = "http://localhost:63919",
 
                     ClientSecrets = 
                     {
-                        new Secret("secret".Sha256())
+                        new Secret("JuCheapSecret".Sha256())
                     },
                     
                     AllowedGrantTypes = GrantTypes.Hybrid,
                     AllowAccessTokensViaBrowser = false,
 
-                    RedirectUris = { "http://localhost:21402/signin-oidc" },
-                    PostLogoutRedirectUris = { "http://localhost:21402/signout-callback-oidc" },
+                    RedirectUris = { "http://localhost:63919/signin-oidc" },
+                    PostLogoutRedirectUris = { "http://localhost:63919/signout-callback-oidc" },
 
                     AllowOfflineAccess = true,
 
@@ -42,8 +42,7 @@ namespace JuCheap.Core.Web.Configuration
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        IdentityServerConstants.StandardScopes.Email,
-                        "api1", "api2.read_only"
+                        IdentityServerConstants.StandardScopes.Email
                     }
                 }
             };

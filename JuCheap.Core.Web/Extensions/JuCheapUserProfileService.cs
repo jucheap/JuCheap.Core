@@ -56,7 +56,8 @@ namespace JuCheap.Core.Web.Extensions
 
                 var claims = new List<Claim>
                 {
-                    new Claim("name",user.LoginName)
+                    new Claim("name", user.LoginName),
+                    new Claim("email", user.Email)
                 };
                 context.IssuedClaims.AddRange(claims);
             }

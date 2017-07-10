@@ -55,5 +55,13 @@ namespace JuCheap.Core.Interfaces
         /// <param name="filters">查询过滤参数</param>
         /// <returns></returns>
         Task<PagedResult<UserDto>> SearchAsync(UserFilters filters);
+
+        /// <summary>
+        /// 验证此用户是否有指定client应用的授权
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        Task<bool> HasClient(string clientId, Guid userId);
     }
 }

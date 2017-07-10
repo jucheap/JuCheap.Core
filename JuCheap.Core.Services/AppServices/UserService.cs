@@ -135,5 +135,17 @@ namespace JuCheap.Core.Services.AppServices
                     CreateDateTime = item.CreateDateTime
                 }).PagingAsync(filters.page, filters.rows);
         }
+
+        /// <summary>
+        /// 验证此用户是否有指定client应用的授权
+        /// </summary>
+        /// <param name="clientId"></param>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public async Task<bool> HasClient(string clientId, Guid userId)
+        {
+            var client = await _context.Apps.FirstOrDefaultAsync(x => x.ClientId == clientId);
+            return client.UserId == userId;
+        }
     }
 }

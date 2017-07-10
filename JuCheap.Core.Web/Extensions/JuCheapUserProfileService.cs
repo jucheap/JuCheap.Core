@@ -44,9 +44,16 @@ namespace JuCheap.Core.Web.Extensions
         /// <returns></returns>
         public virtual async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
-            var user = await _userService.FindAsync(Guid.Parse(context.Subject.GetSubjectId()));
+            var userId = Guid.Parse(context.Subject.GetSubjectId());
+            var user = await _userService.FindAsync(userId);
             if (user != null)
             {
+                //此处还可以验证当前用户，是否有此Client的登录授权。如下
+                //if (!await _userService.HasClient(context.Client.ClientId, userId))
+                //{
+                //    throw new Exception("您没有访问此应用的权限");
+                //}
+
                 var claims = new List<Claim>
                 {
                     new Claim("name",user.LoginName)

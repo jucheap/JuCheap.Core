@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
 using JuCheap.Core.Interfaces;
+using JuCheap.Core.Models;
 
 namespace JuCheap.Core.Web
 {
@@ -44,6 +45,29 @@ namespace JuCheap.Core.Web
         {
             var vm = await _account.BuildLoginViewModelAsync(returnUrl);
             return View(vm);
+        }
+
+        /// <summary>
+        /// Show reg page
+        /// </summary>
+        [HttpGet]
+        public IActionResult Reg()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// Handle postback from username/password login
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> Reg(UserAddDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _userService.AddAsync(model);
+                return Redirect("/");
+            }
+            return View();
         }
 
         /// <summary>

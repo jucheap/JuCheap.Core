@@ -71,5 +71,11 @@ namespace JuCheap.Core.Services.AppServices
             var list = await _context.Apps.Where(x => x.UserId == userId).ToListAsync();
             return _mapper.Map<List<AppEntity>, List<AppDto>>(list);
         }
+
+        public async Task<AppDto> GetByClientId(string clientId)
+        {
+            var entity = await _context.Apps.FirstOrDefaultAsync(x => x.ClientId == clientId);
+            return _mapper.Map<AppDto>(entity);
+        }
     }
 }

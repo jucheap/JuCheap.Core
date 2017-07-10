@@ -17,7 +17,7 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 登录账号
         /// </summary>
-        [Display(Name = "登录账号"), Required, MinLength(4), MaxLength(20)]
+        [Display(Name = "登录账号"), Required(ErrorMessage = "{0}不能为空"), MinLength(4, ErrorMessage = "{0}长度不能少于4个字符"), MaxLength(20, ErrorMessage = "{0}长度不能大于4个字符")]
         [RegularExpression("^[^_][a-zA-Z0-9_]*$",ErrorMessage = "登录账号必须是字母、数字或者下划线的组合")]
         [Remote("VerifyLoginName", "User",ErrorMessage = "登录帐号已经存在")]
         public string LoginName { get; set; }
@@ -25,13 +25,13 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 真实姓名
         /// </summary>
-        [Display(Name = "真实姓名"), Required, MinLength(2), MaxLength(20)]
+        [Display(Name = "真实姓名"), Required(ErrorMessage = "{0}不能为空"), MinLength(2, ErrorMessage = "{0}长度不能少于4个字符"), MaxLength(20, ErrorMessage = "{0}长度不能大于4个字符")]
         public string RealName { get; set; }
 
         /// <summary>
         /// 邮箱
         /// </summary>
-        [Display(Name = "邮箱"), Required, MinLength(5), MaxLength(36)]
+        [Display(Name = "邮箱"), Required(ErrorMessage = "{0}不能为空"), MinLength(5, ErrorMessage = "{0}长度不能少于4个字符"), MaxLength(36, ErrorMessage = "{0}长度不能大于4个字符")]
         [RegularExpression(@"^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$",ErrorMessage = "请输入正确的邮箱地址")]
         public string Email { get; set; }
 
@@ -39,14 +39,7 @@ namespace JuCheap.Core.Models
         /// 密码
         ///</summary>
         [Display(Name = "登录密码")]
-        [Required, MinLength(6), MaxLength(12)]
+        [Required(ErrorMessage = "{0}不能为空"), MinLength(6, ErrorMessage = "{0}长度不能少于4个字符"), MaxLength(12, ErrorMessage = "{0}长度不能大于4个字符")]
         public string Password { get; set; }
-
-        ///<summary>
-        /// 确认密码
-        ///</summary>
-        [Display(Name = "确认密码")]
-        [Required, MinLength(6), MaxLength(12), Compare("Password")]
-        public string ConfirmPwd { get; set; }
     }
 }

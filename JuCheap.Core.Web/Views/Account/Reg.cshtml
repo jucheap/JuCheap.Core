@@ -1,0 +1,145 @@
+﻿@model JuCheap.Core.Models.UserAddDto
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8" />
+    <title>注册 - JuCheap SSO 单点登录系统</title>
+    <meta name="keywords" content="JuCheap SSO,JuCheap单点登录系统,JuCheap" />
+    <meta name="description" content="JuCheap SSO 单点登录系统" />
+    <meta name="author" content="jucheap" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="~/skin/default_skin/css/googlefonts.css" rel="stylesheet" />
+    <link href="~/skin/default_skin/css/theme.css" rel="stylesheet" />
+    <link href="~/admin-tools/admin-forms/css/admin-forms.css" rel="stylesheet" />
+    <style type="text/css">
+        .field-validation-error{color:red !important;}
+    </style>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+     <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+     <![endif]-->
+</head>
+
+<body class="external-page sb-l-c sb-r-c">
+
+    <!-- Start: Main -->
+<div id="main" class="animated fadeIn">
+
+    <!-- Start: Content-Wrapper -->
+    <section id="content_wrapper">
+
+        <!-- begin canvas animation bg -->
+        <div id="canvas-wrapper">
+            <canvas id="demo-canvas"></canvas>
+        </div>
+
+        <!-- Begin: Content -->
+        <section id="content" class="">
+
+            <div class="admin-form theme-info mw700" style="margin-top: 3%;" id="login1">
+
+                <div class="row mb15 table-layout">
+
+                    <div class="col-xs-6 va-m pln">
+                        <a href="/" title="Return to Dashboard">
+                            <img src="~/img/logos/logo_white.png" title="JuCheap SSO" class="img-responsive w250">
+                        </a>
+                    </div>
+
+                    <div class="col-xs-6 text-right va-b pr5">
+                        <div class="login-links">
+                            <a href="/Account/Login" class="" title="登录">登录</a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="panel panel-info mt10 br-n">
+                    <form method="post" action="/account/reg" id="account2">
+                        <div class="panel-body p25 bg-light">
+                            <div class="section-divider mt10 mb40">
+                                <span>注册JuCheap单点系统</span>
+                            </div>
+                            <!-- .section-divider -->
+
+                            <div class="section row">
+                                <div class="col-md-6">
+                                    <label for="LoginName" class="field prepend-icon">
+                                        @Html.TextBoxFor(model => model.LoginName, new {@class = "gui-input", placeholder = "登录帐号"})
+                                        @Html.ValidationMessageFor(model => model.LoginName)
+                                        <label for="LoginName" class="field-icon">
+                                            <i class="fa fa-user"></i>
+                                        </label>
+                                    </label>
+                                </div>
+                                <!-- end section -->
+
+                                <div class="col-md-6">
+                                    <label for="NickName" class="field prepend-icon">
+                                        @Html.TextBoxFor(model => model.RealName, new {@class = "gui-input", placeholder = "姓名"})
+                                        @Html.ValidationMessageFor(model => model.RealName)
+                                        <label for="RealName" class="field-icon">
+                                            <i class="fa fa-user"></i>
+                                        </label>
+                                    </label>
+                                </div>
+                                <!-- end section -->
+                            </div>
+                            <!-- end .section row section -->
+
+                            <div class="section">
+                                <label for="Email" class="field prepend-icon">
+                                    @Html.TextBoxFor(model => model.Email, new {@class = "gui-input", placeholder = "邮件"})
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                    <label for="Email" class="field-icon">
+                                        <i class="fa fa-envelope"></i>
+                                    </label>
+                                </label>
+                            </div>
+                            <!-- end section -->
+
+                            <div class="section">
+                                <label for="Password" class="field prepend-icon">
+                                    @Html.PasswordFor(model => model.Password, new {@class = "gui-input", placeholder = "密码"})
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                    <label for="Password" class="field-icon">
+                                        <i class="fa fa-unlock-alt"></i>
+                                    </label>
+                                </label>
+                            </div>
+                            <!-- end section -->
+                        </div>
+                        <!-- end .form-body section -->
+                        <div class="panel-footer clearfix">
+                            <button id="btnReg" type="submit" class="button btn-primary pull-right">注册</button>
+                            <span class="text-danger">@ViewBag.Error</span>
+                        </div>
+                        <!-- end .form-footer section -->
+                    </form>
+                </div>
+            </div>
+
+        </section>
+        <!-- End: Content -->
+
+    </section>
+    <!-- End: Content-Wrapper -->
+    <script>
+        $("#btnReg").click(function () {
+            $(this).button("loading");
+            return true;
+        });
+    </script>
+</div>
+
+</body>
+
+</html>

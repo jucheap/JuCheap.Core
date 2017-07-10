@@ -33,92 +33,60 @@
                             <pre>
                             <b class="sys-title">一:如何接入</b>
                             <b>支持的Net版本，最低为：Net 4.5</b>
-                            <b>进入JuCheap SSO <a href="/user/reg" target="_blank">注册页面</a>，注册帐号；</b>
+                            <b>进入JuCheap SSO <a href="/account/reg" target="_blank">注册页面</a>，注册帐号；</b>
                             <b>注册成功后，会自动跳转到登录页面，用刚刚注册的账号和密码登录；登录成功后，点击网页右上角的头像，进入“我的网站”添加网站；</b>
                             <b>配置Start.cs类</b>
                             <b>
-                                app.UseCookieAuthentication(new CookieAuthenticationOptions()
+                                app.UseCookieAuthentication(new CookieAuthenticationOptions
                                 {
-                                    AuthenticationType = OpenIdConnectAuthenticationDefaults.AuthenticationType //AuthenticationType必须保持一致
+                                    AuthenticationScheme = "Cookies",
+                                    AutomaticAuthenticate = true,
+                                    ExpireTimeSpan = TimeSpan.FromMinutes(60),
+                                    CookieName = "JuCheap.Core.SSO"
                                 });
-                                app.UseOpenIdConnectAuthentication(new OpenIdConnectAuthenticationOptions
+
+                                JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+                                app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
                                 {
-                                    Authority = "http://sso.jucheap.com/identity",//SSO服务地址
-                                    ClientId = "C116042723450400001",//必须跟服务端配置的ClientId一致，也就是你添加网站后的“网站ID”
-                                    Scope = "openid profile roles",
-                                    ResponseType = "id_token token",
-                                    RedirectUri = "http://j.pe.com/", //登录成功跳转地址=>接入网站地址（你自己的网站地址）
-                                    PostLogoutRedirectUri = "http://j.pe.com/", //登出跳转地址=>接入网站地址（你自己的网站地址）
-                                    SignInAsAuthenticationType = OpenIdConnectAuthenticationDefaults.AuthenticationType,//AuthenticationType必须保持一致
-                                    Notifications = new OpenIdConnectAuthenticationNotifications
+                                    AuthenticationScheme = "oidc",
+                                    SignInScheme = "Cookies",
+                                    Authority = "http://localhost:18496",
+                                    RequireHttpsMetadata = false,
+
+                                    ClientId = "JuCheap-SSO-Demo",
+                                    ClientSecret = "JuCheapSecret",
+
+                                    ResponseType = "code id_token",
+                                    Scope = { "openid", "profile", "email", "offline_access" },
+                                    GetClaimsFromUserInfoEndpoint = true,
+
+                                    SaveTokens = true,
+
+                                    TokenValidationParameters = new TokenValidationParameters
                                     {
-                                        SecurityTokenValidated = async n =>
-                                        {
-                                            var nid = new ClaimsIdentity(n.AuthenticationTicket.Identity.AuthenticationType, "name", "role");
-                                            // get userinfo data
-                                            var userInfoClient = new UserInfoClient(new Uri(n.Options.Authority + "/connect/userinfo"), n.ProtocolMessage.AccessToken);
-                                            var userInfo = await userInfoClient.GetAsync();
-                                            userInfo.Claims.ToList().ForEach(ui => nid.AddClaim(new Claim(ui.Item1, ui.Item2)));
-                                            // keep the id_token for logout
-                                            nid.AddClaim(new Claim("id_token", n.ProtocolMessage.IdToken));
-                                            // add access token for sample API
-                                            nid.AddClaim(new Claim("access_token", n.ProtocolMessage.AccessToken));
-                                            // keep track of access token expiration
-                                            nid.AddClaim(new Claim("expires_at", DateTimeOffset.Now.AddSeconds(int.Parse(n.ProtocolMessage.ExpiresIn)).ToString()));
-                                            nid.AddClaim(new Claim("app_nonce", n.ProtocolMessage.Nonce));
-                                            n.AuthenticationTicket = new AuthenticationTicket(nid, n.AuthenticationTicket.Properties);
-                                        },
-                                        RedirectToIdentityProvider = n =>
-                                        {
-                                            if (n.ProtocolMessage.RequestType == OpenIdConnectRequestType.LogoutRequest)
-                                            {
-                                                var idTokenHint = n.OwinContext.Authentication.User.FindFirst("id_token");
-                                                if (idTokenHint != null)
-                                                {
-                                                    n.ProtocolMessage.IdTokenHint = idTokenHint.Value;
-                                                }
-                                            }
-                                            return Task.FromResult(0);
-                                        }
+                                        NameClaimType = JwtClaimTypes.Name,
+                                        RoleClaimType = JwtClaimTypes.Role,
                                     }
                                 });
-                                </b>
+                            </b>
                             <b class="sys-title">二、添加相关nuget包:</b>
-                                Microsoft.Owin.Host.SystemWeb
-                                Microsoft.Owin.Security.OpenIdConnect
+                                Microsoft.AspNetCore.Authentication.Cookies
+                                Microsoft.AspNetCore.Authentication.OpenIdConnect
                                 IdentityModel
                                 
-                                启动SSO:
-                                (1):MVC网站:在拦截器类RegisterGlobalFilters里面添加全局校验filters.Add(new AuthorizeAttribute());, 如果特殊的不想校验则添加[AllowAnonymous]
-                                (2):Webforms网站:需要这样来做,在OnPreInit事件里面添加如下代码:
-                                if (!Request.IsAuthenticated)
-                                {
-                                    HttpContext.Current.GetOwinContext().Authentication.Challenge(new AuthenticationProperties
-                                    {
-                                        RedirectUri = Request.Url.ToString()
-                                    },
-                                    OpenIdConnectAuthenticationDefaults.AuthenticationType);
-                                    Response.End();
-                                    return;
-                                }
+                                
                             <b class="sys-title">三、获取用户信息:</b>
                                 (1):获取登录账号名称:var userName = User.Identity.Name
                                 (2):获取其他用户信息:
                                 var user = User as ClaimsPrincipal;
                                 //获取Claim信息
-                                var userid = user.FindFirst("userid").Value; //userid是服务端提供的Claim信息,获取之前需要跟服务端确认提供了哪些用户信息
+                                var userid = user.FindFirst("sub").Value; //sub是服务端提供的Claim信息,获取之前需要跟服务端确认提供了哪些用户信息
                             <b class="sys-title">四、登出:</b>
-                                (1)MVC网站:
                                 public ActionResult Logout()
                                 {
-                                    Request.GetOwinContext().Authentication.SignOut();
+                                    await HttpContext.Authentication.SignOutAsync("Cookies");
+                                    await HttpContext.Authentication.SignOutAsync("oidc");
                                     return Redirect("/");
-                                }
-                                (2)webform网站:
-                                protected void Logout(object sender, EventArgs e)
-                                {
-                                    Request.GetOwinContext().Authentication.SignOut();
-                                    Response.Redirect(Request.Url.ToString());
                                 }
                             </pre>
                         </div>

@@ -53,6 +53,7 @@ namespace JuCheap.Core.Web.SSO.Demo
             }
 
             app.UseStaticFiles();
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationScheme = "Cookies",

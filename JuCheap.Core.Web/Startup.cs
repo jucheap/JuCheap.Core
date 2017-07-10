@@ -83,7 +83,7 @@ namespace JuCheap.Core.Web
                 options.Events.RaiseFailureEvents = true;
                 options.Events.RaiseErrorEvents = true;
             })
-                .AddInMemoryClients(Clients.Get())
+                .AddClientStore<JuCheapAppClientStore>()
                 .AddInMemoryIdentityResources(Resources.GetIdentityResources())
                 .AddDeveloperSigningCredential()
                 .AddExtensionGrantValidator<Extensions.ExtensionGrantValidator>()

@@ -21,5 +21,7 @@ namespace JuCheap.Core.Interfaces
         Task<AppDto> GetAsync(Guid id);
 
         Task<List<AppDto>> GetByUserId(Guid userId);
+
+        Task<AppDto> GetByClientId(string clientId);
     }
 }

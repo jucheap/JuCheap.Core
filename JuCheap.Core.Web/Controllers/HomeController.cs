@@ -15,6 +15,8 @@ using Microsoft.Net.Http.Headers;
 using System;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using log4net;
+using JuCheap.Core.Infrastructure.Utilities;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -28,12 +30,14 @@ namespace JuCheap.Core.Web.Controllers
         private readonly IUserService _userService;
         private readonly IMenuService _menuService;
         private readonly IHostingEnvironment _hostEnvironment;
+        private ILog log = LogManager.GetLogger(Constants.Log4net.RepositoryName, Constants.Log4net.LoggerName);
 
         public HomeController(IUserService userSvr, IMenuService menuService,IHostingEnvironment hostEnvironment)
         {
             _userService = userSvr;
             _menuService = menuService;
             _hostEnvironment = hostEnvironment;
+            //log.Error("home ctor error");
         }
 
         /// <summary>

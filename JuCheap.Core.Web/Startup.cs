@@ -14,6 +14,11 @@ using Microsoft.Extensions.Logging;
 using JuCheap.Core.Services;
 using JuCheap.Core.Web.Filters;
 using Microsoft.AspNetCore.Http;
+using log4net.Repository;
+using log4net;
+using System.IO;
+using log4net.Config;
+using JuCheap.Core.Infrastructure.Utilities;
 
 namespace JuCheap.Core.Web
 {
@@ -35,6 +40,9 @@ namespace JuCheap.Core.Web
             builder.AddEnvironmentVariables();
 
             Configuration = builder.Build();
+
+            var repository = LogManager.CreateRepository(Constants.Log4net.RepositoryName);
+            XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
         }
 
         public IConfigurationRoot Configuration { get; }

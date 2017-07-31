@@ -94,7 +94,7 @@
                     var ids = jQuery("#table_list_my").jqGrid('getDataIDs');
                     for (var i = 0; i < ids.length; i++) {
                         var id = ids[i];
-                        var cancel = "<button class=\"btn btn-danger btn-sm\" type=\"button\" onclick=\"cancelRight(" + id + ")\">取消</button>";
+                        var cancel = "<button class=\"btn btn-danger btn-sm\" type=\"button\" onclick=\"cancelRight('" + id + "')\">取消</button>";
                         jQuery("#table_list_my").jqGrid('setRowData', ids[i], { Cancel: cancel });
                     }
                 }
@@ -114,7 +114,7 @@
                     var ids = jQuery("#table_list_notmy").jqGrid('getDataIDs');
                     for (var i = 0; i < ids.length; i++) {
                         var id = ids[i];
-                        var authen = "<button class=\"btn btn-info btn-sm\" type=\"button\" onclick=\"giveRight(" + id + ")\">授权</button>";
+                        var authen = "<button class=\"btn btn-info btn-sm\" type=\"button\" onclick=\"giveRight('" + id + "')\">授权</button>";
                         jQuery("#table_list_notmy").jqGrid('setRowData', ids[i], { Authen: authen });
                     }
                 }

@@ -56,35 +56,20 @@ namespace JuCheap.Core.Web
                 });
 
             //使用Sql Server数据库
-            //services.AddEntityFrameworkSqlServer()
-            //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-            //        options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"),
-            //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
-            //            .UseInternalServiceProvider(serviceProvider));
             services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
 
             ////使用Sqlite数据库
-            //services.AddEntityFrameworkSqlite()
-            //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-            //        options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite"),
-            //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
-            //            .UseInternalServiceProvider(serviceProvider));
+            //services.AddDbContext<JuCheapContext>(options => options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite")));
 
             ////使用MySql数据库
-            //services.AddEntityFrameworkMySql()
-            //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-            //        options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
-            //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
-            //            .UseInternalServiceProvider(serviceProvider));
+            //services.AddDbContext<JuCheapContext>(options => options.UseMySql(Configuration.GetConnectionString("Connection_MySql")));
 
-            //services.AddDbContextPool<JuCheapContext>(options => options.UseSqlServer((Configuration.GetConnectionString("Connection_SqlServer"))));
 
-            //services.AddSingleton<DbContext, JuCheapContext>();
 
             //权限验证filter
             services.AddMvc(cfg =>
             {
-                //cfg.Filters.Add(new RightFilter());
+                cfg.Filters.Add(new RightFilter());
             });
 
             // Add application services.
@@ -120,7 +105,7 @@ namespace JuCheap.Core.Web
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-            //app.UseMiddleware<VisitMiddleware>();
+            app.UseMiddleware<VisitMiddleware>();
 
             app.UseMvc(routes =>
             {

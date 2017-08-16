@@ -126,6 +126,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [IgnoreRightFilter]
+        [AllowAnonymous]
         public IActionResult Error()
         {
             return View();

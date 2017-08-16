@@ -9,14 +9,11 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using JuCheap.Core.Infrastructure.Extentions;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Net.Http.Headers;
-using System;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
 using log4net;
 using JuCheap.Core.Infrastructure.Utilities;
+using Microsoft.AspNetCore.Authentication;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -105,7 +102,7 @@ namespace JuCheap.Core.Web.Controllers
                 identity.AddClaim(new Claim("LoginUserId", loginDto.User.Id.ToString()));
                 var properties = new AuthenticationProperties() { IsPersistent = true };
                 var principal = new ClaimsPrincipal(identity);
-                await HttpContext.Authentication.SignInAsync(authenType, principal, properties);
+                await HttpContext.SignInAsync(authenType, principal, properties);
                 model.ReturnUrl = model.ReturnUrl.IsNotBlank() ? model.ReturnUrl : "/";
                 return Redirect(model.ReturnUrl);
             }
@@ -120,7 +117,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.Authentication.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
         }
 
@@ -131,37 +128,6 @@ namespace JuCheap.Core.Web.Controllers
         [IgnoreRightFilter]
         public IActionResult Error()
         {
-            return View();
-        }
-
-        /// <summary>
-        /// 上传文件Demo
-        /// </summary>
-        /// <param name="fileinput"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> Upload(IFormFile fileinput)
-        {
-            // 文件大小
-            long size = 0;
-            // 原文件名（包括路径）
-            var filename = ContentDispositionHeaderValue.Parse(fileinput.ContentDisposition).FileName;
-            // 扩展名
-            var extName = filename.Substring(filename.LastIndexOf('.')).Replace("\"", "");
-            // 新文件名
-            string shortfilename = $"{Guid.NewGuid()}{extName}";
-            // 新文件名（包括路径）
-            filename = _hostEnvironment.WebRootPath + @"\upload\" + shortfilename;
-            // 设置文件大小
-            size += fileinput.Length;
-            // 创建新文件
-            using (FileStream fs = System.IO.File.Create(filename))
-            {
-                // 复制文件
-                await fileinput.CopyToAsync(fs);
-                // 清空缓冲区数据
-                await fs.FlushAsync();
-            }
             return View();
         }
     }

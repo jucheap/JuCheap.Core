@@ -10,6 +10,7 @@
 *
 *********************************************************************************/
 
+using JuCheap.Core.Data.Configurations;
 using JuCheap.Core.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,117 +38,16 @@ namespace JuCheap.Core.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<MenuEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.Code).HasMaxLength(6).IsRequired();
-                m.Property(e => e.PathCode).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Name).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Url).HasMaxLength(300).IsRequired();
-                m.Property(e => e.Order).IsRequired();
-                m.Property(e => e.Type).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("Menus");
-            });
-            modelBuilder.Entity<RoleEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.Name).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Description).HasMaxLength(50).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("Roles");
-            });
-            modelBuilder.Entity<LoginLogEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
-                m.Property(e => e.IP).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Mac).HasMaxLength(200).IsRequired();
-                m.Property(e => e.UserId).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("LoginLogs");
-            });
-            modelBuilder.Entity<PageViewEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
-                m.Property(e => e.IP).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Url).HasMaxLength(300).IsRequired();
-                m.Property(e => e.UserId).HasMaxLength(20).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("PageViews");
-            });
-            modelBuilder.Entity<PathCodeEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.Code).HasMaxLength(4).IsRequired();
-                m.Property(e => e.Len).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("PathCodes");
-            });
-            modelBuilder.Entity<RoleMenuEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.RoleId).IsRequired();
-                m.Property(e => e.MenuId).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("RoleMenus");
-            });
-            modelBuilder.Entity<UserRoleEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.RoleId).IsRequired();
-                m.Property(e => e.UserId).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("UserRoles");
-            });
-            modelBuilder.Entity<UserEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
-                m.Property(e => e.RealName).HasMaxLength(20).IsRequired();
-                m.Property(e => e.Email).HasMaxLength(36).IsRequired();
-                m.Property(e => e.Password).HasMaxLength(50).IsRequired();
-                m.Property(e => e.IsSuperMan).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("Users");
-            });
-            modelBuilder.Entity<SystemConfigEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.SystemName).HasMaxLength(50).IsRequired();
-                m.Property(e => e.IsDataInited).IsRequired();
-                m.Property(e => e.DataInitedDate).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("SystemConfigs");
-            });
-            modelBuilder.Entity<AreaEntity>(m =>
-            {
-                m.HasKey(e => e.Id);
-                m.Property(e => e.Id).ValueGeneratedNever();
-                m.Property(e => e.Name).HasMaxLength(50).IsRequired();
-                m.Property(e => e.CreateDateTime).IsRequired();
-                m.Property(e => e.IsDeleted).IsRequired();
-                m.ToTable("Areas");
-            });
+            modelBuilder.ApplyConfiguration(new SystemConfigConfiguration());
+            modelBuilder.ApplyConfiguration(new MenuConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleMenuConfiguration());
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
+            modelBuilder.ApplyConfiguration(new LoginLogConfiguration());
+            modelBuilder.ApplyConfiguration(new PageViewConfiguration());
+            modelBuilder.ApplyConfiguration(new AreaConfiguration());
+            modelBuilder.ApplyConfiguration(new PathCodeConfiguration());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

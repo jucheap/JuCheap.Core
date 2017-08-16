@@ -1,82 +1,90 @@
-Ôªøusing System;
-using System.Security.Claims;
-using System.Security.Principal;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using JuCheap.Core.Data;
-using JuCheap.Core.Interfaces;
-using JuCheap.Core.Services.AppServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using JuCheap.Core.Services;
-using JuCheap.Core.Web.Filters;
-using Microsoft.AspNetCore.Http;
-using log4net.Repository;
 using log4net;
+using JuCheap.Core.Infrastructure.Utilities;
 using System.IO;
 using log4net.Config;
-using JuCheap.Core.Infrastructure.Utilities;
+using JuCheap.Core.Data;
+using Microsoft.EntityFrameworkCore;
+using JuCheap.Core.Web.Filters;
+using JuCheap.Core.Services;
+using JuCheap.Core.Interfaces;
+using JuCheap.Core.Services.AppServices;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication;
+using System.Security.Principal;
+using System.Security.Claims;
 
 namespace JuCheap.Core.Web
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IConfiguration configuration)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-
-            if (env.IsDevelopment())
-            {
-                // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
-                builder.AddUserSecrets<Startup>();
-            }
-
-            builder.AddEnvironmentVariables();
-
-            Configuration = builder.Build();
+            Configuration = configuration;
 
             var repository = LogManager.CreateRepository(Constants.Log4net.RepositoryName);
             XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
         }
 
-        public IConfigurationRoot Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ////‰ΩøÁî®Sql ServerÊï∞ÊçÆÂ∫ì
+            services.AddMvc();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(o =>
+                {
+                    o.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
+                    o.LoginPath = new PathString("/Home/Login");
+                    o.LogoutPath = new PathString("/Home/Logout");
+                    o.Cookie = new CookieBuilder
+                    {
+                        HttpOnly = true,
+                        Name = ".JuCheap.Core.Identity",
+                        Path = "/"
+                    };
+                    //o.DataProtectionProvider = null;//»Áπ˚–Ë“™◊ˆ∏∫‘ÿæ˘∫‚£¨æÕ–Ë“™Ã·π©“ª∏ˆKey
+                });
+
+            // π”√Sql Server ˝æ›ø‚
             //services.AddEntityFrameworkSqlServer()
             //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
             //        options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"),
             //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
             //            .UseInternalServiceProvider(serviceProvider));
+            services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
 
-            ////‰ΩøÁî®SqliteÊï∞ÊçÆÂ∫ì
+            //// π”√Sqlite ˝æ›ø‚
             //services.AddEntityFrameworkSqlite()
             //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
             //        options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite"),
             //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
             //            .UseInternalServiceProvider(serviceProvider));
 
-            //‰ΩøÁî®MySqlÊï∞ÊçÆÂ∫ì
-            services.AddEntityFrameworkMySql()
-                .AddDbContext<JuCheapContext>((serviceProvider, options) =>
-                    options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
-                        b => b.MigrationsAssembly("JuCheap.Core.Web"))
-                        .UseInternalServiceProvider(serviceProvider));
+            //// π”√MySql ˝æ›ø‚
+            //services.AddEntityFrameworkMySql()
+            //    .AddDbContext<JuCheapContext>((serviceProvider, options) =>
+            //        options.UseMySql(Configuration.GetConnectionString("Connection_MySql"),
+            //            b => b.MigrationsAssembly("JuCheap.Core.Web"))
+            //            .UseInternalServiceProvider(serviceProvider));
 
-            services.AddSingleton<DbContext, JuCheapContext>();
+            //services.AddDbContextPool<JuCheapContext>(options => options.UseSqlServer((Configuration.GetConnectionString("Connection_SqlServer"))));
 
-            //ÊùÉÈôêÈ™åËØÅfilter
+            //services.AddSingleton<DbContext, JuCheapContext>();
+
+            //»®œﬁ—È÷§filter
             services.AddMvc(cfg =>
             {
-                cfg.Filters.Add(new RightFilter());
+                //cfg.Filters.Add(new RightFilter());
             });
 
             // Add application services.
@@ -94,15 +102,11 @@ namespace JuCheap.Core.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            loggerFactory.AddDebug();
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
             }
             else
@@ -112,23 +116,11 @@ namespace JuCheap.Core.Web
 
             app.UseStaticFiles();
 
-            var option = new CookieAuthenticationOptions
-            {
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                CookieHttpOnly = true,
-                ExpireTimeSpan = TimeSpan.FromMinutes(43200),
-                LoginPath = new PathString("/Home/Login"),
-                LogoutPath = new PathString("/Home/Logout"),
-                CookieName = ".JuCheapCore.Identity",
-                CookiePath = "/",
-                //DataProtectionProvider = null//Â¶ÇÊûúÈúÄË¶ÅÂÅöË¥üËΩΩÂùáË°°ÔºåÂ∞±ÈúÄË¶ÅÊèê‰æõ‰∏Ä‰∏™Key
-            };
-            app.UseCookieAuthentication(option);
+            app.UseAuthentication();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-            app.UseMiddleware<VisitMiddleware>();
+            //app.UseMiddleware<VisitMiddleware>();
 
             app.UseMvc(routes =>
             {
@@ -138,18 +130,25 @@ namespace JuCheap.Core.Web
             });
 
             //init database
-            var dbService = app.ApplicationServices.GetRequiredService<IDatabaseInitService>();
-            Task.Run(() => dbService.InitAsync());
+            
+            Task.Run(async () =>
+            {
+                using (var scope = app.ApplicationServices.CreateScope())
+                {
+                    var dbService = scope.ServiceProvider.GetService<IDatabaseInitService>();
+                    await dbService.InitAsync();
+                }
+            });
         }
     }
 
     /// <summary>
-    /// IIdentityÊâ©Â±ï
+    /// IIdentity¿©’π
     /// </summary>
     public static class IdentityExtention
     {
         /// <summary>
-        /// Ëé∑ÂèñÁôªÂΩïÁöÑÁî®Êà∑ID
+        /// ªÒ»°µ«¬ºµƒ”√ªßID
         /// </summary>
         /// <param name="identity">IIdentity</param>
         /// <returns></returns>

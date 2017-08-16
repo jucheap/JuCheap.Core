@@ -27,8 +27,7 @@
     "inputFiles": [
       "wwwroot/css/bootstrap.css",
       "wwwroot/css/font-awesome.css",
-      "wwwroot/css/login-theme.css",
-      "wwwroot/css/login.css"
+      "wwwroot/css/login-theme.css"
     ]
   },
   {

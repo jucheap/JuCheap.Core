@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using JuCheap.Core.Data;
 using JuCheap.Core.Data.Entity;
 using JuCheap.Core.Infrastructure.Extentions;
-using JuCheap.Core.Infrastructure.Utilities;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models.Enum;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +36,6 @@ namespace JuCheap.Core.Services.AppServices
         {
             try
             {
-                //await _context.Database.EnsureCreatedAsync();
                 await _context.Database.MigrateAsync();
                 if (await _context.SystemConfigs.AnyAsync(item => item.IsDataInited))
                     return false;
@@ -198,7 +196,7 @@ namespace JuCheap.Core.Services.AppServices
                     Name = "日志查看",
                     Url = "#",
                     CreateDateTime = Now,
-                    Order = 9,
+                    Order = 2,
                     Code = "AB",
                     PathCode = "AB",
                     Type = 1
@@ -210,7 +208,7 @@ namespace JuCheap.Core.Services.AppServices
                     Name = "登录日志",
                     Url = "/Log/Logins",
                     CreateDateTime = Now,
-                    Order = 10,
+                    Order = 1,
                     Code = "AA",
                     PathCode = "ABAA",
                     Type = 2
@@ -222,7 +220,7 @@ namespace JuCheap.Core.Services.AppServices
                     Name = "访问日志",
                     Url = "/Log/Visits",
                     CreateDateTime = Now,
-                    Order = 11,
+                    Order = 2,
                     Code = "AB",
                     PathCode = "ABAB",
                     Type = 2
@@ -276,6 +274,92 @@ namespace JuCheap.Core.Services.AppServices
                     Code = "AB",
                     PathCode = "AAACAB"
                 });
+
+                var page = new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "示例页面",
+                    Url = "#",
+                    CreateDateTime = Now,
+                    Order = 3,
+                    Code = "AC",
+                    PathCode = "AC",
+                    Type = 1
+                };
+                var pageButton = new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "按钮",
+                    Url = "/Pages/Buttons",
+                    CreateDateTime = Now,
+                    Order = 0,
+                    Code = "AA",
+                    PathCode = "ACAA",
+                    Type = 2
+                };
+                var pageForm = new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "表单",
+                    Url = "/Pages/Form",
+                    CreateDateTime = Now,
+                    Order = 1,
+                    Code = "AB",
+                    PathCode = "ACAB",
+                    Type = 2
+                };
+                var pageFormAdvance = new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "高级表单",
+                    Url = "/Pages/FormAdvance",
+                    CreateDateTime = Now,
+                    Order = 2,
+                    Code = "AC",
+                    PathCode = "ACAC",
+                    Type = 2
+                };
+                var pageTable = new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "表格",
+                    Url = "/Pages/Tables",
+                    CreateDateTime = Now,
+                    Order = 3,
+                    Code = "AD",
+                    PathCode = "ACAD",
+                    Type = 2
+                };
+                var pageTabs = new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "选项卡",
+                    Url = "/Pages/Tabs",
+                    CreateDateTime = Now,
+                    Order = 4,
+                    Code = "AE",
+                    PathCode = "ACAE",
+                    Type = 2
+                };
+                var pageFonts = new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "字体",
+                    Url = "/Pages/FontAwesome",
+                    CreateDateTime = Now,
+                    Order = 5,
+                    Code = "AF",
+                    PathCode = "ACAF",
+                    Type = 2
+                };
+
+                menus.Add(page);
+                menus.Add(pageButton);
+                menus.Add(pageForm);
+                menus.Add(pageFormAdvance);
+                menus.Add(pageTable);
+                menus.Add(pageTabs);
+                menus.Add(pageFonts);
 
                 #endregion
 

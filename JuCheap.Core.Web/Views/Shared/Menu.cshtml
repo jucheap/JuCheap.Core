@@ -21,7 +21,7 @@
             </li>
             @if (menus != null)
             {
-                foreach (var module in menus.Where(item => item.Type == MenuType.Module))
+                foreach (var module in menus.OrderBy(x => x.Order).Where(item => item.Type == MenuType.Module))
                 {
                     <li>
                         <a href="#">
@@ -30,7 +30,7 @@
                             <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-second-level">
-                            @foreach (var menu in menus.Where(item => item.ParentId == module.Id))
+                            @foreach (var menu in menus.OrderBy(x => x.Order).Where(item => item.ParentId == module.Id))
                             {
                                 <li>
                                     <a class="J_menuItem" href="@menu.Url" data-index="@module.Id">@menu.Name</a>

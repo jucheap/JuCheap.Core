@@ -64,8 +64,6 @@ namespace JuCheap.Core.Web
             ////使用MySql数据库
             //services.AddDbContext<JuCheapContext>(options => options.UseMySql(Configuration.GetConnectionString("Connection_MySql")));
 
-
-
             //权限验证filter
             services.AddMvc(cfg =>
             {

@@ -12,10 +12,10 @@ namespace JuCheap.Core.Data.Migrations
                 name: "Areas",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,13 +26,13 @@ namespace JuCheap.Core.Data.Migrations
                 name: "LoginLogs",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IP = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    IP = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    LoginName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Mac = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    LoginName = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    Mac = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,16 +43,16 @@ namespace JuCheap.Core.Data.Migrations
                 name: "Menus",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Code = table.Column<string>(type: "varchar(6)", maxLength: 6, nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Name = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
                     Order = table.Column<int>(type: "int", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    PathCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Type = table.Column<byte>(type: "tinyint", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false)
+                    ParentId = table.Column<Guid>(type: "char(36)", nullable: true),
+                    PathCode = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    Type = table.Column<byte>(type: "tinyint unsigned", nullable: false),
+                    Url = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -63,13 +63,13 @@ namespace JuCheap.Core.Data.Migrations
                 name: "PageViews",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IP = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    IP = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    LoginName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", maxLength: 20, nullable: false)
+                    LoginName = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    Url = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: false),
+                    UserId = table.Column<Guid>(type: "char(36)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -80,9 +80,9 @@ namespace JuCheap.Core.Data.Migrations
                 name: "PathCodes",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Code = table.Column<string>(type: "varchar(4)", maxLength: 4, nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Len = table.Column<int>(type: "int", nullable: false)
                 },
@@ -95,11 +95,11 @@ namespace JuCheap.Core.Data.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Description = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    Name = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,12 +110,12 @@ namespace JuCheap.Core.Data.Migrations
                 name: "SystemConfigs",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DataInitedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DataInitedDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDataInited = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    SystemName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    SystemName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -126,14 +126,14 @@ namespace JuCheap.Core.Data.Migrations
                 name: "Users",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Email = table.Column<string>(type: "varchar(36)", maxLength: 36, nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     IsSuperMan = table.Column<bool>(type: "bit", nullable: false),
-                    LoginName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    RealName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
+                    LoginName = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
+                    Password = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    RealName = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,11 +144,11 @@ namespace JuCheap.Core.Data.Migrations
                 name: "RoleMenus",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    MenuId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    MenuId = table.Column<Guid>(type: "char(36)", nullable: false),
+                    RoleId = table.Column<Guid>(type: "char(36)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -171,11 +171,11 @@ namespace JuCheap.Core.Data.Migrations
                 name: "UserRoles",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreateDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    CreateDateTime = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    RoleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    RoleId = table.Column<Guid>(type: "char(36)", nullable: false),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false)
                 },
                 constraints: table =>
                 {

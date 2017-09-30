@@ -55,14 +55,14 @@ namespace JuCheap.Core.Web
                     //o.DataProtectionProvider = null;//如果需要做负载均衡，就需要提供一个Key
                 });
 
-            //使用Sql Server数据库
-            services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
+            ////使用Sql Server数据库
+            //services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
 
             ////使用Sqlite数据库
             //services.AddDbContext<JuCheapContext>(options => options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite")));
 
-            ////使用MySql数据库
-            //services.AddDbContext<JuCheapContext>(options => options.UseMySql(Configuration.GetConnectionString("Connection_MySql")));
+            //使用MySql数据库
+            services.AddDbContext<JuCheapContext>(options => options.UseMySql(Configuration.GetConnectionString("Connection_MySql")));
 
             //权限验证filter
             services.AddMvc(cfg =>

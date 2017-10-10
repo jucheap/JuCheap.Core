@@ -13,6 +13,9 @@
 using JuCheap.Core.Data.Configurations;
 using JuCheap.Core.Data.Entity;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace JuCheap.Core.Data
 {
@@ -38,16 +41,14 @@ namespace JuCheap.Core.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new SystemConfigConfiguration());
-            modelBuilder.ApplyConfiguration(new MenuConfiguration());
-            modelBuilder.ApplyConfiguration(new RoleConfiguration());
-            modelBuilder.ApplyConfiguration(new RoleMenuConfiguration());
-            modelBuilder.ApplyConfiguration(new UserConfiguration());
-            modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
-            modelBuilder.ApplyConfiguration(new LoginLogConfiguration());
-            modelBuilder.ApplyConfiguration(new PageViewConfiguration());
-            modelBuilder.ApplyConfiguration(new AreaConfiguration());
-            modelBuilder.ApplyConfiguration(new PathCodeConfiguration());
+            //添加FluentAPI配置
+            var typesToRegister = typeof(SystemConfigConfiguration).Assembly.GetTypes().Where(q => q.GetInterface(typeof(IEntityTypeConfiguration<>).FullName) != null);
+
+            foreach (var type in typesToRegister)
+            {
+                dynamic configurationInstance = Activator.CreateInstance(type);
+                modelBuilder.ApplyConfiguration(configurationInstance);
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

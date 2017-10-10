@@ -19,4 +19,9 @@
     <ProjectReference Include="..\JuCheap.Core.Models\JuCheap.Core.Models.csproj" />
     <ProjectReference Include="..\JuCheap.Core.Services\JuCheap.Core.Services.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

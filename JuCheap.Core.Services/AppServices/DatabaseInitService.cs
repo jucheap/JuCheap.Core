@@ -483,7 +483,7 @@ namespace JuCheap.Core.Services.AppServices
                             Code = a + b,
                             Len = 2
                         }).OrderBy(item => item.Code).ToList();
-
+            list.ForEach(x => x.Init());
             await _context.Database.ExecuteSqlCommandAsync("DELETE FROM PathCodes");
             _context.PathCodes.AddRange(list);
 

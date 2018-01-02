@@ -361,6 +361,92 @@ namespace JuCheap.Core.Services.AppServices
                 menus.Add(pageTabs);
                 menus.Add(pageFonts);
 
+                //示例页面
+                var pages = new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "示例页面",
+                    Url = "#",
+                    CreateDateTime = Now,
+                    Order = 3,
+                    Code = "AC",
+                    PathCode = "AC",
+                    Type = 1
+                };
+                menus.Add(pages);
+                menus.Add(new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    ParentId = pages.Id,
+                    Order = 0,
+                    Name = "按钮",
+                    Type = 2,
+                    Url = "/Pages/Buttons",
+                    CreateDateTime = Now,
+                    Code = "AA",
+                    PathCode = "ACAA"
+                });
+                menus.Add(new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    ParentId = pages.Id,
+                    Order = 1,
+                    Name = "表单",
+                    Type = 2,
+                    Url = "/Pages/Form",
+                    CreateDateTime = Now,
+                    Code = "AB",
+                    PathCode = "ACAB"
+                });
+                menus.Add(new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    ParentId = pages.Id,
+                    Order = 2,
+                    Name = "高级表单",
+                    Type = 2,
+                    Url = "/Pages/FormAdvance",
+                    CreateDateTime = Now,
+                    Code = "AC",
+                    PathCode = "ACAC"
+                });
+                menus.Add(new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    ParentId = pages.Id,
+                    Order = 3,
+                    Name = "表格",
+                    Type = 2,
+                    Url = "/Pages/Tables",
+                    CreateDateTime = Now,
+                    Code = "AD",
+                    PathCode = "ACAD"
+                });
+                menus.Add(new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    ParentId = pages.Id,
+                    Order = 4,
+                    Name = "选项卡",
+                    Type = 2,
+                    Url = "/Pages/Tabs",
+                    CreateDateTime = Now,
+                    Code = "AE",
+                    PathCode = "ACAE"
+                });
+                menus.Add(new MenuEntity
+                {
+                    Id = Guid.NewGuid(),
+                    ParentId = pages.Id,
+                    Order = 5,
+                    Name = "字体FontAwesome",
+                    Type = 2,
+                    Url = "/Pages/FontAwesome",
+                    CreateDateTime = Now,
+                    Code = "AF",
+                    PathCode = "ACAF"
+                });
+
                 #endregion
 
                 #region 角色

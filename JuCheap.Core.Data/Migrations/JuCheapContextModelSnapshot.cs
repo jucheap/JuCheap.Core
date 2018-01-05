@@ -53,7 +53,7 @@ namespace JuCheap.Core.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(20);
 
-                    b.Property<string>("Mac")
+                    b.Property<string>("Message")
                         .IsRequired()
                         .HasMaxLength(200);
 

@@ -10,7 +10,6 @@ using JuCheap.Core.Models;
 using JuCheap.Core.Models.Enum;
 using JuCheap.Core.Models.Filters;
 using JuCheap.Core.Infrastructure.Extentions;
-using JuCheap.Core.Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -114,7 +113,7 @@ namespace JuCheap.Core.Services.AppServices
             };
             if (entity == null)
             {
-                reslt.Message = "账号不存在";
+                reslt.Message = "Account not exists";
                 reslt.Result = LoginResult.AccountNotExists;
                 loginLog.UserId = Guid.Empty;
             }
@@ -123,18 +122,18 @@ namespace JuCheap.Core.Services.AppServices
                 if (entity.Password == dto.Password.ToMd5())
                 {
                     reslt.LoginSuccess = true;
-                    reslt.Message = "登陆成功";
+                    reslt.Message = "Login success";
                     reslt.Result = LoginResult.Success;
                     reslt.User = _mapper.Map<UserEntity, UserDto>(entity);
                 }
                 else
                 {
-                    reslt.Message = "登陆密码错误";
+                    reslt.Message = "Wrong password";
                     reslt.Result = LoginResult.WrongPassword;
                 }
                 loginLog.UserId = entity.Id;
             }
-            loginLog.Mac = reslt.Message;
+            loginLog.Message = reslt.Message;
             logDbSet.Add(loginLog);
             await _context.SaveChangesAsync();
             return reslt;

@@ -31,7 +31,7 @@ namespace JuCheap.Core.Data.Migrations
                     IP = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     LoginName = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
-                    Mac = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
+                    Message = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
                     UserId = table.Column<Guid>(type: "char(36)", nullable: false)
                 },
                 constraints: table =>

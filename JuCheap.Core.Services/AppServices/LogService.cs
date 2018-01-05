@@ -44,7 +44,7 @@ namespace JuCheap.Core.Services.AppServices
                     UserId = item.UserId,
                     LoginName = item.LoginName,
                     IP = item.IP,
-                    Mac = item.Mac,
+                    Message = item.Message,
                     CreateDateTime = item.CreateDateTime
                 }).PagingAsync(filters.page, filters.rows);
         }

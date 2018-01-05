@@ -29,7 +29,7 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 登录结果信息
         /// </summary>
-        public string Mac { get; set; }
+        public string Message { get; set; }
 
         /// <summary>
         /// 登录时间

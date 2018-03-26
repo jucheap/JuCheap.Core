@@ -37,6 +37,9 @@ namespace JuCheap.Core.Services
             config.CreateMap<RoleEntity, TreeDto>()
                 .ForMember(m => m.id, e => e.MapFrom(item => item.Id))
                 .ForMember(m => m.name, e => e.MapFrom(item => item.Name));
+
+            config.CreateMap<DepartmentEntity, DepartmentDto>().ReverseMap();
+            config.CreateMap<AreaEntity, AreaDto>().ReverseMap();
         }
     }
 }

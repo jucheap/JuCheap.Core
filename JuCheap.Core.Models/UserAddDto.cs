@@ -48,5 +48,8 @@ namespace JuCheap.Core.Models
         [Display(Name = "确认密码")]
         [Required, MinLength(6), MaxLength(12), Compare("Password")]
         public string ConfirmPwd { get; set; }
+
+        [Display(Name = "所属部门")]
+        public Guid? DepartmentId { get; set; }
     }
 }

@@ -49,7 +49,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Edit(Guid id)
+        public async Task<IActionResult> Edit(string id)
         {
             var model = await _menuService.FindAsync(id);
             return View(model);
@@ -65,7 +65,7 @@ namespace JuCheap.Core.Web.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _menuService.AddAsync(dto);
-                if (result != Guid.Empty)
+                if (result.IsNotBlank())
                     return RedirectToAction("Index");
             }
             return View(dto);
@@ -93,7 +93,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        public async Task<IActionResult> Delete([FromBody]IEnumerable<Guid> ids)
+        public async Task<IActionResult> Delete([FromBody]IEnumerable<string> ids)
         {
             var result = new JsonResultModel<bool>();
             if (ids.AnyOne())
@@ -125,7 +125,7 @@ namespace JuCheap.Core.Web.Controllers
         {
             filters.page = 1;
             filters.rows = 10;
-            filters.ExcludeType = MenuType.Button; 
+            filters.ExcludeType = MenuType.Action; 
             var result = await _menuService.SearchAsync(filters);
             return Json(new {value = result.rows});
         }

@@ -11,7 +11,7 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 用户ID
         /// </summary>
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 登录账号
@@ -32,6 +32,11 @@ namespace JuCheap.Core.Models
         /// 创建日期
         /// </summary>
         public DateTime CreateDateTime { get; set; }
+
+        /// <summary>
+        /// 部门名称
+        /// </summary>
+        public string DepartmentName { get; set; }
 
         /// <summary>
         /// 用户拥有的角色

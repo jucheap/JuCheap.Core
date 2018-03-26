@@ -53,6 +53,13 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label" asp-for="DepartmentId"></label>
+                    <div class="col-sm-8">
+                        <select id="DepartmentId" name="DepartmentId" class="form-control"></select>
+                        <span asp-validation-for="DepartmentId"></span>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-8">
                         <button class="btn btn-info" type="submit">保存</button>
                         <button class="btn btn-white" type="button" id="btnBack">返回</button>
@@ -62,6 +69,10 @@
         </div>
     </div>
 </div>
+@section styles{    
+    <link href="~/js/plugins/select2/css/select2.css" rel="stylesheet" />
+}
+
 @section scripts{
     <environment names="Development">
         <script src="~/js/jquery.validate.js"></script>
@@ -71,10 +82,20 @@
     <environment names="Staging,Production">
         <script src="~/js/validate.min.js" asp-append-version="true"></script>
         <script src="~/js/base.min.js" asp-append-version="true"></script>
-    </environment>
+    </environment>    
+    <script src="~/js/plugins/select2/js/select2.js"></script>
     <script>
-        $("#btnBack").bind("click", function(e) {
+        $("#btnBack").bind("click", function (e) {
             XPage.GoTo(e.target, "@Url.Action("Index")");
+        });
+        $(function() {
+            $('#DepartmentId').select2({
+                placeholder: "所属部门",
+                ajax: {
+                    url: '@Url.Action("GetDepartments", "Department")',
+                    dataType: 'json'
+                }
+            });
         });
     </script>
 }

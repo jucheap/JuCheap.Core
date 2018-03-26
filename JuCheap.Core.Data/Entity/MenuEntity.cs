@@ -24,7 +24,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 上级ID
         /// </summary>
-        public Guid? ParentId { get; set; }
+        public string ParentId { get; set; }
 
         /// <summary>
         /// 编码

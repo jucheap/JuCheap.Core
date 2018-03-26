@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
+using System;
 
 namespace JuCheap.Core.Infrastructure.Extentions
 {
@@ -209,6 +210,67 @@ namespace JuCheap.Core.Infrastructure.Extentions
                 return false;
             decimal d;
             return decimal.TryParse(val, out d);
+        }
+
+        /// <summary>
+        /// 获取中文字符串首字母
+        /// </summary>
+        /// <param name="source"></param>
+        ///  <param name="toUpper">是否大写</param>
+        /// <returns></returns>
+        public static string GetChineseSpell(this string source, bool toUpper = true)
+        {
+            var len = source.Length;
+            var myStr = new StringBuilder();
+            for (var i = 0; i < len; i++)
+            {
+                myStr.Append(GetSpell(source.Substring(i, 1)));
+            }
+            return toUpper ? myStr.ToString().ToUpper() : myStr.ToString();
+        }
+
+        /// <summary>
+        /// 比较两个字符串值是否相等
+        /// </summary>
+        public static bool IsEqual(this string source, string comapreValue, StringComparison comparison = StringComparison.OrdinalIgnoreCase)
+        {
+            if (source.IsNotBlank() && comapreValue.IsNotBlank())
+            {
+                return source.Equals(comapreValue, comparison);
+            }
+            return source.IsBlank() && comapreValue.IsBlank();
+        }
+
+        /// <summary>  
+        /// 获取单个中文的首字母  
+        /// </summary>  
+        /// <param name="cnChar"></param>  
+        /// <returns></returns>  
+        private static string GetSpell(string cnChar)
+        {
+            var arrCn = Encoding.Default.GetBytes(cnChar);
+            if (arrCn.Length > 1)
+            {
+                var area = arrCn[0];
+                var pos = arrCn[1];
+                var code = (area << 8) + pos;
+                var areacode = new[] { 45217, 45253, 45761, 46318, 46826, 47010, 47297, 47614, 48119, 48119, 49062, 49324, 49896, 50371, 50614, 50622, 50906, 51387, 51446, 52218, 52698, 52698, 52698, 52980, 53689, 54481 };
+
+                for (var i = 0; i < 26; i++)
+                {
+                    var max = 55290;
+                    if (i != 25)
+                    {
+                        max = areacode[i + 1];
+                    }
+                    if (areacode[i] <= code && code < max)
+                    {
+                        return Encoding.Default.GetString(new[] { (byte)(97 + i) });
+                    }
+                }
+                return "*";
+            }
+            return cnChar;
         }
     }
 }

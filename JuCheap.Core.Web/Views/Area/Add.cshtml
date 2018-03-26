@@ -1,0 +1,56 @@
+﻿@model JuCheap.Models.AreaDto
+
+@{
+    ViewBag.Title = "添加";
+    Layout = "~/Views/Shared/_Layout_Content.cshtml";
+}
+<div class="wrapper wrapper-content">
+    @using (Html.BeginForm("Add", "Area", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+        <div class="form-group">
+            <label class="col-sm-3 control-label">@Html.LabelFor(m => m.ParentName)：</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(m => m.ParentName, new { @class = "form-control disabled", disabled = "disabled" })
+                @Html.HiddenFor(m => m.ParentId)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">@Html.LabelFor(m => m.Name)：</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(m => m.Name, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.Name)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">@Html.LabelFor(m => m.FullSpelling)：</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(m => m.FullSpelling, new {@class = "form-control"})
+                @Html.ValidationMessageFor(m => m.FullSpelling)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">@Html.LabelFor(m => m.SimpleSpelling)：</label>
+            <div class="col-sm-8">
+                @Html.TextBoxFor(m => m.SimpleSpelling, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.SimpleSpelling)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-8">
+                <button class="btn btn-info" type="submit" id="btnSave">添加</button>
+                <button class="btn btn-white" type="button" id="btnBack" data-type="window">返回</button>
+            </div>
+        </div>
+    }
+</div>
+@section scripts{
+    <environment names="Development">
+        <script src="~/js/jquery.validate.js"></script>
+        <script src="~/js/jquery.validate.unobtrusive.js"></script>
+        <script src="~/js/base.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/validate.min.js" asp-append-version="true"></script>
+        <script src="~/js/base.min.js" asp-append-version="true"></script>
+    </environment>
+}

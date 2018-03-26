@@ -16,6 +16,7 @@
         </div>
         <div class="ibox-content">
             <button type="button" class="btn btn-primary btn-lg" id="btnReload">重置路径码</button>
+            <button type="button" class="btn btn-warning btn-lg" id="btnReloadArea"><i class="fa fa-undo"></i> 重置省市区数据</button>
         </div>
     </div>
 </div>
@@ -29,9 +30,12 @@
         <script src="~/js/base.min.js" asp-append-version="true"></script>
     </environment>
     <script>
-        $(function() {
-            $("#btnReload").click(function() {
+        $(function () {
+            $("#btnReload").click(function () {
                 XPage.DoPost(this, "@Url.Action("ReloadPathCode")", null, null, null);
+            });
+            $("#btnReloadArea").click(function () {
+                XPage.DoPost(this, "@Url.Action("ReInitAreas")", null, null, null);
             });
         });
     </script>

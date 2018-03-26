@@ -13,13 +13,13 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 菜单ID
         /// </summary>
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 上级ID
         /// </summary>
         [Display(Name = "上级菜单")]
-        public Guid? ParentId { get; set; }
+        public string ParentId { get; set; }
 
         /// <summary>
         /// 上级菜单名称

@@ -23,7 +23,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 用户ID
         /// </summary>
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// 登录账号

@@ -10,6 +10,7 @@
 *
 *********************************************************************************/
 
+using System;
 using System.Collections.Generic;
 
 namespace JuCheap.Core.Data.Entity
@@ -44,11 +45,21 @@ namespace JuCheap.Core.Data.Entity
         /// 是否是超级管理员
         /// </summary>
         public bool IsSuperMan { get; set; }
-        
+
+        /// <summary>
+        /// 部门Id
+        /// </summary>
+        public string DepartmentId { get; set; }
+
         /// <summary>
         /// 用户拥有的角色
         /// </summary>
         public virtual ICollection<UserRoleEntity> UserRoles { get; set; }
+
+        /// <summary>
+        /// 部门
+        /// </summary>
+        public virtual DepartmentEntity Department { get; set; }
 
     }
 }

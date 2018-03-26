@@ -10,11 +10,11 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// 用户ID
         /// </summary>
-        public Guid? UserId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// 登录账号

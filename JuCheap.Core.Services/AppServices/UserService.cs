@@ -39,7 +39,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="user"></param>
         /// <returns></returns>
-        public async Task<Guid> AddAsync(UserAddDto user)
+        public async Task<string> AddAsync(UserAddDto user)
         {
             var entity = _mapper.Map<UserAddDto, UserEntity>(user);
             entity.Init();
@@ -50,7 +50,7 @@ namespace JuCheap.Core.Services.AppServices
             entity.Password = entity.Password.ToMd5();
             _context.Users.Add(entity);
 
-            return await _context.SaveChangesAsync() > 0 ? entity.Id : Guid.Empty;
+            return await _context.SaveChangesAsync() > 0 ? entity.Id : string.Empty;
         }
 
         /// <summary>
@@ -64,8 +64,11 @@ namespace JuCheap.Core.Services.AppServices
             entity.LoginName = dto.LoginName;
             entity.RealName = dto.RealName;
             entity.Email = dto.Email;
+            entity.DepartmentId = dto.DepartmentId;
             if (dto.Password.IsNotBlank())
+            {
                 entity.Password = dto.Password.ToMd5();
+            }
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -74,7 +77,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        public async Task<UserDto> FindAsync(Guid id)
+        public async Task<UserDto> FindAsync(string id)
         {
             var entity = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
             var dto = _mapper.Map<UserEntity, UserDto>(entity);
@@ -86,7 +89,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        public async Task<bool> DeleteAsync(IEnumerable<Guid> ids)
+        public async Task<bool> DeleteAsync(IEnumerable<string> ids)
         {
             var entities = _context.Users.Where(item => ids.Contains(item.Id));
             entities.ForEach(item => item.IsDeleted = true);
@@ -106,7 +109,7 @@ namespace JuCheap.Core.Services.AppServices
             var entity = await _context.Users.FirstOrDefaultAsync(item => item.LoginName == loginName);
             var loginLog = new LoginLogEntity
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString("N"),
                 LoginName = dto.LoginName,
                 IP = dto.LoginIP,
                 CreateDateTime = DateTime.Now
@@ -115,7 +118,7 @@ namespace JuCheap.Core.Services.AppServices
             {
                 reslt.Message = "Account not exists";
                 reslt.Result = LoginResult.AccountNotExists;
-                loginLog.UserId = Guid.Empty;
+                loginLog.UserId = string.Empty;
             }
             else
             {
@@ -145,13 +148,13 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        public async Task<bool> GiveAsync(Guid userId, Guid roleId)
+        public async Task<bool> GiveAsync(string userId, string roleId)
         {
             if (await _context.UserRoles.AnyAsync(item => item.UserId == userId && item.RoleId == roleId))
                 return true;
             _context.UserRoles.Add(new UserRoleEntity
             {
-                Id = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString("N"),
                 UserId = userId,
                 RoleId = roleId
             });
@@ -164,7 +167,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        public async Task<bool> CancelAsync(Guid userId, Guid roleId)
+        public async Task<bool> CancelAsync(string userId, string roleId)
         {
             var userRole = await _context.UserRoles.FirstOrDefaultAsync(item => item.UserId == userId && item.RoleId == roleId);
             _context.UserRoles.Remove(userRole);
@@ -184,18 +187,19 @@ namespace JuCheap.Core.Services.AppServices
             var query = _context.Users.Where(item => !item.IsDeleted);
 
             if (filters.keywords.IsNotBlank())
-                query =
-                    query.Where(item => item.LoginName.Contains(filters.keywords) ||
-                                        item.RealName.Contains(filters.keywords));
+            {
+                query = query.Where(x => x.LoginName.Contains(filters.keywords) || x.RealName.Contains(filters.keywords));
+            }
 
-            return await query.OrderByDescending(item => item.CreateDateTime)
-                .Select(item => new UserDto
+            return await query.OrderByDescending(x => x.CreateDateTime)
+                .Select(x => new UserDto
                 {
-                    Id = item.Id,
-                    LoginName = item.LoginName,
-                    RealName = item.RealName,
-                    Email = item.Email,
-                    CreateDateTime = item.CreateDateTime
+                    Id = x.Id,
+                    LoginName = x.LoginName,
+                    RealName = x.RealName,
+                    Email = x.Email,
+                    DepartmentName = x.Department.FullName,
+                    CreateDateTime = x.CreateDateTime
                 }).PagingAsync(filters.page, filters.rows);
         }
 
@@ -205,7 +209,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="userId">用户ID</param>
         /// <param name="url">url地址</param>
         /// <returns></returns>
-        public async Task<bool> HasRightAsync(Guid userId, string url)
+        public async Task<bool> HasRightAsync(string userId, string url)
         {
             var menus = _context.Menus;
             var userRoles = _context.UserRoles;
@@ -216,7 +220,7 @@ namespace JuCheap.Core.Services.AppServices
             var menuIds = await roleMenus.Where(item => roleIds.Contains(item.RoleId))
                 .Select(item => item.MenuId)
                 .ToListAsync();
-            return await query.AnyAsync(item => menuIds.Contains(item.Id) && url.StartsWith(item.Url));
+            return await query.AnyAsync(x => menuIds.Contains(x.Id) && url.StartsWith(x.Url));
         }
 
         /// <summary>
@@ -238,11 +242,10 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="userId">用户ID，可以为空</param>
         /// <param name="loginName">用户名</param>
         /// <returns></returns>
-        public async Task<bool> ExistsLoginNameAsync(Guid? userId, string loginName)
+        public async Task<bool> ExistsLoginNameAsync(string userId, string loginName)
         {
-            var query = _context.Users.Where(u => !u.IsDeleted && u.LoginName == loginName);
-            if (userId.HasValue)
-                query = query.Where(u => u.Id != userId.Value);
+            var query = _context.Users.Where(u => !u.IsDeleted && u.LoginName == loginName)
+                .WhereIf(userId.IsNotBlank(), u => u.Id != userId);
             return await query.AnyAsync();
         }
     }

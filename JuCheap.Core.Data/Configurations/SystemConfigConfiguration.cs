@@ -12,7 +12,7 @@ namespace JuCheap.Core.Data.Configurations
         public void Configure(EntityTypeBuilder<SystemConfigEntity> builder)
         {
             builder.HasKey(e => e.Id);
-            builder.Property(e => e.Id).ValueGeneratedNever();
+            builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
             builder.Property(e => e.SystemName).HasMaxLength(50).IsRequired();
             builder.Property(e => e.IsDataInited).IsRequired();
             builder.Property(e => e.DataInitedDate).IsRequired();

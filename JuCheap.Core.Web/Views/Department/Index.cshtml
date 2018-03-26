@@ -1,0 +1,62 @@
+﻿
+@{
+    ViewBag.Title = "部门管理";
+    Layout = "~/Views/Shared/_Layout_Content.cshtml";
+}
+
+
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>部门管理</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div class="form-group">
+                <button id="btnAdd" type="button" class="btn btn-primary "><i class="fa fa-plus"></i>&nbsp;添加</button>
+                <button id="btnEdit" type="button" class="btn btn-info "><i class="fa fa-pencil"></i> 编辑</button>
+                <button id="btnDel" type="button" class="btn btn-danger ">
+                    <i class="fa fa-remove"></i>&nbsp;&nbsp;<span class="bold">删除</span>
+                </button>
+                <button id="btnCancel" type="button" class="btn btn-warning "><i class="fa fa-undo"></i> 取消选中状态</button>
+            </div>
+
+            <div class="jqGrid_wrapper">
+                <ul id="departmentTree" class="ztree">
+                    <li>数据加载中......</li>
+                </ul>
+                <input type="hidden" id="txtParentId"/>
+            </div>
+        </div>
+    </div>
+</div>
+@section styles
+    {
+    <link href="~/css/plugins/ztree/metroStyle.css" rel="stylesheet" />
+}
+@section scripts
+{
+    <script src="~/js/plugins/ztree/jquery.ztree.all.js"></script>
+    <script src="~/js/page/jucheap.ztree.js"></script>
+    <script type="text/javascript">
+        var config = {
+            id: 'departmentTree',
+            loadUrl: '@Url.Action("GetTrees")',
+            addUrl: '@Url.Action("Add")',
+            editUrl: '@Url.Action("Edit")',
+            deleteUrl: '@Url.Action("Delete")',
+            height: '360px',
+            title:'部门信息'
+        };
+        new JuCheapTree(config).load();
+        $("#btnCancel").click(function() {
+            var zTree = $.fn.zTree.getZTreeObj(config.id);
+            zTree.cancelSelectedNode();
+            $("#txtParentId").val("");
+        });
+    </script>
+}

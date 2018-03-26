@@ -20,6 +20,9 @@
     <ProjectReference Include="..\JuCheap.Core.Services\JuCheap.Core.Services.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Content Update="areas-json.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="log4net.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

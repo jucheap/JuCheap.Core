@@ -108,6 +108,11 @@ namespace JuCheap.Core.Data
         /// </summary>
         public DbSet<AreaEntity> Areas { get; set; }
 
+        /// <summary>
+        /// 部门
+        /// </summary>
+        public DbSet<DepartmentEntity> Departments { get; set; }
+
         #endregion
     }
 }

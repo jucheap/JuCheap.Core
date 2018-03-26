@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using JuCheap.Core.Data;
@@ -8,6 +9,7 @@ using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models.Enum;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace JuCheap.Core.Services.AppServices
 {
@@ -44,7 +46,7 @@ namespace JuCheap.Core.Services.AppServices
 
                 var admin = new UserEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     LoginName = "jucheap",
                     RealName = "超级管理员",
                     Password = "qwaszx12".ToMd5(),
@@ -54,7 +56,7 @@ namespace JuCheap.Core.Services.AppServices
                 };
                 var guest = new UserEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     LoginName = "admin",
                     RealName = "游客",
                     Password = "qwaszx".ToMd5(),
@@ -73,7 +75,7 @@ namespace JuCheap.Core.Services.AppServices
 
                 var system = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     Name = "系统设置",
                     Url = "#",
                     CreateDateTime = Now,
@@ -84,7 +86,7 @@ namespace JuCheap.Core.Services.AppServices
                 };//1
                 var menuMgr = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = system.Id,
                     Name = "菜单管理",
                     Url = "/Menu/Index",
@@ -96,7 +98,7 @@ namespace JuCheap.Core.Services.AppServices
                 };//2
                 var roleMgr = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = system.Id,
                     Name = "角色管理",
                     Url = "/Role/Index",
@@ -108,7 +110,7 @@ namespace JuCheap.Core.Services.AppServices
                 };//3
                 var userMgr = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = system.Id,
                     Name = "用户管理",
                     Url = "/User/Index",
@@ -118,9 +120,21 @@ namespace JuCheap.Core.Services.AppServices
                     PathCode = "AAAC",
                     Type = 2
                 };//4
+                var departmentMgr = new MenuEntity
+                {
+                    Id = Guid.NewGuid().ToString("N"),
+                    ParentId = system.Id,
+                    Name = "部门管理",
+                    Url = "/Department/Index",
+                    CreateDateTime = Now,
+                    Order = 3,
+                    Code = "AG",
+                    PathCode = "AAAG",
+                    Type = 2
+                };
                 var userRoleMgr = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = userMgr.Id,
                     Name = "用户授权",
                     Url = "/User/Authen",
@@ -132,7 +146,7 @@ namespace JuCheap.Core.Services.AppServices
                 };//5
                 var giveRight = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = userRoleMgr.Id,
                     Name = "授权",
                     Url = "/User/GiveRight",
@@ -144,7 +158,7 @@ namespace JuCheap.Core.Services.AppServices
                 };
                 var cancelRight = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = userRoleMgr.Id,
                     Name = "取消授权",
                     Url = "/User/CancelRight",
@@ -156,7 +170,7 @@ namespace JuCheap.Core.Services.AppServices
                 };
                 var roleMenuMgr = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = system.Id,
                     Name = "角色授权",
                     Url = "/Role/Authen",
@@ -168,7 +182,7 @@ namespace JuCheap.Core.Services.AppServices
                 };//6
                 var sysConfig = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = system.Id,
                     Name = "系统配置",
                     Url = "/System/Index",
@@ -178,9 +192,21 @@ namespace JuCheap.Core.Services.AppServices
                     PathCode = "AAAF",
                     Type = 2
                 };//7
+                var areaConfig = new MenuEntity
+                {
+                    Id = Guid.NewGuid().ToString("N"),
+                    ParentId = system.Id,
+                    Name = "省市区管理",
+                    Url = "/Area/Index",
+                    CreateDateTime = Now,
+                    Order = 5,
+                    Code = "AH",
+                    PathCode = "AAAH",
+                    Type = 2
+                };
                 var sysConfigReloadPathCode = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = sysConfig.Id,
                     Name = "重置路径码",
                     Url = "/System/ReloadPathCode",
@@ -192,7 +218,7 @@ namespace JuCheap.Core.Services.AppServices
                 };//8
                 var log = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     Name = "日志查看",
                     Url = "#",
                     CreateDateTime = Now,
@@ -203,7 +229,7 @@ namespace JuCheap.Core.Services.AppServices
                 };//9
                 var logLogin = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = log.Id,
                     Name = "登录日志",
                     Url = "/Log/Logins",
@@ -215,7 +241,7 @@ namespace JuCheap.Core.Services.AppServices
                 };//10
                 var logView = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = log.Id,
                     Name = "访问日志",
                     Url = "/Log/Visits",
@@ -233,30 +259,36 @@ namespace JuCheap.Core.Services.AppServices
                     menuMgr,
                     roleMgr,
                     userMgr,
+                    departmentMgr,
                     userRoleMgr,
                     giveRight,
                     cancelRight,
                     roleMenuMgr,
                     sysConfig,
+                    areaConfig,
                     sysConfigReloadPathCode,
                     log,
                     logLogin,
                     logView
                 };
-                var menuBtns = GetMenuButtons(menuMgr.Id, "Menu", "菜单", "AAAA", 12);//14
-                var rolwBtns = GetMenuButtons(roleMgr.Id, "Role", "角色", "AAAB", 15);//17
-                var userBtns = GetMenuButtons(userMgr.Id, "User", "用户", "AAAC", 18);//20
+                var menuBtns = GetMenuButtons(menuMgr.Id, "Menu", "菜单", "AAAA", 12);
+                var rolwBtns = GetMenuButtons(roleMgr.Id, "Role", "角色", "AAAB", 15);
+                var userBtns = GetMenuButtons(userMgr.Id, "User", "用户", "AAAC", 18);
+                var departmentBtns = GetMenuButtons(departmentMgr.Id, "Department", "部门", "AAAG", 19);
+                var areaBtns = GetMenuButtons(areaConfig.Id, "Area", "部门", "AAAH", 20);
 
-                menus.AddRange(menuBtns);//14
-                menus.AddRange(rolwBtns);//17
-                menus.AddRange(userBtns);//20
+                menus.AddRange(menuBtns);
+                menus.AddRange(rolwBtns);
+                menus.AddRange(userBtns);
+                menus.AddRange(departmentBtns);
+                menus.AddRange(areaBtns);
                 menus.Add(new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = roleMenuMgr.Id,
                     Order = 6,
                     Name = "授权",
-                    Type = (byte)MenuType.Button,
+                    Type = (byte)MenuType.Action,
                     Url = "/Role/SetRoleMenus",
                     CreateDateTime = Now,
                     Code = "AA",
@@ -264,11 +296,11 @@ namespace JuCheap.Core.Services.AppServices
                 });
                 menus.Add(new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = roleMenuMgr.Id,
                     Order = 6,
                     Name = "清空权限",
-                    Type = (byte)MenuType.Button,
+                    Type = (byte)MenuType.Action,
                     Url = "/Role/ClearRoleMenus",
                     CreateDateTime = Now,
                     Code = "AB",
@@ -277,7 +309,7 @@ namespace JuCheap.Core.Services.AppServices
                 //示例页面
                 var page = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     Name = "示例页面",
                     Url = "#",
                     CreateDateTime = Now,
@@ -288,7 +320,7 @@ namespace JuCheap.Core.Services.AppServices
                 };
                 var pageButton = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = page.Id,
                     Name = "按钮",
                     Url = "/Pages/Buttons",
@@ -300,7 +332,7 @@ namespace JuCheap.Core.Services.AppServices
                 };
                 var pageForm = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = page.Id,
                     Name = "表单",
                     Url = "/Pages/Form",
@@ -312,7 +344,7 @@ namespace JuCheap.Core.Services.AppServices
                 };
                 var pageFormAdvance = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = page.Id,
                     Name = "高级表单",
                     Url = "/Pages/FormAdvance",
@@ -324,7 +356,7 @@ namespace JuCheap.Core.Services.AppServices
                 };
                 var pageTable = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = page.Id,
                     Name = "表格",
                     Url = "/Pages/Tables",
@@ -336,7 +368,7 @@ namespace JuCheap.Core.Services.AppServices
                 };
                 var pageTabs = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = page.Id,
                     Name = "选项卡",
                     Url = "/Pages/Tabs",
@@ -348,7 +380,7 @@ namespace JuCheap.Core.Services.AppServices
                 };
                 var pageFonts = new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = page.Id,
                     Name = "字体",
                     Url = "/Pages/FontAwesome",
@@ -373,13 +405,13 @@ namespace JuCheap.Core.Services.AppServices
 
                 var superAdminRole = new RoleEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     Name = "超级管理员",
                     Description = "超级管理员"
                 };
                 var guestRole = new RoleEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     Name = "guest",
                     Description = "游客"
                 };
@@ -397,14 +429,14 @@ namespace JuCheap.Core.Services.AppServices
                 {
                     new UserRoleEntity
                     {
-                        Id = Guid.NewGuid(),
+                        Id = Guid.NewGuid().ToString("N"),
                         UserId = admin.Id,
                         RoleId = superAdminRole.Id,
                         CreateDateTime = Now
                     },
                     new UserRoleEntity
                     {
-                        Id = Guid.NewGuid(),
+                        Id = Guid.NewGuid().ToString("N"),
                         UserId = guest.Id,
                         RoleId = guestRole.Id,
                         CreateDateTime = Now
@@ -421,18 +453,18 @@ namespace JuCheap.Core.Services.AppServices
                 {
                     roleMenus.Add(new RoleMenuEntity
                     {
-                        Id = Guid.NewGuid(),
+                        Id = Guid.NewGuid().ToString("N"),
                         RoleId = superAdminRole.Id,
                         MenuId = m.Id,
                         CreateDateTime = Now
                     });
                 });
                 //guest授权(guest只有查看权限，没有按钮操作权限)
-                menus.Where(item => item.Type != (byte)MenuType.Button).ForEach(m =>
+                menus.Where(item => item.Type != (byte)MenuType.Action).ForEach(m =>
                 {
                     roleMenus.Add(new RoleMenuEntity
                     {
-                        Id = Guid.NewGuid(),
+                        Id = Guid.NewGuid().ToString("N"),
                         RoleId = guestRole.Id,
                         MenuId = m.Id,
                         CreateDateTime = Now
@@ -445,7 +477,7 @@ namespace JuCheap.Core.Services.AppServices
 
                 var systemConfig = new SystemConfigEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     SystemName = "JuCheap Core",
                     IsDataInited = true,
                     DataInitedDate = Now,
@@ -496,6 +528,30 @@ namespace JuCheap.Core.Services.AppServices
             return await _context.SaveChangesAsync() > 0;
         }
 
+        /// <summary>
+        /// 初始化省市区数据
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> InitAreas()
+        {
+            //删除以前的数据
+            var olds = await _context.Areas.ToListAsync();
+            _context.Areas.RemoveRange(olds);
+            var filePath = string.Format("{0}areas-json.json", AppDomain.CurrentDomain.BaseDirectory);
+            if (File.Exists(filePath))
+            {
+                var areas = JsonConvert.DeserializeObject<IList<AreaEntity>>(File.ReadAllText(filePath));
+                if (areas.AnyOne())
+                {
+                    areas.ForEach(x => x.CreateDateTime = DateTime.Now);
+                }
+                _context.Areas.AddRange(areas);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
+        }
+
         #region Private
 
         /// <summary>
@@ -507,13 +563,13 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="parentPathCode">父级路径码</param>
         /// <param name="order">排序</param>
         /// <returns></returns>
-        private IEnumerable<MenuEntity> GetMenuButtons(Guid parentId, string controllerName, string controllerShowName, string parentPathCode, int order)
+        private IEnumerable<MenuEntity> GetMenuButtons(string parentId, string controllerName, string controllerShowName, string parentPathCode, int order)
         {
             return new List<MenuEntity>
             {
                 new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = parentId,
                     Name = string.Concat("添加",controllerShowName),
                     Url = string.Format("/{0}/Add",controllerName),
@@ -525,7 +581,7 @@ namespace JuCheap.Core.Services.AppServices
                 },
                 new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = parentId,
                     Name = string.Concat("修改",controllerShowName),
                     Url = string.Format("/{0}/Edit",controllerName),
@@ -537,7 +593,7 @@ namespace JuCheap.Core.Services.AppServices
                 },
                 new MenuEntity
                 {
-                    Id = Guid.NewGuid(),
+                    Id = Guid.NewGuid().ToString("N"),
                     ParentId = parentId,
                     Name = string.Concat("删除",controllerShowName),
                     Url = string.Format("/{0}/Delete",controllerName),

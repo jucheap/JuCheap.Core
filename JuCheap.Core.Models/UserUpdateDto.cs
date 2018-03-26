@@ -11,7 +11,7 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 用户ID
         /// </summary>
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 登录账号
@@ -46,5 +46,16 @@ namespace JuCheap.Core.Models
         [Display(Name = "确认密码")]
         [MinLength(6), MaxLength(12), Compare("Password")]
         public string ConfirmPwd { get; set; }
+
+        ///<summary>
+        /// 所属部门
+        ///</summary>
+        [Display(Name = "所属部门")]
+        public string DepartmentId { get; set; }
+
+        /// <summary>
+        /// 部门名称
+        /// </summary>
+        public string DepartmentName { get; set; }
     }
 }

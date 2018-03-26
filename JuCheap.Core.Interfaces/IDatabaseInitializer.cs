@@ -16,5 +16,11 @@ namespace JuCheap.Core.Interfaces
         /// 初始化路径码
         /// </summary>
         Task<bool> InitPathCodeAsync();
+
+        /// <summary>
+        /// 初始化省市区数据
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> InitAreas();
     }
 }

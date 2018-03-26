@@ -1,6 +1,7 @@
 ﻿
 using System.Threading.Tasks;
 using JuCheap.Core.Interfaces;
+using JuCheap.Core.Web.Filters;
 using JuCheap.Core.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -39,6 +40,21 @@ namespace JuCheap.Core.Web.Controllers
             var result = new JsonResultModel<bool>
             {
                 flag = await _databaseInitService.InitPathCodeAsync()
+            };
+            return Json(result);
+        }
+
+        /// <summary>
+        /// 初始化省市区数据
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
+        [IgnoreRightFilter]
+        public async Task<JsonResult> ReInitAreas()
+        {
+            var result = new JsonResultModel<bool>
+            {
+                flag = await _databaseInitService.InitAreas()
             };
             return Json(result);
         }

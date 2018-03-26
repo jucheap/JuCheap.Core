@@ -12,7 +12,7 @@ namespace JuCheap.Core.Data.Configurations
         public void Configure(EntityTypeBuilder<PathCodeEntity> builder)
         {
             builder.HasKey(e => e.Id);
-            builder.Property(e => e.Id).ValueGeneratedNever();
+            builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
             builder.Property(e => e.Code).HasMaxLength(4).IsRequired();
             builder.Property(e => e.Len).IsRequired();
             builder.Property(e => e.CreateDateTime).IsRequired();

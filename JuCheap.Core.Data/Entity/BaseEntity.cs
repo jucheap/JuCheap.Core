@@ -10,7 +10,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 主键
         /// </summary>
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 创建日期
@@ -34,7 +34,7 @@ namespace JuCheap.Core.Data.Entity
         /// <param name="entity"></param>
         public static void Init(this BaseEntity entity)
         {
-            entity.Id = Guid.NewGuid();
+            entity.Id = Guid.NewGuid().ToString("N");
             entity.CreateDateTime = DateTime.Now;
             entity.IsDeleted = false;
         }

@@ -12,7 +12,7 @@ namespace JuCheap.Core.Data.Configurations
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
             builder.HasKey(e => e.Id);
-            builder.Property(e => e.Id).ValueGeneratedNever();
+            builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
             builder.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
             builder.Property(e => e.RealName).HasMaxLength(20).IsRequired();
             builder.Property(e => e.Email).HasMaxLength(36).IsRequired();
@@ -20,6 +20,7 @@ namespace JuCheap.Core.Data.Configurations
             builder.Property(e => e.IsSuperMan).IsRequired();
             builder.Property(e => e.CreateDateTime).IsRequired();
             builder.Property(e => e.IsDeleted).IsRequired();
+            builder.HasOne(e => e.Department).WithMany(e => e.Users).HasForeignKey(e => e.DepartmentId);
             builder.ToTable("Users");
         }
     }

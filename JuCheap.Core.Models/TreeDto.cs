@@ -10,12 +10,12 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// Id
         /// </summary>
-        public Guid id { get; set; }
+        public string id { get; set; }
 
         /// <summary>
         /// 父类ID
         /// </summary>
-        public Guid? pId { get; set; }
+        public string pId { get; set; }
 
         /// <summary>
         /// 名称

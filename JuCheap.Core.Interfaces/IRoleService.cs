@@ -18,7 +18,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="dto">角色模型</param>
         /// <returns></returns>
-        Task<Guid> AddAsync(RoleDto dto);
+        Task<string> AddAsync(RoleDto dto);
 
         /// <summary>
         /// 更新角色
@@ -32,14 +32,14 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task<RoleDto> FindAsync(Guid id);
+        Task<RoleDto> FindAsync(string id);
 
         /// <summary>
         /// 批量删除
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        Task<bool> DeleteAsync(IEnumerable<Guid> ids);
+        Task<bool> DeleteAsync(IEnumerable<string> ids);
 
         /// <summary>
         /// 分页搜索
@@ -66,6 +66,6 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        Task<bool> ClearRoleMenusAsync(Guid roleId);
+        Task<bool> ClearRoleMenusAsync(string roleId);
     }
 }

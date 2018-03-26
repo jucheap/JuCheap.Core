@@ -1,4 +1,5 @@
-﻿@model JuCheap.Core.Models.UserUpdateDto
+﻿@using JuCheap.Core.Infrastructure.Extentions
+@model JuCheap.Core.Models.UserUpdateDto
 
 @{
     ViewBag.Title = "编辑用户";
@@ -54,6 +55,18 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label" asp-for="DepartmentId"></label>
+                    <div class="col-sm-8">
+                        <select id="DepartmentId" name="DepartmentId" class="form-control">
+                            @if (!Model.DepartmentId.IsBlank())
+                            {
+                                <option value="@Model.DepartmentId" selected="selected">@Model.DepartmentName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="DepartmentId"></span>
+                    </div>
+                </div>
+                <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-8">
                         <button class="btn btn-info" type="submit">保存</button>
                         <button class="btn btn-white" type="button" id="btnBack">返回</button>
@@ -63,6 +76,9 @@
         </div>
     </div>
 </div>
+@section styles{
+    <link href="~/js/plugins/select2/css/select2.css" rel="stylesheet" />
+}
 @section scripts{
     <environment names="Development">
         <script src="~/js/jquery.validate.js"></script>
@@ -73,9 +89,20 @@
         <script src="~/js/validate.min.js" asp-append-version="true"></script>
         <script src="~/js/base.min.js" asp-append-version="true"></script>
     </environment>
+    <script src="~/js/plugins/select2/js/select2.js"></script>
     <script>
-        $("#btnBack").bind("click", function(e) {
+        $("#btnBack").bind("click", function (e) {
             XPage.GoTo(e.target, "@Url.Action("Index")");
+        });
+        $(function () {
+            $('#DepartmentId').select2({
+                placeholder: "所属部门",
+                allowClear: true,
+                ajax: {
+                    url: '@Url.Action("GetDepartments", "Department")',
+                    dataType: 'json'
+                }
+            });
         });
     </script>
 }

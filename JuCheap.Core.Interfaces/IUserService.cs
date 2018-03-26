@@ -18,7 +18,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="dto">用户模型</param>
         /// <returns></returns>
-        Task<Guid> AddAsync(UserAddDto dto);
+        Task<string> AddAsync(UserAddDto dto);
 
         /// <summary>
         /// 更新用户
@@ -32,7 +32,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="id">主键</param>
         /// <returns></returns>
-        Task<UserDto> FindAsync(Guid id);
+        Task<UserDto> FindAsync(string id);
 
         /// <summary>
         /// 登陆
@@ -46,7 +46,7 @@ namespace JuCheap.Core.Interfaces
         /// </summary>
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
-        Task<bool> DeleteAsync(IEnumerable<Guid> ids);
+        Task<bool> DeleteAsync(IEnumerable<string> ids);
 
         /// <summary>
         /// 用户角色授权
@@ -54,7 +54,7 @@ namespace JuCheap.Core.Interfaces
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        Task<bool> GiveAsync(Guid userId, Guid roleId);
+        Task<bool> GiveAsync(string userId, string roleId);
 
         /// <summary>
         /// 用户角色取消
@@ -62,7 +62,7 @@ namespace JuCheap.Core.Interfaces
         /// <param name="userId">用户ID</param>
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
-        Task<bool> CancelAsync(Guid userId, Guid roleId);
+        Task<bool> CancelAsync(string userId, string roleId);
 
         /// <summary>
         /// 分页搜索
@@ -77,7 +77,7 @@ namespace JuCheap.Core.Interfaces
         /// <param name="userId">用户ID</param>
         /// <param name="url">url地址</param>
         /// <returns></returns>
-        Task<bool> HasRightAsync(Guid userId, string url);
+        Task<bool> HasRightAsync(string userId, string url);
 
         /// <summary>
         /// 记录访问记录
@@ -92,6 +92,6 @@ namespace JuCheap.Core.Interfaces
         /// <param name="userId">用户ID，可以为空</param>
         /// <param name="loginName">用户名</param>
         /// <returns></returns>
-        Task<bool> ExistsLoginNameAsync(Guid? userId, string loginName);
+        Task<bool> ExistsLoginNameAsync(string userId, string loginName);
     }
 }

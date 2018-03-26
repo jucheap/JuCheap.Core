@@ -23,7 +23,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// UserId
         /// </summary>
-        public Guid? UserId { get; set; }
+        public string UserId { get; set; }
         /// <summary>
         /// UserName
         /// </summary>

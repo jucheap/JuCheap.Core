@@ -11,7 +11,7 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// Id
         /// </summary>
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 角色名称

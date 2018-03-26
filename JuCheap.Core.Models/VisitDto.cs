@@ -10,12 +10,12 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// ID
         /// </summary>
-        public Guid Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// UserId
         /// </summary>
-        public Guid? UserId { get; set; }
+        public string UserId { get; set; }
         /// <summary>
         /// UserName
         /// </summary>

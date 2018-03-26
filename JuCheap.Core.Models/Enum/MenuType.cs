@@ -20,9 +20,9 @@ namespace JuCheap.Core.Models.Enum
         Menu = 2,
 
         /// <summary>
-        /// 按钮
+        /// 操作
         /// </summary>
-        [Description("按钮")]
-        Button = 3
+        [Description("操作")]
+        Action = 3
     }
 }

@@ -51,15 +51,16 @@ namespace JuCheap.Core.Web
                     };
                     //o.DataProtectionProvider = null;//如果需要做负载均衡，就需要提供一个Key
                 });
-
-            ////使用Sql Server数据库
-            //services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
+            //使用Sql Server数据库
+            services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
+            //支持sql2008的row_number分页函数
+            //services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"), x => x.UseRowNumberForPaging()));
 
             ////使用Sqlite数据库
             //services.AddDbContext<JuCheapContext>(options => options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite")));
 
             //使用MySql数据库
-            services.AddDbContext<JuCheapContext>(options => options.UseMySql(Configuration.GetConnectionString("Connection_MySql")));
+            //services.AddDbContext<JuCheapContext>(options => options.UseMySql(Configuration.GetConnectionString("Connection_MySql")));
 
             //权限验证filter
             services.AddMvc(cfg =>
@@ -79,6 +80,8 @@ namespace JuCheap.Core.Web
             services.AddScoped<IMenuService, MenuService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IDepartmentService, DepartmentService>();
+            services.AddScoped<IAreaService, AreaService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -132,17 +135,14 @@ namespace JuCheap.Core.Web
         /// </summary>
         /// <param name="identity">IIdentity</param>
         /// <returns></returns>
-        public static Guid GetLoginUserId(this IIdentity identity)
+        public static string GetLoginUserId(this IIdentity identity)
         {
             var claim = (identity as ClaimsIdentity)?.FindFirst("LoginUserId");
             if (claim != null)
             {
-                if (Guid.TryParse(claim.Value, out Guid userId))
-                {
-                    return userId;
-                }
+                return claim.Value;
             }
-            return Guid.Empty;
+            return string.Empty;
         }
     }
 }

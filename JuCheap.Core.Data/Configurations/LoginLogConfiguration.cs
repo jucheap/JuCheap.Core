@@ -12,7 +12,7 @@ namespace JuCheap.Core.Data.Configurations
         public void Configure(EntityTypeBuilder<LoginLogEntity> builder)
         {
             builder.HasKey(e => e.Id);
-            builder.Property(e => e.Id).ValueGeneratedNever();
+            builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
             builder.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
             builder.Property(e => e.IP).HasMaxLength(20).IsRequired();
             builder.Property(e => e.Message).HasMaxLength(200).IsRequired();

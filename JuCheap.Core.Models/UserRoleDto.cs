@@ -10,11 +10,11 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 角色ID
         /// </summary>
-        public Guid RoleId { get; set; }
+        public string RoleId { get; set; }
 
         /// <summary>
         /// 角色名称
         /// </summary>
-        public Guid RoleName { get; set; }
+        public string RoleName { get; set; }
     }
 }

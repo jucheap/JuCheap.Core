@@ -7,11 +7,11 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 角色ID
         /// </summary>
-        public Guid RoleId { get; set; }
+        public string RoleId { get; set; }
 
         /// <summary>
         /// 菜单ID
         /// </summary>
-        public Guid MenuId { get; set; }
+        public string MenuId { get; set; }
     }
 }

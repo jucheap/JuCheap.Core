@@ -77,6 +77,10 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<DepartmentDto> Find(string id)
         {
+            if (id.IsBlank())
+            {
+                return null;
+            }
             var entity = await _context.Departments.FindAsync(id);
             var result = _mapper.Map<DepartmentEntity, DepartmentDto>(entity);
             if (result?.ParentId.IsBlank() == false)

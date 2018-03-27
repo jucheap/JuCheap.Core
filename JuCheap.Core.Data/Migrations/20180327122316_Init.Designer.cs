@@ -11,7 +11,7 @@ using System;
 namespace JuCheap.Core.Data.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    [Migration("20180326144333_Init")]
+    [Migration("20180327122316_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -123,6 +123,9 @@ namespace JuCheap.Core.Data.Migrations
                         .HasMaxLength(6);
 
                     b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<string>("Icon")
+                        .HasMaxLength(50);
 
                     b.Property<bool>("IsDeleted");
 

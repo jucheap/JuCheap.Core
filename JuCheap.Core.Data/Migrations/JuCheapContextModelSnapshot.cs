@@ -123,6 +123,9 @@ namespace JuCheap.Core.Data.Migrations
 
                     b.Property<DateTime>("CreateDateTime");
 
+                    b.Property<string>("Icon")
+                        .HasMaxLength(50);
+
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("Name")

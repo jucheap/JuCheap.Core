@@ -77,6 +77,7 @@ namespace JuCheap.Core.Services.AppServices
                 {
                     Id = Guid.NewGuid().ToString("N"),
                     Name = "系统设置",
+                    Icon = "fa fa-gear",
                     Url = "#",
                     CreateDateTime = Now,
                     Order = 1,
@@ -220,6 +221,7 @@ namespace JuCheap.Core.Services.AppServices
                 {
                     Id = Guid.NewGuid().ToString("N"),
                     Name = "日志查看",
+                    Icon = "fa fa-bars",
                     Url = "#",
                     CreateDateTime = Now,
                     Order = 2,
@@ -311,6 +313,7 @@ namespace JuCheap.Core.Services.AppServices
                 {
                     Id = Guid.NewGuid().ToString("N"),
                     Name = "示例页面",
+                    Icon = "fa fa-file-o",
                     Url = "#",
                     CreateDateTime = Now,
                     Order = 3,

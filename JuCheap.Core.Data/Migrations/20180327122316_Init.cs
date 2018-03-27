@@ -70,6 +70,7 @@ namespace JuCheap.Core.Data.Migrations
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     Code = table.Column<string>(maxLength: 6, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    Icon = table.Column<string>(maxLength: 50, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
                     Order = table.Column<int>(nullable: false),

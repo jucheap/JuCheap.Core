@@ -147,27 +147,6 @@ body.body-small .navbar-top-links li:last-child {
 	border-bottom:4px solid #19aa8d;
     background: #172D44;
 }
-.nav.nav-second-level>li:before {
-	background: #425668;
-    bottom: auto;
-    content: "";
-    height: 8px;
-    left: 28px;
-    margin-top: 13px;
-    position: absolute;
-    right: auto;
-    width: 8px;
-    z-index: 1;
-    border-radius: 50%;
-}
-.nav.nav-second-level>li:after {
-    border-left: 1px solid #425668;
-    bottom: 0;
-    content: "";
-    left: 32px;
-    position: absolute;
-    top: 0;
-}
 .nav.nav-second-level>li.active {
 	border:none
 }

@@ -46,6 +46,12 @@ namespace JuCheap.Core.Models
         public int Order { get; set; }
 
         /// <summary>
+        /// 图标
+        /// </summary>
+        [Display(Name = "图标")]
+        public string Icon { get; set; }
+
+        /// <summary>
         /// 菜单类型
         /// </summary>
         public MenuType Type { get; set; }

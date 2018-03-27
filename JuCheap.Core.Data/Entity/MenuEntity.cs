@@ -52,6 +52,11 @@ namespace JuCheap.Core.Data.Entity
         public int Order { get; set; }
 
         /// <summary>
+        /// 图标
+        /// </summary>
+        public string Icon { get; set; }
+
+        /// <summary>
         /// 菜单类型
         /// </summary>
         public byte Type { get; set; }

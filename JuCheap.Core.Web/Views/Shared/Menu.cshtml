@@ -25,15 +25,18 @@
                 {
                     <li>
                         <a href="#">
-                            <i class="fa fa-tv"></i>
+                            <i class="@(module.Icon.IsBlank() ? "fa fa-tv" : module.Icon)"></i>
                             <span class="nav-label">@module.Name</span>
                             <span class="fa arrow"></span>
                         </a>
                         <ul class="nav nav-second-level">
                             @foreach (var menu in menus.OrderBy(x => x.Order).Where(item => item.ParentId == module.Id))
                             {
-                                <li>
-                                    <a class="J_menuItem" href="@menu.Url" data-index="@module.Id">@menu.Name</a>
+                                <li>                                    
+                                    <a class="J_menuItem" href="@menu.Url" data-index="@module.Id">
+                                        <i class="@(menu.Icon.IsBlank() ? "fa fa-angle-right" : menu.Icon)"></i>
+                                        @menu.Name
+                                    </a>
                                 </li>
                             }
                         </ul>

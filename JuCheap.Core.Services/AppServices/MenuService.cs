@@ -85,7 +85,7 @@ namespace JuCheap.Core.Services.AppServices
             entity.Name = dto.Name;
             entity.Url = dto.Url;
             entity.Order = dto.Order;
-
+            entity.Icon = dto.Icon;
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -163,21 +163,22 @@ namespace JuCheap.Core.Services.AppServices
             var dbSet = _context.Menus;
             var dbSetUserRoles = _context.UserRoles;
             var dbSetRoleMenus = _context.RoleMenus;
-            var query = dbSet.Where(item => !item.IsDeleted && item.Type != (byte)MenuType.Action);
-            var roleIds = await dbSetUserRoles.Where(item => item.UserId == userId)
-                .Select(item => item.RoleId).ToListAsync();
-            var menuIds = await dbSetRoleMenus.Where(item => roleIds.Contains(item.RoleId))
-                .Select(item => item.MenuId)
+            var query = dbSet.Where(x => !x.IsDeleted && x.Type != (byte)MenuType.Action);
+            var roleIds = await dbSetUserRoles.Where(x => x.UserId == userId)
+                .Select(x => x.RoleId).ToListAsync();
+            var menuIds = await dbSetRoleMenus.Where(x => roleIds.Contains(x.RoleId))
+                .Select(x => x.MenuId)
                 .ToListAsync();
-            return await query.Where(item => menuIds.Contains(item.Id))
-                .Select(item => new MenuDto
+            return await query.Where(x => menuIds.Contains(x.Id))
+                .Select(x => new MenuDto
                 {
-                    Id = item.Id,
-                    ParentId = item.ParentId,
-                    Name = item.Name,
-                    Url = item.Url,
-                    Order = item.Order,
-                    Type = (MenuType)item.Type
+                    Id = x.Id,
+                    ParentId = x.ParentId,
+                    Name = x.Name,
+                    Url = x.Url,
+                    Order = x.Order,
+                    Type = (MenuType)x.Type,
+                    Icon = x.Icon
                 }).ToListAsync();
         }
 

@@ -56,6 +56,15 @@ namespace JuCheap.Core.Web.Controllers
         }
 
         /// <summary>
+        /// 图标选择
+        /// </summary>
+        [IgnoreRightFilter]
+        public IActionResult FontAwesome()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// 添加
         /// </summary>
         /// <returns></returns>

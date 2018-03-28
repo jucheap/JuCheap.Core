@@ -50,6 +50,6 @@ namespace JuCheap.Core.Models
         public string ConfirmPwd { get; set; }
 
         [Display(Name = "所属部门")]
-        public Guid? DepartmentId { get; set; }
+        public string DepartmentId { get; set; }
     }
 }

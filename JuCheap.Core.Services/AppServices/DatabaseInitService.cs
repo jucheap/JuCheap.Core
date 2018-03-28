@@ -496,7 +496,9 @@ namespace JuCheap.Core.Services.AppServices
                 _context.UserRoles.AddRange(userRoles);
                 _context.RoleMenus.AddRange(roleMenus);
                 _context.SystemConfigs.Add(systemConfig);
-                return await _context.SaveChangesAsync() > 0;
+                await _context.SaveChangesAsync();
+                await InitPathCodeAsync();
+                return true;
             }
             catch
             {

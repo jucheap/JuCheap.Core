@@ -31,6 +31,14 @@ namespace JuCheap.Core.WebApi
             // Add framework services.
             services.AddMvc();
 
+            // 使用内存存储，密钥，客户端和资源来配置身份服务器。
+            services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
+                .AddInMemoryApiResources(Config.GetApiResources())//添加api资源
+                .AddInMemoryClients(Config.GetClients())//添加客户端
+                                                        //.AddTestUsers(Config.GetUsers()); //添加测试用户
+                .AddUserService(Config.GetUsers());
+
             //使用Sql Server数据库
             services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
             //支持sql2008的row_number分页函数
@@ -63,6 +71,8 @@ namespace JuCheap.Core.WebApi
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            app.UseIdentityServer();
 
             app.UseMvc();
         }

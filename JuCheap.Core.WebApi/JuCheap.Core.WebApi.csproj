@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>JuCheap.Core.WebApi</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JuCheap.Core.Data\JuCheap.Core.Data.csproj" />
+    <ProjectReference Include="..\JuCheap.Core.Infrastructure\JuCheap.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\JuCheap.Core.Interfaces\JuCheap.Core.Interfaces.csproj" />
+    <ProjectReference Include="..\JuCheap.Core.Models\JuCheap.Core.Models.csproj" />
+    <ProjectReference Include="..\JuCheap.Core.Services\JuCheap.Core.Services.csproj" />
+  </ItemGroup>
+
+</Project>

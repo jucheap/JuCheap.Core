@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using JuCheap.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace JuCheap.Core.WebApi
+namespace JuCheap.Core.WebApi.Service
 {
     /// <summary>
     /// Extension methods for the IdentityServer builder

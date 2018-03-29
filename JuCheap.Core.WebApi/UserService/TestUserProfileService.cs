@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using JuCheap.Core.Interfaces;
 
-namespace JuCheap.Core.WebApi
+namespace JuCheap.Core.WebApi.Service
 {
     /// <summary>
     /// Profile service for test users

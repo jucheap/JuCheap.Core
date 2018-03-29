@@ -9,7 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System;
 
-namespace JuCheap.Core.WebApi
+namespace JuCheap.Core.WebApi.Service
 {
     /// <summary>
     /// Store for test users

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System;
 using Microsoft.AspNetCore.Authentication;
 
-namespace JuCheap.Core.WebApi
+namespace JuCheap.Core.WebApi.Service
 {
     /// <summary>
     /// Resource owner password validator for test users

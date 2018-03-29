@@ -36,8 +36,8 @@ namespace JuCheap.Core.WebApi
                 .AddDeveloperSigningCredential()
                 .AddInMemoryApiResources(Config.GetApiResources())//添加api资源
                 .AddInMemoryClients(Config.GetClients())//添加客户端
-                                                        //.AddTestUsers(Config.GetUsers()); //添加测试用户
-                .AddUserService(Config.GetUsers());
+                                                        .AddTestUsers(Config.GetUsers()); //添加测试用户
+                //.AddUserService(Config.GetUsers());
 
             //使用Sql Server数据库
             services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));

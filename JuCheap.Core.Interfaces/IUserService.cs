@@ -35,6 +35,13 @@ namespace JuCheap.Core.Interfaces
         Task<UserDto> FindAsync(string id);
 
         /// <summary>
+        /// 根据登录名查询
+        /// </summary>
+        /// <param name="loginName">登录名</param>
+        /// <returns></returns>
+        Task<UserDto> GetAsync(string loginName);
+
+        /// <summary>
         /// 登陆
         /// </summary>
         /// <param name="dto">登录信息</param>

@@ -3,18 +3,17 @@
 
 using IdentityServer4.Models;
 using System.Collections.Generic;
-using IdentityServer4.Test;
 
 namespace JuCheap.Core.WebApi
 {
     public class Config
     {
-		// scopes define the API resources in your system
-		public static IEnumerable<ApiResource> GetApiResources()
+        // scopes define the API resources in your system
+        public static IEnumerable<ApiResource> GetApiResources()
         {
             return new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource("jucheap", "jucheap web api")
             };
         }
 
@@ -23,51 +22,20 @@ namespace JuCheap.Core.WebApi
         {
             return new List<Client>
             {
-                new Client
-                {
-                    ClientId = "client",
-	                // 没有交互性用户，使用 clientid/secret 实现认证。
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-	                // 用于认证的密码
-                    ClientSecrets = 
-                    {
-                        new Secret("secret".Sha256())
-                    },
-	                // 客户端有权访问的范围（Scopes）
-                    AllowedScopes = { "api1" }
-                },
 	            // resource owner password grant client
 	            new Client
 	            {
-		            ClientId = "ro.client",
+		            ClientId = "api.client",
 		            AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
 		            ClientSecrets =
 		            {
-			            new Secret("secret".Sha256())
-		            },
-		            AllowedScopes = { "api1" }
-	            }
+			            new Secret("28365BC74137474DA6986B86836B4468".Sha256())
+
+                    },
+                    AllowedScopes = { "jucheap","openid","email","profile","offline_access" }
+                }
 			};
         }
-
-	    public static List<TestUser> GetUsers()
-	    {
-		    return new List<TestUser>
-		    {
-			    new TestUser
-			    {
-				    SubjectId = "1",
-				    Username = "alice",
-				    Password = "password"
-			    },
-			    new TestUser
-			    {
-				    SubjectId = "2",
-				    Username = "bob",
-				    Password = "password"
-			    }
-		    };
-	    }
 	}
 }

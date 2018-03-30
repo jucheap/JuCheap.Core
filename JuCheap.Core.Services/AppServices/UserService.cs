@@ -85,6 +85,17 @@ namespace JuCheap.Core.Services.AppServices
         }
 
         /// <summary>
+        /// 根据登录名查询
+        /// </summary>
+        /// <param name="loginName">登录名</param>
+        /// <returns></returns>
+        public async Task<UserDto> GetAsync(string loginName)
+        {
+            var entity = await _context.Users.FirstOrDefaultAsync(u => u.LoginName == loginName);
+            return _mapper.Map<UserEntity, UserDto>(entity);
+        }
+
+        /// <summary>
         /// 批量逻辑删除
         /// </summary>
         /// <param name="ids">主键ID集合</param>
@@ -111,7 +122,7 @@ namespace JuCheap.Core.Services.AppServices
             {
                 Id = Guid.NewGuid().ToString("N"),
                 LoginName = dto.LoginName,
-                IP = dto.LoginIP,
+                IP = dto.LoginIP ?? "127.0.0.1",
                 CreateDateTime = DateTime.Now
             };
             if (entity == null)

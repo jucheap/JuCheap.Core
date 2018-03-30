@@ -1,13 +1,17 @@
-﻿using JuCheap.Core.Data;
+﻿using IdentityServer4.Services;
+using IdentityServer4.Validation;
+using JuCheap.Core.Data;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Services;
 using JuCheap.Core.Services.AppServices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 
 namespace JuCheap.Core.WebApi
 {
@@ -31,13 +35,13 @@ namespace JuCheap.Core.WebApi
             // Add framework services.
             services.AddMvc();
 
-            // 使用内存存储，密钥，客户端和资源来配置身份服务器。
+            // 配置IdentityServer
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
                 .AddInMemoryApiResources(Config.GetApiResources())//添加api资源
-                .AddInMemoryClients(Config.GetClients())//添加客户端
-                                                        .AddTestUsers(Config.GetUsers()); //添加测试用户
-                //.AddUserService(Config.GetUsers());
+                .AddInMemoryClients(Config.GetClients());//添加客户端
+            services.AddScoped<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
+            services.AddScoped<IProfileService, ProfileService>();
 
             //使用Sql Server数据库
             services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
@@ -64,6 +68,19 @@ namespace JuCheap.Core.WebApi
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDepartmentService, DepartmentService>();
             services.AddScoped<IAreaService, AreaService>();
+
+            //配置认证信息
+            services.AddAuthentication((options) =>
+                {
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters();
+                options.RequireHttpsMetadata = false;
+                options.Audience = "jucheap";//api范围
+                options.Authority = "http://localhost:63230";//IdentityServer地址
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,6 +90,8 @@ namespace JuCheap.Core.WebApi
             loggerFactory.AddDebug();
 
             app.UseIdentityServer();
+
+            app.UseAuthentication();
 
             app.UseMvc();
         }

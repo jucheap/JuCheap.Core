@@ -1,4 +1,6 @@
-﻿using IdentityServer4.Services;
+﻿using System.Security.Claims;
+using System.Security.Principal;
+using IdentityServer4.Services;
 using IdentityServer4.Validation;
 using JuCheap.Core.Data;
 using JuCheap.Core.Interfaces;
@@ -12,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 
 namespace JuCheap.Core.WebApi
 {
@@ -38,8 +41,9 @@ namespace JuCheap.Core.WebApi
             // 配置IdentityServer
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
-                .AddInMemoryApiResources(Config.GetApiResources())//添加api资源
-                .AddInMemoryClients(Config.GetClients());//添加客户端
+                .AddInMemoryIdentityResources(Config.GetIdentityResourceResources())
+                .AddInMemoryApiResources(Config.GetApiResources())
+                .AddInMemoryClients(Config.GetClients());//添加授权客户端
             services.AddScoped<IResourceOwnerPasswordValidator, ResourceOwnerPasswordValidator>();
             services.AddScoped<IProfileService, ProfileService>();
 
@@ -78,8 +82,8 @@ namespace JuCheap.Core.WebApi
             {
                 options.TokenValidationParameters = new TokenValidationParameters();
                 options.RequireHttpsMetadata = false;
-                options.Audience = "jucheap";//api范围
-                options.Authority = "http://localhost:63230";//IdentityServer地址
+                options.Audience = Config.ApiName;//api范围
+                options.Authority = Config.IdentityUrl;//IdentityServer地址
             });
         }
 
@@ -94,6 +98,22 @@ namespace JuCheap.Core.WebApi
             app.UseAuthentication();
 
             app.UseMvc();
+        }
+    }
+
+    /// <summary>
+    /// Identity扩展
+    /// </summary>
+    public static class IdentityExtention
+    {
+        /// <summary>
+        /// 获取登录用户的Id
+        /// </summary>
+        /// <param name="identity"></param>
+        /// <returns></returns>
+        public static string GetLoginUserId(this ClaimsPrincipal identity)
+        {
+            return identity.Claims.FirstOrDefault(x => x.Type == Config.UserId)?.Value;
         }
     }
 }

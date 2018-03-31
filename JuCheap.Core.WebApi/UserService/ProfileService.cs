@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Services;
 using JuCheap.Core.Interfaces;
@@ -22,9 +23,9 @@ namespace JuCheap.Core.WebApi
         {
             try
             {
-                var userId = context.Subject.Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+                var userId = context.Subject.Claims.FirstOrDefault(x => x.Type == Config.UserId)?.Value;
 
-                if (!string.IsNullOrEmpty(userId) && long.Parse(userId) > 0)
+                if (!string.IsNullOrEmpty(userId))
                 {
                     //get user from db (find user by user id)
                     var user = await _userService.FindAsync(userId);
@@ -34,7 +35,7 @@ namespace JuCheap.Core.WebApi
                     {
                         var claims = ResourceOwnerPasswordValidator.GetUserClaims(user);
 
-                        context.IssuedClaims = claims.Where(x => context.RequestedClaimTypes.Contains(x.Type)).ToList();
+                        context.IssuedClaims = claims.ToList();
                     }
                 }
             }
@@ -50,9 +51,9 @@ namespace JuCheap.Core.WebApi
             try
             {
                 //get subject from context (set in ResourceOwnerPasswordValidator.ValidateAsync),
-                var userId = context.Subject.Claims.FirstOrDefault(x => x.Type == "user_id");
+                var userId = context.Subject.Claims.FirstOrDefault(x => x.Type == Config.UserId);
 
-                if (!string.IsNullOrEmpty(userId?.Value) && long.Parse(userId.Value) > 0)
+                if (!string.IsNullOrEmpty(userId?.Value))
                 {
                     var user = await _userService.FindAsync(userId.Value);
 

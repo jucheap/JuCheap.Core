@@ -12,7 +12,7 @@ namespace JuCheap.Core.WebApi
 {
     public class ResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
     {
-        //repository to get user from db
+        //repository to get user from userservice
         private readonly IUserService _userService;
 
         public ResourceOwnerPasswordValidator(IUserService userService)
@@ -65,6 +65,7 @@ namespace JuCheap.Core.WebApi
         {
             return new Claim[]
             {
+                new Claim(Config.UserId, user.Id),
                 new Claim(JwtClaimTypes.Subject, user.Id),
                 new Claim(JwtClaimTypes.Name, user.LoginName),
                 new Claim(JwtClaimTypes.Email, user.Email)

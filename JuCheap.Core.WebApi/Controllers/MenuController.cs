@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using IdentityModel;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -31,7 +32,8 @@ namespace JuCheap.Core.WebApi.Controllers
         [Authorize]
         public async Task<List<MenuDto>> GetUserMenu()
         {
-            var menus = await _menuService.GetMyMenusAsync(User.Claims.FirstOrDefault(x => x.Type == "sub").Value);
+            var userId = User.GetLoginUserId();
+            var menus = await _menuService.GetMyMenusAsync(userId);
             return menus;
         }
     }

@@ -184,7 +184,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters == null)
                 return new PagedResult<UserDto>(1, 0);
 
-            var query = _context.Users.Where(item => !item.IsDeleted);
+            var query = _context.Users.AsQueryable();
 
             if (filters.keywords.IsNotBlank())
             {
@@ -211,15 +211,11 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> HasRightAsync(string userId, string url)
         {
-            var menus = _context.Menus;
-            var userRoles = _context.UserRoles;
-            var roleMenus = _context.RoleMenus;
-            var query = menus.Where(item => !item.IsDeleted);
-            var roleIds = await userRoles.Where(item => item.UserId == userId)
-                .Select(item => item.RoleId).ToListAsync();
-            var menuIds = await roleMenus.Where(item => roleIds.Contains(item.RoleId))
-                .Select(item => item.MenuId)
-                .ToListAsync();
+            var query = _context.Menus.AsQueryable();
+            var roleIds = await _context.UserRoles.Where(x => x.UserId == userId)
+                .Select(x => x.RoleId).ToListAsync();
+            var menuIds = await _context.RoleMenus.Where(x => roleIds.Contains(x.RoleId))
+                .Select(x => x.MenuId).ToListAsync();
             return await query.AnyAsync(x => menuIds.Contains(x.Id) && url.StartsWith(x.Url));
         }
 
@@ -244,7 +240,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> ExistsLoginNameAsync(string userId, string loginName)
         {
-            var query = _context.Users.Where(u => !u.IsDeleted && u.LoginName == loginName)
+            var query = _context.Users.Where(u => u.LoginName == loginName)
                 .WhereIf(userId.IsNotBlank(), u => u.Id != userId);
             return await query.AnyAsync();
         }

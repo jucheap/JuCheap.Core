@@ -98,24 +98,23 @@ namespace JuCheap.Core.Services.AppServices
             if (filters == null)
                 return new PagedResult<RoleDto>(0, 0);
 
-            var dbSet = _context.Roles;
-            var query = dbSet.Where(item => !item.IsDeleted);
+            var query = _context.Roles.AsQueryable();
 
             if (filters.keywords.IsNotBlank())
-                query = query.Where(item => item.Name.Contains(filters.keywords));
+                query = query.Where(x => x.Name.Contains(filters.keywords));
 
             if (filters.UserId.IsNotBlank())
             {
                 var userRoles = _context.UserRoles;
-                var myRoleIds = userRoles.Where(item => item.UserId == filters.UserId)
-                                .Select(item => item.RoleId)
+                var myRoleIds = userRoles.Where(x => x.UserId == filters.UserId)
+                                .Select(x => x.RoleId)
                                 .ToList();
                 query = filters.ExcludeMyRoles
-                    ? query.Where(item => !myRoleIds.Contains(item.Id))
-                    : query.Where(item => myRoleIds.Contains(item.Id));
+                    ? query.Where(x => !myRoleIds.Contains(x.Id))
+                    : query.Where(x => myRoleIds.Contains(x.Id));
             }
 
-            return await query.OrderByDescending(item => item.CreateDateTime)
+            return await query.OrderByDescending(x => x.CreateDateTime)
                 .Select(item => new RoleDto
                 {
                     Id = item.Id,
@@ -130,7 +129,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<List<TreeDto>> GetTreesAsync()
         {
-            var list = await _context.Roles.Where(r => !r.IsDeleted).ToListAsync();
+            var list = await _context.Roles.ToListAsync();
             return _mapper.Map<List<RoleEntity>, List<TreeDto>>(list);
         }
 
@@ -143,11 +142,11 @@ namespace JuCheap.Core.Services.AppServices
             if (!datas.AnyOne()) return false;
 
             var roleId = datas.First().RoleId;
-            var olds = await _context.RoleMenus.Where(item => item.RoleId == roleId).ToListAsync();
-            var oldIds = olds.Select(item => item.MenuId);
-            var newIds = datas.Select(item => item.MenuId);
-            var adds = datas.Where(item => !oldIds.Contains(item.MenuId)).ToList();
-            var removes = olds.Where(item => !newIds.Contains(item.MenuId)).ToList();
+            var olds = await _context.RoleMenus.Where(x => x.RoleId == roleId).ToListAsync();
+            var oldIds = olds.Select(x => x.MenuId);
+            var newIds = datas.Select(x => x.MenuId);
+            var adds = datas.Where(x => !oldIds.Contains(x.MenuId)).ToList();
+            var removes = olds.Where(x => !newIds.Contains(x.MenuId)).ToList();
             if (adds.AnyOne())
             {
                 var roleMenus = _mapper.Map<List<RoleMenuDto>, List<RoleMenuEntity>>(adds);
@@ -171,7 +170,7 @@ namespace JuCheap.Core.Services.AppServices
         {
             if (roleId.IsBlank()) return false;
 
-            var list = await _context.RoleMenus.Where(item => item.RoleId == roleId).ToListAsync();
+            var list = await _context.RoleMenus.Where(x => x.RoleId == roleId).ToListAsync();
             _context.RoleMenus.RemoveRange(list);
 
             return await _context.SaveChangesAsync() > 0;

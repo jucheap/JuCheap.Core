@@ -7,10 +7,12 @@ namespace JuCheap.Core.Data.Configurations
     /// <summary>
     ///LoginLog表信息配置
     /// </summary>
-    public class LoginLogConfiguration : IEntityTypeConfiguration<LoginLogEntity>
+    public class LoginLogConfiguration : BaseConfiguration<LoginLogEntity>
     {
-        public void Configure(EntityTypeBuilder<LoginLogEntity> builder)
+        public override void Configure(EntityTypeBuilder<LoginLogEntity> builder)
         {
+            base.Configure(builder);
+
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
             builder.Property(e => e.LoginName).HasMaxLength(20).IsRequired();

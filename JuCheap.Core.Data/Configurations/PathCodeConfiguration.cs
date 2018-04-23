@@ -7,10 +7,12 @@ namespace JuCheap.Core.Data.Configurations
     /// <summary>
     /// PathCode表信息配置
     /// </summary>
-    public class PathCodeConfiguration : IEntityTypeConfiguration<PathCodeEntity>
+    public class PathCodeConfiguration : BaseConfiguration<PathCodeEntity>
     {
-        public void Configure(EntityTypeBuilder<PathCodeEntity> builder)
+        public override void Configure(EntityTypeBuilder<PathCodeEntity> builder)
         {
+            base.Configure(builder);
+
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
             builder.Property(e => e.Code).HasMaxLength(4).IsRequired();

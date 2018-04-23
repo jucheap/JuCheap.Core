@@ -7,10 +7,12 @@ namespace JuCheap.Core.Data.Configurations
     /// <summary>
     /// Menu表信息配置
     /// </summary>
-    public class MenuConfiguration : IEntityTypeConfiguration<MenuEntity>
+    public class MenuConfiguration : BaseConfiguration<MenuEntity>
     {
-        public void Configure(EntityTypeBuilder<MenuEntity> builder)
+        public override void Configure(EntityTypeBuilder<MenuEntity> builder)
         {
+            base.Configure(builder);
+
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
             builder.Property(e => e.Code).HasMaxLength(6).IsRequired();

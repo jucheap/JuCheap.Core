@@ -7,10 +7,12 @@ namespace JuCheap.Core.Data.Configurations
     /// <summary>
     /// PageView表信息配置
     /// </summary>
-    public class PageViewConfiguration : IEntityTypeConfiguration<PageViewEntity>
+    public class PageViewConfiguration : BaseConfiguration<PageViewEntity>
     {
-        public void Configure(EntityTypeBuilder<PageViewEntity> builder)
+        public override void Configure(EntityTypeBuilder<PageViewEntity> builder)
         {
+            base.Configure(builder);
+
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
             builder.Property(e => e.LoginName).HasMaxLength(20).IsRequired();

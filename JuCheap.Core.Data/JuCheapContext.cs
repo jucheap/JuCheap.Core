@@ -42,7 +42,8 @@ namespace JuCheap.Core.Data
         {
             base.OnModelCreating(modelBuilder);
             //添加FluentAPI配置
-            var typesToRegister = typeof(SystemConfigConfiguration).Assembly.GetTypes().Where(q => q.GetInterface(typeof(IEntityTypeConfiguration<>).FullName) != null);
+            var typesToRegister = typeof(SystemConfigConfiguration).Assembly.GetTypes()
+                .Where(q => q.GetInterface(typeof(IEntityTypeConfiguration<>).FullName) != null && !q.FullName.StartsWith("JuCheap.Core.Data.Configurations.BaseConfiguration"));
 
             foreach (var type in typesToRegister)
             {

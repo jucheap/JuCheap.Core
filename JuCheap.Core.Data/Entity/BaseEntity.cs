@@ -36,7 +36,6 @@ namespace JuCheap.Core.Data.Entity
         {
             entity.Id = Guid.NewGuid().ToString("N");
             entity.CreateDateTime = DateTime.Now;
-            entity.IsDeleted = false;
         }
     }
 }

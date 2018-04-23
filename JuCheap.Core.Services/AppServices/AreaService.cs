@@ -90,7 +90,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<IList<TreeDto>> FindByParentId(string parentId)
         {
-            var query = _context.Areas.Where(x => !x.IsDeleted)
+            var query = _context.Areas
                 .WhereIf(parentId.IsBlank() || parentId == "0", x => x.ParentId == null || x.ParentId == string.Empty || x.ParentId == "0")
                 .WhereIf(parentId.IsNotBlank(), x => x.ParentId == parentId);
             return await query.Select(x => new TreeDto
@@ -109,14 +109,14 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> Delete(IList<string> ids)
         {
-            var areas = await _context.Areas.Where(x => !x.IsDeleted && ids.Contains(x.Id)).ToListAsync();
+            var areas = await _context.Areas.Where(x => ids.Contains(x.Id)).ToListAsync();
 
             if (!areas.AnyOne())
             {
                 throw new Exception("没有找到任何需要删除的数据");
             }
 
-            if (await _context.Areas.AnyAsync(x => !x.IsDeleted && x.Enabled && ids.Contains(x.ParentId)))
+            if (await _context.Areas.AnyAsync(x => x.Enabled && ids.Contains(x.ParentId)))
             {
                 throw new Exception("该节点下还有子节点，请删除子节点");
             }
@@ -137,7 +137,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> IsExists(string id, string name)
         {
-            var query = _context.Areas.Where(x => !x.IsDeleted && x.Name == name)
+            var query = _context.Areas.Where(x => x.Name == name)
                    .WhereIf(id.IsBlank() == false, x => x.Id != id && x.ParentId == id);
             return await query.AnyAsync();
         }
@@ -152,7 +152,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters == null)
                 return new PagedResult<AreaDto>();
 
-            var query = _context.Areas.Where(item => !item.IsDeleted)
+            var query = _context.Areas
                     .WhereIf(filters.keywords.IsNotBlank(), x => x.Name.Contains(filters.keywords));
 
             return await query.OrderByDescending(x => x.CreateDateTime)
@@ -174,9 +174,9 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         public async Task<bool> UpdatePathCodes()
         {
-            while (await _context.Areas.AnyAsync(x => !x.IsDeleted && x.PathCode == string.Empty))
+            while (await _context.Areas.AnyAsync(x => x.PathCode == string.Empty))
             {
-                var query = _context.Areas.Where(item => !item.IsDeleted && item.PathCode == string.Empty);
+                var query = _context.Areas.Where(x => x.PathCode == string.Empty);
                 var list = query.AsNoTracking().Take(100).ToList();
                 foreach (var area in list)
                 {
@@ -209,7 +209,7 @@ namespace JuCheap.Core.Services.AppServices
             if (parentId.IsBlank())
             {
                 var list = await _context.Areas
-                    .Where(x => !x.IsDeleted && (x.ParentId == null || x.ParentId == string.Empty))
+                    .Where(x => (x.ParentId == null || x.ParentId == string.Empty))
                     .Select(x => x.PathCode).ToListAsync();
                 existCodes = list.Select(x => x.Trim()).ToList();
             }

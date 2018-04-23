@@ -7,10 +7,12 @@ namespace JuCheap.Core.Data.Configurations
     /// <summary>
     /// SystemConfig表信息配置
     /// </summary>
-    public class SystemConfigConfiguration : IEntityTypeConfiguration<SystemConfigEntity>
+    public class SystemConfigConfiguration : BaseConfiguration<SystemConfigEntity>
     {
-        public void Configure(EntityTypeBuilder<SystemConfigEntity> builder)
+        public override void Configure(EntityTypeBuilder<SystemConfigEntity> builder)
         {
+            base.Configure(builder);
+
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
             builder.Property(e => e.SystemName).HasMaxLength(50).IsRequired();

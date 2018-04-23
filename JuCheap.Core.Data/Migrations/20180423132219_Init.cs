@@ -20,7 +20,7 @@ namespace JuCheap.Core.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     Level = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    ParentId = table.Column<string>(maxLength: 20, nullable: true),
+                    ParentId = table.Column<string>(maxLength: 36, nullable: true),
                     PathCode = table.Column<string>(maxLength: 20, nullable: true),
                     SimpleSpelling = table.Column<string>(maxLength: 20, nullable: true)
                 },
@@ -38,7 +38,7 @@ namespace JuCheap.Core.Data.Migrations
                     FullName = table.Column<string>(maxLength: 500, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    ParentId = table.Column<string>(nullable: true),
+                    ParentId = table.Column<string>(maxLength: 36, nullable: true),
                     PathCode = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -56,7 +56,7 @@ namespace JuCheap.Core.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     LoginName = table.Column<string>(maxLength: 20, nullable: false),
                     Message = table.Column<string>(maxLength: 200, nullable: false),
-                    UserId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -94,7 +94,7 @@ namespace JuCheap.Core.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     LoginName = table.Column<string>(maxLength: 20, nullable: false),
                     Url = table.Column<string>(maxLength: 300, nullable: false),
-                    UserId = table.Column<string>(maxLength: 20, nullable: false)
+                    UserId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -153,7 +153,7 @@ namespace JuCheap.Core.Data.Migrations
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
-                    DepartmentId = table.Column<string>(nullable: true),
+                    DepartmentId = table.Column<string>(maxLength: 36, nullable: true),
                     Email = table.Column<string>(maxLength: 36, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsSuperMan = table.Column<bool>(nullable: false),
@@ -179,8 +179,8 @@ namespace JuCheap.Core.Data.Migrations
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    MenuId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    MenuId = table.Column<string>(maxLength: 36, nullable: false),
+                    RoleId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -206,8 +206,8 @@ namespace JuCheap.Core.Data.Migrations
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false),
-                    UserId = table.Column<string>(nullable: false)
+                    RoleId = table.Column<string>(maxLength: 36, nullable: false),
+                    UserId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
                 {

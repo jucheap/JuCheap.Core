@@ -98,7 +98,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<IList<TreeDto>> FindByParentId(string parentId)
         {
-            var query = _context.Departments.Where(x => !x.IsDeleted)
+            var query = _context.Departments
                 .WhereIf(parentId.IsBlank(), x => x.ParentId == null || x.ParentId == string.Empty)
                 .WhereIf(parentId.IsNotBlank(), x => x.ParentId == parentId);
             return await query.Select(x => new TreeDto
@@ -117,7 +117,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> Delete(IList<string> ids)
         {
-            var departments = _context.Departments.Where(x => !x.IsDeleted && ids.Contains(x.Id)).ToList();
+            var departments = _context.Departments.Where(x => ids.Contains(x.Id)).ToList();
 
             if (!departments.AnyOne())
             {
@@ -146,7 +146,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters == null)
                 return new PagedResult<DepartmentDto>();
 
-            var query = _context.Departments.Where(item => !item.IsDeleted)
+            var query = _context.Departments
                     .WhereIf(filters.keywords.IsNotBlank(),
                         x => x.Name.Contains(filters.keywords) || x.FullName.Contains(filters.keywords));
 
@@ -172,7 +172,7 @@ namespace JuCheap.Core.Services.AppServices
             if (parentId.IsBlank())
             {
                 var list = await _context.Departments
-                    .Where(x => !x.IsDeleted && (x.ParentId == null || x.ParentId == string.Empty))
+                    .Where(x => (x.ParentId == null || x.ParentId == string.Empty))
                     .Select(x => x.PathCode).ToListAsync();
                 existCodes = list.Select(x => x.Trim()).ToList();
                 dept.FullName = dept.Name;

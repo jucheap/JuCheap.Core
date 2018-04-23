@@ -133,13 +133,12 @@ namespace JuCheap.Core.Services.AppServices
             if (filters == null)
                 return new PagedResult<MenuDto>();
 
-            var dbSet = _context.Menus;
-            var query = dbSet.Where(item => !item.IsDeleted);
+            var query = _context.Menus.AsQueryable();
 
             if (filters.keywords.IsNotBlank())
-                query = query.Where(item => item.Name.Contains(filters.keywords));
+                query = query.Where(x => x.Name.Contains(filters.keywords));
             if (filters.ExcludeType.HasValue)
-                query = query.Where(item => item.Type != (byte)filters.ExcludeType.Value);
+                query = query.Where(x => x.Type != (byte)filters.ExcludeType.Value);
 
             return await query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new MenuDto
@@ -163,7 +162,7 @@ namespace JuCheap.Core.Services.AppServices
             var dbSet = _context.Menus;
             var dbSetUserRoles = _context.UserRoles;
             var dbSetRoleMenus = _context.RoleMenus;
-            var query = dbSet.Where(x => !x.IsDeleted && x.Type != (byte)MenuType.Action);
+            var query = dbSet.Where(x => x.Type != (byte)MenuType.Action);
             var roleIds = await dbSetUserRoles.Where(x => x.UserId == userId)
                 .Select(x => x.RoleId).ToListAsync();
             var menuIds = await dbSetRoleMenus.Where(x => roleIds.Contains(x.RoleId))
@@ -188,7 +187,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<List<TreeDto>> GetTreesAsync()
         {
-            var list = await _context.Menus.Where(m => !m.IsDeleted).ToListAsync();
+            var list = await _context.Menus.ToListAsync();
             return _mapper.Map<List<MenuEntity>, List<TreeDto>>(list);
         }
 
@@ -198,7 +197,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<List<MenuDto>> GetMenusByRoleIdAsync(string roleId)
         {
-            var list = await _context.Menus.Where(m => !m.IsDeleted)
+            var list = await _context.Menus
                 .Join(_context.RoleMenus, m => m.Id, rm => rm.MenuId, (menu, roleMenu) => new { menu, roleMenu })
                 .Where(item => item.roleMenu.RoleId == roleId)
                 .Select(item => item.menu).ToListAsync();

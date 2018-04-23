@@ -44,7 +44,7 @@ namespace JuCheap.Core.Data.Migrations
                         .HasMaxLength(50);
 
                     b.Property<string>("ParentId")
-                        .HasMaxLength(20);
+                        .HasMaxLength(36);
 
                     b.Property<string>("PathCode")
                         .HasMaxLength(20);
@@ -74,7 +74,8 @@ namespace JuCheap.Core.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
-                    b.Property<string>("ParentId");
+                    b.Property<string>("ParentId")
+                        .HasMaxLength(36);
 
                     b.Property<string>("PathCode");
 
@@ -105,7 +106,8 @@ namespace JuCheap.Core.Data.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(36);
 
                     b.HasKey("Id");
 
@@ -174,7 +176,7 @@ namespace JuCheap.Core.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(36);
 
                     b.HasKey("Id");
 
@@ -233,10 +235,12 @@ namespace JuCheap.Core.Data.Migrations
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("MenuId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(36);
 
                     b.Property<string>("RoleId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(36);
 
                     b.HasKey("Id");
 
@@ -276,7 +280,8 @@ namespace JuCheap.Core.Data.Migrations
 
                     b.Property<DateTime>("CreateDateTime");
 
-                    b.Property<string>("DepartmentId");
+                    b.Property<string>("DepartmentId")
+                        .HasMaxLength(36);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -315,10 +320,12 @@ namespace JuCheap.Core.Data.Migrations
                     b.Property<bool>("IsDeleted");
 
                     b.Property<string>("RoleId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(36);
 
                     b.Property<string>("UserId")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(36);
 
                     b.HasKey("Id");
 

@@ -7,10 +7,12 @@ namespace JuCheap.Core.Data.Configurations
     /// <summary>
     /// User表信息配置
     /// </summary>
-    public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
+    public class UserConfiguration : BaseConfiguration<UserEntity>
     {
-        public void Configure(EntityTypeBuilder<UserEntity> builder)
+        public override void Configure(EntityTypeBuilder<UserEntity> builder)
         {
+            base.Configure(builder);
+
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
             builder.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
@@ -20,6 +22,7 @@ namespace JuCheap.Core.Data.Configurations
             builder.Property(e => e.IsSuperMan).IsRequired();
             builder.Property(e => e.CreateDateTime).IsRequired();
             builder.Property(e => e.IsDeleted).IsRequired();
+            builder.Property(e => e.DepartmentId).HasMaxLength(36);
             builder.HasOne(e => e.Department).WithMany(e => e.Users).HasForeignKey(e => e.DepartmentId);
             builder.ToTable("Users");
         }

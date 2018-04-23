@@ -7,10 +7,11 @@ namespace JuCheap.Core.Data.Configurations
     /// <summary>
     /// Role表信息配置
     /// </summary>
-    public class RoleConfiguration : IEntityTypeConfiguration<RoleEntity>
+    public class RoleConfiguration : BaseConfiguration<RoleEntity>
     {
-        public void Configure(EntityTypeBuilder<RoleEntity> builder)
+        public override void Configure(EntityTypeBuilder<RoleEntity> builder)
         {
+            base.Configure(builder);
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
             builder.Property(e => e.Name).HasMaxLength(20).IsRequired();

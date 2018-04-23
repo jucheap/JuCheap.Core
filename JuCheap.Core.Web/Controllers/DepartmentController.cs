@@ -100,7 +100,7 @@ namespace JuCheap.Core.Web.Controllers
         public async Task<ActionResult> Delete(string id)
         {
             var success = await _departmentService.Delete(new List<string> { id });
-            return Json(success);
+            return Json(new { flag = success });
         }
 
         /// <summary>

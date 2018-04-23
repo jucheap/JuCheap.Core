@@ -105,6 +105,7 @@ namespace JuCheap.Core.Data.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("UserId")
+                        .HasMaxLength(36)
                         .IsRequired();
 
                     b.HasKey("Id");
@@ -174,7 +175,7 @@ namespace JuCheap.Core.Data.Migrations
 
                     b.Property<string>("UserId")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(36);
 
                     b.HasKey("Id");
 

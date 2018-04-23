@@ -16,7 +16,7 @@ namespace JuCheap.Core.Data.Configurations
             builder.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
             builder.Property(e => e.IP).HasMaxLength(20).IsRequired();
             builder.Property(e => e.Url).HasMaxLength(300).IsRequired();
-            builder.Property(e => e.UserId).HasMaxLength(20).IsRequired();
+            builder.Property(e => e.UserId).HasMaxLength(36).IsRequired();
             builder.Property(e => e.CreateDateTime).IsRequired();
             builder.Property(e => e.IsDeleted).IsRequired();
             builder.ToTable("PageViews");

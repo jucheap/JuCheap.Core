@@ -57,6 +57,10 @@ namespace JuCheap.Core.Services
         /// <param name="services"></param>
         public static void UseJuCheapService(this IServiceCollection services)
         {
+            //AutoMapper配置
+            services.AddScoped<IConfigurationProvider>(_ => AutoMapperConfig.GetMapperConfiguration());
+            services.AddScoped(_ => AutoMapperConfig.GetMapperConfiguration().CreateMapper());
+
             //通过反射，批量取出需要注入的接口和实现类
             var registrations =
                 from type in typeof(JuCheapModuleInitializer).Assembly.GetTypes()

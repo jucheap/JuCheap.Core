@@ -1,23 +1,22 @@
-using System;
-using System.Threading.Tasks;
+using JuCheap.Core.Data;
+using JuCheap.Core.Infrastructure.Utilities;
+using JuCheap.Core.Interfaces;
+using JuCheap.Core.Services;
+using JuCheap.Core.Web.Filters;
+using log4net;
+using log4net.Config;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using log4net;
-using JuCheap.Core.Infrastructure.Utilities;
+using System;
 using System.IO;
-using log4net.Config;
-using JuCheap.Core.Data;
-using Microsoft.EntityFrameworkCore;
-using JuCheap.Core.Web.Filters;
-using JuCheap.Core.Services;
-using JuCheap.Core.Interfaces;
-using JuCheap.Core.Services.AppServices;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-using System.Security.Principal;
 using System.Security.Claims;
+using System.Security.Principal;
+using System.Threading.Tasks;
 
 namespace JuCheap.Core.Web
 {
@@ -68,12 +67,7 @@ namespace JuCheap.Core.Web
                 cfg.Filters.Add(new RightFilter());
             });
 
-            // Add application services.
-            // 1.automapper
-            services.AddScoped<AutoMapper.IConfigurationProvider>(_ => AutoMapperConfig.GetMapperConfiguration());
-            services.AddScoped(_ => AutoMapperConfig.GetMapperConfiguration().CreateMapper());
-
-            // 2.service依赖注入
+            // service依赖注入
             services.UseJuCheapService();
         }
 
@@ -91,11 +85,9 @@ namespace JuCheap.Core.Web
             }
 
             app.UseStaticFiles();
-
+            //全局身份认证
             app.UseAuthentication();
-
-            // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-
+            //访问记录middleware
             app.UseMiddleware<VisitMiddleware>();
 
             app.UseMvc(routes =>
@@ -105,8 +97,7 @@ namespace JuCheap.Core.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //init database
-            
+            //初始化数据库以及初始数据
             Task.Run(async () =>
             {
                 using (var scope = app.ApplicationServices.CreateScope())

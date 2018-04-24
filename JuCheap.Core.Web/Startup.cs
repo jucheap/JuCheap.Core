@@ -39,7 +39,7 @@ namespace JuCheap.Core.Web
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o =>
                 {
-                    o.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
+                    o.ExpireTimeSpan = TimeSpan.FromMinutes(480);//cookie默认有效时间为8个小时
                     o.LoginPath = new PathString("/Home/Login");
                     o.LogoutPath = new PathString("/Home/Logout");
                     o.Cookie = new CookieBuilder

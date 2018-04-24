@@ -73,15 +73,8 @@ namespace JuCheap.Core.Web
             services.AddScoped<AutoMapper.IConfigurationProvider>(_ => AutoMapperConfig.GetMapperConfiguration());
             services.AddScoped(_ => AutoMapperConfig.GetMapperConfiguration().CreateMapper());
 
-            // 2.service
-            services.AddScoped<IDatabaseInitService, DatabaseInitService>();
-            services.AddScoped<ILogService, LogService>();
-            services.AddScoped<IPathCodeService, PathCodeService>();
-            services.AddScoped<IMenuService, MenuService>();
-            services.AddScoped<IRoleService, RoleService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IDepartmentService, DepartmentService>();
-            services.AddScoped<IAreaService, AreaService>();
+            // 2.service“¿¿µ◊¢»Î
+            services.UseJuCheapService();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

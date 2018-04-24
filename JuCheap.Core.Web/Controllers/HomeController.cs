@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Hosting;
 using log4net;
 using JuCheap.Core.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Diagnostics;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -129,6 +130,12 @@ namespace JuCheap.Core.Web.Controllers
         [AllowAnonymous]
         public IActionResult Error()
         {
+            var feature = HttpContext.Features.Get<IExceptionHandlerFeature>();
+            var error = feature?.Error;
+            if (error != null)
+            {
+                log.Error(error);
+            }
             return View();
         }
     }

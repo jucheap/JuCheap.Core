@@ -25,7 +25,6 @@ namespace JuCheap.Core.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
             var repository = LogManager.CreateRepository(Constants.Log4net.RepositoryName);
             XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
         }

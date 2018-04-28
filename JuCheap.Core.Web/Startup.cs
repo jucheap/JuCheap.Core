@@ -1,4 +1,6 @@
 using Hangfire;
+using Hangfire.MySql;
+using Hangfire.MySql.Core;
 using JuCheap.Core.Data;
 using JuCheap.Core.Infrastructure.Utilities;
 using JuCheap.Core.Interfaces;
@@ -75,6 +77,7 @@ namespace JuCheap.Core.Web
             //使用sql server数据库做hangfire的持久化
             services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("Connection_Job_SqlServer")));
             //使用mysql数据库做hangfire的持久化
+            //services.AddHangfire(x => x.UseStorage(new MySqlStorage(Configuration.GetConnectionString("Connection_Job_MySql"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

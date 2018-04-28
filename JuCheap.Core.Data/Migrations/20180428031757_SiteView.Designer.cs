@@ -11,9 +11,10 @@ using System;
 namespace JuCheap.Core.Data.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    partial class JuCheapContextModelSnapshot : ModelSnapshot
+    [Migration("20180428031757_SiteView")]
+    partial class SiteView
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

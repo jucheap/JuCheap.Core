@@ -151,5 +151,19 @@
     },
     // Optionally generate .map file
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/charts.min.js",
+    "inputFiles": [
+      "wwwroot/js/plugins/echarts/echarts.min.js",
+      "wwwroot/js/page/charts.view.js"
+    ],
+    // Optionally specify minification options
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    // Optionally generate .map file
+    "sourceMap": false
   }
 ]

@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "图表统计";
+    Layout = "~/Views/Shared/_Layout_Content.cshtml";
+}
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/js/plugins/echarts/echarts.min.js"></script>
+        <script src="~/js/page/charts.view.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/charts.min.js" asp-append-version="true"></script>
+    </environment>
+}
+
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>最近七天访问量 - 柱状图</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div id="barChart" style="width: 100%;height: 400px"></div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>最近七天访问量 - 折线图</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div id="lineChart" style="width: 100%;height: 400px"></div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>最近七天访问量 - 饼状图</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <div id="pieChart" style="width: 100%;height: 400px"></div>
+        </div>
+    </div>
+</div>
+
+

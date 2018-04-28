@@ -28,8 +28,9 @@ namespace JuCheap.Core.Services.AppServices
         /// 添加或更新网站访问量
         /// </summary>
         /// <param name="day">日期</param>
-        public async Task<bool> AddOrUpdate(DateTime day)
+        public async Task<bool> AddOrUpdate()
         {
+            var day = DateTime.Now;
             var date = day.Date;
             var endDate = date.AddDays(1);
             var number = await _context.PageViews.CountAsync(x => x.CreateDateTime > date && x.CreateDateTime < endDate);

@@ -14,7 +14,7 @@ namespace JuCheap.Core.Interfaces
         /// 添加或更新网站访问量
         /// </summary>
         /// <param name="day">日期</param>
-        Task<bool> AddOrUpdate(DateTime day);
+        Task<bool> AddOrUpdate();
 
         /// <summary>
         /// 获取指定时间段内的访问量统计数据

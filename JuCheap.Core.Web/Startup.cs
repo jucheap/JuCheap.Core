@@ -1,3 +1,4 @@
+using Hangfire;
 using JuCheap.Core.Data;
 using JuCheap.Core.Infrastructure.Utilities;
 using JuCheap.Core.Interfaces;
@@ -69,6 +70,11 @@ namespace JuCheap.Core.Web
 
             // service依赖注入
             services.UseJuCheapService();
+
+            //hangfire自动任务配置数据库配置
+            //使用sql server数据库做hangfire的持久化
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("Connection_Job_SqlServer")));
+            //使用mysql数据库做hangfire的持久化
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -106,6 +112,19 @@ namespace JuCheap.Core.Web
                     await dbService.InitAsync();
                 }
             });
+
+            //hangfire自动任务配置
+            var jobOptions = new BackgroundJobServerOptions
+            {
+                ServerName = Environment.MachineName
+            };
+            app.UseHangfireServer(jobOptions);
+            var option = new DashboardOptions
+            {
+                Authorization = new[] { new HangfireAuthorizationFilter() }
+            };
+            app.UseHangfireDashboard("/task");
+            RecurringJob.AddOrUpdate<ISiteViewService>(x => x.AddOrUpdate(), Cron.Daily());
         }
     }
 

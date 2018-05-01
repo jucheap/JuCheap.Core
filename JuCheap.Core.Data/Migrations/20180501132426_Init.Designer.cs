@@ -11,14 +11,14 @@ using System;
 namespace JuCheap.Core.Data.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    [Migration("20180428031757_SiteView")]
-    partial class SiteView
+    [Migration("20180501132426_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.AreaEntity", b =>

@@ -126,7 +126,7 @@ namespace JuCheap.Core.Web
             {
                 Authorization = new[] { new HangfireAuthorizationFilter() }
             };
-            app.UseHangfireDashboard("/task");
+            app.UseHangfireDashboard("/task", option);
             RecurringJob.AddOrUpdate<ISiteViewService>(x => x.AddOrUpdate(), Cron.Daily());
         }
     }

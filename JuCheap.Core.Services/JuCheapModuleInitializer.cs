@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
 using JuCheap.Core.Data.Entity;
+using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Models;
 using JuCheap.Core.Models.Enum;
+using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
 
 namespace JuCheap.Core.Services
 {
@@ -40,6 +43,37 @@ namespace JuCheap.Core.Services
 
             config.CreateMap<DepartmentEntity, DepartmentDto>().ReverseMap();
             config.CreateMap<AreaEntity, AreaDto>().ReverseMap();
+        }
+    }
+
+    /// <summary>
+    /// 依赖注入模块初始化
+    /// </summary>
+    public static class JuCheapServiceModuleInitialize
+    {
+        /// <summary>
+        /// 添加需要依赖注入的服务
+        /// </summary>
+        /// <param name="services"></param>
+        public static void UseJuCheapService(this IServiceCollection services)
+        {
+            //AutoMapper配置
+            services.AddScoped<IConfigurationProvider>(_ => AutoMapperConfig.GetMapperConfiguration());
+            services.AddScoped(_ => AutoMapperConfig.GetMapperConfiguration().CreateMapper());
+
+            //通过反射，批量取出需要注入的接口和实现类
+            var registrations =
+                from type in typeof(JuCheapModuleInitializer).Assembly.GetTypes()
+                where type.Namespace != null && (type.Namespace.IsNotBlank() &&
+                                               type.Namespace.StartsWith("JuCheap.Core.Services") &&
+                                               type.GetInterfaces().Any(x => x.Name.EndsWith("Service")) &&
+                                               type.GetInterfaces().Any())
+                select new { Service = type.GetInterfaces().First(), Implementation = type };
+
+            foreach (var t in registrations)
+            {
+                services.AddScoped(t.Service, t.Implementation);
+            }
         }
     }
 }

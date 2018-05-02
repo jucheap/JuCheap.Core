@@ -1,23 +1,25 @@
-using System;
-using System.Threading.Tasks;
+using Hangfire;
+using Hangfire.MySql;
+using Hangfire.MySql.Core;
+using JuCheap.Core.Data;
+using JuCheap.Core.Infrastructure.Utilities;
+using JuCheap.Core.Interfaces;
+using JuCheap.Core.Services;
+using JuCheap.Core.Web.Filters;
+using log4net;
+using log4net.Config;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using log4net;
-using JuCheap.Core.Infrastructure.Utilities;
+using System;
 using System.IO;
-using log4net.Config;
-using JuCheap.Core.Data;
-using Microsoft.EntityFrameworkCore;
-using JuCheap.Core.Web.Filters;
-using JuCheap.Core.Services;
-using JuCheap.Core.Interfaces;
-using JuCheap.Core.Services.AppServices;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Http;
-using System.Security.Principal;
 using System.Security.Claims;
+using System.Security.Principal;
+using System.Threading.Tasks;
 
 namespace JuCheap.Core.Web
 {
@@ -26,7 +28,6 @@ namespace JuCheap.Core.Web
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
             var repository = LogManager.CreateRepository(Constants.Log4net.RepositoryName);
             XmlConfigurator.Configure(repository, new FileInfo("log4net.config"));
         }
@@ -40,7 +41,7 @@ namespace JuCheap.Core.Web
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o =>
                 {
-                    o.ExpireTimeSpan = TimeSpan.FromMinutes(43200);
+                    o.ExpireTimeSpan = TimeSpan.FromMinutes(480);//cookie默认有效时间为8个小时
                     o.LoginPath = new PathString("/Home/Login");
                     o.LogoutPath = new PathString("/Home/Logout");
                     o.Cookie = new CookieBuilder
@@ -66,22 +67,17 @@ namespace JuCheap.Core.Web
             services.AddMvc(cfg =>
             {
                 cfg.Filters.Add(new RightFilter());
-            });
+            });            
+            //.AddJsonOptions(option => option.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver());//配置大小写问题，默认是首字母小写
 
-            // Add application services.
-            // 1.automapper
-            services.AddScoped<AutoMapper.IConfigurationProvider>(_ => AutoMapperConfig.GetMapperConfiguration());
-            services.AddScoped(_ => AutoMapperConfig.GetMapperConfiguration().CreateMapper());
+            // service依赖注入
+            services.UseJuCheapService();
 
-            // 2.service
-            services.AddScoped<IDatabaseInitService, DatabaseInitService>();
-            services.AddScoped<ILogService, LogService>();
-            services.AddScoped<IPathCodeService, PathCodeService>();
-            services.AddScoped<IMenuService, MenuService>();
-            services.AddScoped<IRoleService, RoleService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IDepartmentService, DepartmentService>();
-            services.AddScoped<IAreaService, AreaService>();
+            //hangfire自动任务配置数据库配置
+            //使用sql server数据库做hangfire的持久化
+            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("Connection_Job_SqlServer")));
+            //使用mysql数据库做hangfire的持久化
+            //services.AddHangfire(x => x.UseStorage(new MySqlStorage(Configuration.GetConnectionString("Connection_Job_MySql"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,11 +94,9 @@ namespace JuCheap.Core.Web
             }
 
             app.UseStaticFiles();
-
+            //全局身份认证
             app.UseAuthentication();
-
-            // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-
+            //访问记录middleware
             app.UseMiddleware<VisitMiddleware>();
 
             app.UseMvc(routes =>
@@ -112,8 +106,7 @@ namespace JuCheap.Core.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //init database
-            
+            //初始化数据库以及初始数据
             Task.Run(async () =>
             {
                 using (var scope = app.ApplicationServices.CreateScope())
@@ -122,6 +115,19 @@ namespace JuCheap.Core.Web
                     await dbService.InitAsync();
                 }
             });
+
+            //hangfire自动任务配置
+            var jobOptions = new BackgroundJobServerOptions
+            {
+                ServerName = Environment.MachineName
+            };
+            app.UseHangfireServer(jobOptions);
+            var option = new DashboardOptions
+            {
+                Authorization = new[] { new HangfireAuthorizationFilter() }
+            };
+            app.UseHangfireDashboard("/task", option);
+            RecurringJob.AddOrUpdate<ISiteViewService>(x => x.AddOrUpdate(), Cron.Daily());
         }
     }
 

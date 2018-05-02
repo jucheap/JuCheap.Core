@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using JuCheap.Core.Data;
 using JuCheap.Core.Data.Entity;
 using JuCheap.Core.Infrastructure.Extentions;
+using JuCheap.Core.Infrastructure.Utilities;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models.Enum;
+using log4net;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -253,7 +255,18 @@ namespace JuCheap.Core.Services.AppServices
                     PathCode = "ABAB",
                     Type = 2
                 };//11
-
+                var chartsView = new MenuEntity
+                {
+                    Id = Guid.NewGuid().ToString("N"),
+                    ParentId = log.Id,
+                    Name = "图表统计",
+                    Url = "/Log/Charts",
+                    CreateDateTime = Now,
+                    Order = 3,
+                    Code = "AC",
+                    PathCode = "ABAC",
+                    Type = 2
+                };
                 //菜单
                 var menus = new List<MenuEntity>
                 {
@@ -271,7 +284,8 @@ namespace JuCheap.Core.Services.AppServices
                     sysConfigReloadPathCode,
                     log,
                     logLogin,
-                    logView
+                    logView,
+                    chartsView
                 };
                 var menuBtns = GetMenuButtons(menuMgr.Id, "Menu", "菜单", "AAAA", 12);
                 var rolwBtns = GetMenuButtons(roleMgr.Id, "Role", "角色", "AAAB", 15);
@@ -500,9 +514,9 @@ namespace JuCheap.Core.Services.AppServices
                 await InitPathCodeAsync();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                //todo log
+                Log.Logger.Error(ex);
             }
             return false;
         }

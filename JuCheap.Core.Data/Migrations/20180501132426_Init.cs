@@ -132,6 +132,21 @@ namespace JuCheap.Core.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SiteViews",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
+                    CreateDateTime = table.Column<DateTime>(nullable: false),
+                    Day = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Number = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SiteViews", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SystemConfigs",
                 columns: table => new
                 {
@@ -268,6 +283,9 @@ namespace JuCheap.Core.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "RoleMenus");
+
+            migrationBuilder.DropTable(
+                name: "SiteViews");
 
             migrationBuilder.DropTable(
                 name: "SystemConfigs");

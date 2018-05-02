@@ -114,6 +114,11 @@ namespace JuCheap.Core.Data
         /// </summary>
         public DbSet<DepartmentEntity> Departments { get; set; }
 
+        /// <summary>
+        /// 访问数据统计
+        /// </summary>
+        public DbSet<SiteViewEntity> SiteViews { get; set; }
+
         #endregion
     }
 }

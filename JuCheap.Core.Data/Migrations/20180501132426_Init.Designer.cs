@@ -11,14 +11,14 @@ using System;
 namespace JuCheap.Core.Data.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    [Migration("20180423132219_Init")]
+    [Migration("20180501132426_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.1-rtm-125")
+                .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.AreaEntity", b =>
@@ -250,6 +250,25 @@ namespace JuCheap.Core.Data.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("RoleMenus");
+                });
+
+            modelBuilder.Entity("JuCheap.Core.Data.Entity.SiteViewEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36);
+
+                    b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<DateTime>("Day");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int>("Number");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SiteViews");
                 });
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.SystemConfigEntity", b =>

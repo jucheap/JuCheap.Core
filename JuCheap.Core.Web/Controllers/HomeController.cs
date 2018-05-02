@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Hosting;
 using log4net;
 using JuCheap.Core.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Diagnostics;
+using JuCheap.Core.Web.Models;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -27,7 +29,6 @@ namespace JuCheap.Core.Web.Controllers
         private readonly IUserService _userService;
         private readonly IMenuService _menuService;
         private readonly IHostingEnvironment _hostEnvironment;
-        private ILog log = LogManager.GetLogger(Constants.Log4net.RepositoryName, Constants.Log4net.LoggerName);
 
         public HomeController(IUserService userSvr, IMenuService menuService,IHostingEnvironment hostEnvironment)
         {
@@ -129,6 +130,22 @@ namespace JuCheap.Core.Web.Controllers
         [AllowAnonymous]
         public IActionResult Error()
         {
+            var feature = HttpContext.Features.Get<IExceptionHandlerFeature>();
+            var error = feature?.Error;
+            if (error != null)
+            {
+                Log.Logger.Error(error);
+            }
+            var isAjax = false;
+            var xreq = Request.Headers.ContainsKey("x-requested-with");
+            if (xreq)
+            {
+                isAjax = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            }
+            if (isAjax)
+            {
+                return Json(new JsonResultModel<string>(false, error?.Message, string.Empty));
+            }
             return View();
         }
     }

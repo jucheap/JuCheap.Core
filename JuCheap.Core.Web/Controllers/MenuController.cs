@@ -9,7 +9,6 @@ using JuCheap.Core.Web.Filters;
 using JuCheap.Core.Web.Models;
 using JuCheap.Core.Infrastructure.Extentions;
 using Microsoft.AspNetCore.Authorization;
-using System;
 
 namespace JuCheap.Core.Web.Controllers
 {

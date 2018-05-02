@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using JuCheap.Core.Data;
 using JuCheap.Core.Data.Entity;
 using JuCheap.Core.Infrastructure.Extentions;
+using JuCheap.Core.Infrastructure.Utilities;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models.Enum;
+using log4net;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
@@ -512,9 +514,10 @@ namespace JuCheap.Core.Services.AppServices
                 await InitPathCodeAsync();
                 return true;
             }
-            catch
+            catch (Exception ex)
             {
-                //todo log
+                var log = LogManager.GetLogger(Constants.Log4net.RepositoryName, Constants.Log4net.LoggerName);
+                log.Error(ex);
             }
             return false;
         }

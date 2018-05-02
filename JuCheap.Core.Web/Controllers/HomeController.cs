@@ -15,6 +15,7 @@ using log4net;
 using JuCheap.Core.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
+using JuCheap.Core.Web.Models;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -135,6 +136,16 @@ namespace JuCheap.Core.Web.Controllers
             if (error != null)
             {
                 log.Error(error);
+            }
+            var isAjax = false;
+            var xreq = Request.Headers.ContainsKey("x-requested-with");
+            if (xreq)
+            {
+                isAjax = Request.Headers["x-requested-with"] == "XMLHttpRequest";
+            }
+            if (isAjax)
+            {
+                return Json(new JsonResultModel<string>(false, error?.Message, string.Empty));
             }
             return View();
         }

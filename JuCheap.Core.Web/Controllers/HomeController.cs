@@ -29,7 +29,6 @@ namespace JuCheap.Core.Web.Controllers
         private readonly IUserService _userService;
         private readonly IMenuService _menuService;
         private readonly IHostingEnvironment _hostEnvironment;
-        private ILog log = LogManager.GetLogger(Constants.Log4net.RepositoryName, Constants.Log4net.LoggerName);
 
         public HomeController(IUserService userSvr, IMenuService menuService,IHostingEnvironment hostEnvironment)
         {
@@ -135,7 +134,7 @@ namespace JuCheap.Core.Web.Controllers
             var error = feature?.Error;
             if (error != null)
             {
-                log.Error(error);
+                Log.Logger.Error(error);
             }
             var isAjax = false;
             var xreq = Request.Headers.ContainsKey("x-requested-with");

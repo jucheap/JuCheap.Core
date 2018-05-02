@@ -516,8 +516,7 @@ namespace JuCheap.Core.Services.AppServices
             }
             catch (Exception ex)
             {
-                var log = LogManager.GetLogger(Constants.Log4net.RepositoryName, Constants.Log4net.LoggerName);
-                log.Error(ex);
+                Log.Logger.Error(ex);
             }
             return false;
         }

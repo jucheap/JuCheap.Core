@@ -111,8 +111,9 @@ namespace JuCheap.Core.Web
             {
                 using (var scope = app.ApplicationServices.CreateScope())
                 {
+                    var menues = MenuHelper.GetMenues();
                     var dbService = scope.ServiceProvider.GetService<IDatabaseInitService>();
-                    await dbService.InitAsync();
+                    await dbService.InitAsync(menues);
                 }
             });
 

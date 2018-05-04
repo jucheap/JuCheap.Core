@@ -264,6 +264,7 @@ namespace JuCheap.Core.Services.AppServices
                 {
                     menu.Url = "#";
                 }
+                menu.CreateDateTime = DateTime.Now;
             }
             _context.Menus.AddRange(menues);
             await _context.SaveChangesAsync();

@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using JuCheap.Core.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JuCheap.Core.Interfaces
 {
@@ -10,7 +12,7 @@ namespace JuCheap.Core.Interfaces
         /// <summary>
         /// 初始化数据库数据
         /// </summary>
-        Task<bool> InitAsync();
+        Task<bool> InitAsync(List<MenuDto> menues);
 
         /// <summary>
         /// 初始化路径码

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using JuCheap.Core.Infrastructure.Attributes;
 using JuCheap.Core.Infrastructure.Extentions;
+using JuCheap.Core.Infrastructure.Menu;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
 using JuCheap.Core.Models.Filters;
@@ -19,6 +21,7 @@ namespace JuChea.Core.Web.Controllers
             _areaService = areaService;
         }
 
+        [Menu(Id = Menu.AreaPageId, ParentId = Menu.SystemId, Name = "省市区管理", Order = "2")]
         public ActionResult Index()
         {
             _areaService.UpdatePathCodes();
@@ -30,6 +33,7 @@ namespace JuChea.Core.Web.Controllers
         /// </summary>
         /// <param name="id">父页面ID</param>
         /// <returns></returns>
+        [Menu(Id = Menu.AreaPageAddId, ParentId = Menu.AreaPageId, Name = "添加省市区", Order = "1")]
         public async Task<ActionResult> Add(string id)
         {
             var parentDepartment = await _areaService.Find(id);
@@ -67,6 +71,7 @@ namespace JuChea.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Menu(Id = Menu.AreaPageEditId, ParentId = Menu.AreaPageId, Name = "编辑省市区", Order = "2")]
         public async Task<ActionResult> Edit(string id)
         {
             var model = await _areaService.Find(id);
@@ -98,6 +103,7 @@ namespace JuChea.Core.Web.Controllers
         /// <param name="id">主键ID</param>
         /// <returns></returns>
         [HttpPost]
+        [Menu(Id = Menu.AreaPageDeleteId, ParentId = Menu.AreaPageId, Name = "删除省市区", Order = "3")]
         public async Task<ActionResult> Delete(string id)
         {
             var success = await _areaService.Delete(new List<string> { id });

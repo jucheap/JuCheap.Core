@@ -159,16 +159,21 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<List<MenuDto>> GetMyMenusAsync(string userId)
         {
-            var dbSet = _context.Menus;
+            var query = _context.Menus.Where(x => x.Type != (byte)MenuType.Action);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            if (user == null)
+            {
+                return new List<MenuDto>();
+            }
             var dbSetUserRoles = _context.UserRoles;
             var dbSetRoleMenus = _context.RoleMenus;
-            var query = dbSet.Where(x => x.Type != (byte)MenuType.Action);
             var roleIds = await dbSetUserRoles.Where(x => x.UserId == userId)
                 .Select(x => x.RoleId).ToListAsync();
             var menuIds = await dbSetRoleMenus.Where(x => roleIds.Contains(x.RoleId))
                 .Select(x => x.MenuId)
                 .ToListAsync();
-            return await query.Where(x => menuIds.Contains(x.Id))
+            //如果是超级管理员,则默认有所有的权限
+            return await query.WhereIf(user.IsSuperMan == false, x => menuIds.Contains(x.Id))
                 .Select(x => new MenuDto
                 {
                     Id = x.Id,
@@ -202,6 +207,67 @@ namespace JuCheap.Core.Services.AppServices
                 .Where(item => item.roleMenu.RoleId == roleId)
                 .Select(item => item.menu).ToListAsync();
             return _mapper.Map<List<MenuEntity>, List<MenuDto>>(list);
+        }
+
+        /// <summary>
+        /// 重置系统的所有菜单
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> ReInitMenuesAsync(List<MenuDto> list)
+        {
+            if (!list.AnyOne())
+            {
+                return false;
+            }
+
+            //删除以前所有的菜单和菜单的角色关系
+            var oldMenues = await _context.Menus.ToListAsync();
+            oldMenues.ForEach(x => x.IsDeleted = true);
+            var oldMenuRoles = await _context.RoleMenus.ToListAsync();
+            _context.RoleMenus.RemoveRange(oldMenuRoles);
+            //删除已经存在的相同id的菜单
+            var ids = list.Select(x => x.Id).Distinct().ToList();
+            var sameIdMenus = await _context.Menus.Where(x => ids.Contains(x.Id)).ToListAsync();
+            _context.Menus.RemoveRange(sameIdMenus);
+            await _context.SaveChangesAsync();
+            //重置新的菜单
+            var moduleIds = list.Where(x => x.ParentId.IsBlank()).Select(x => x.Id);
+            var menues = _mapper.Map<List<MenuDto>, List<MenuEntity>>(list);
+            foreach(var menu in menues)
+            {
+                //设置菜单类型
+                if (menu.ParentId.IsBlank())
+                {
+                    menu.Type = (byte)MenuType.Module;
+                }
+                else if (moduleIds.Contains(menu.ParentId))
+                {
+                    menu.Type = (byte)MenuType.Menu;
+                }
+                else
+                {
+                    menu.Type = (byte)MenuType.Action;
+                }
+
+                //设置菜单的路径(层级关系) 父类的PathCode+当前类别的Id
+                var parent = menues.FirstOrDefault(x => x.Id == menu.ParentId);
+                menu.Code = menu.Id;
+                if (parent == null)
+                {
+                    menu.PathCode = menu.Id;
+                }
+                else
+                {
+                    menu.PathCode = $"{parent.PathCode}-{menu.Id}";
+                }
+                if (menu.Url.IsBlank())
+                {
+                    menu.Url = "#";
+                }
+            }
+            _context.Menus.AddRange(menues);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

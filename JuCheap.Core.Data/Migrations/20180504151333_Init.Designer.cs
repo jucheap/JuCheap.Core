@@ -11,7 +11,7 @@ using System;
 namespace JuCheap.Core.Data.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    [Migration("20180501132426_Init")]
+    [Migration("20180504151333_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -122,7 +122,7 @@ namespace JuCheap.Core.Data.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasMaxLength(6);
+                        .HasMaxLength(20);
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -141,7 +141,7 @@ namespace JuCheap.Core.Data.Migrations
 
                     b.Property<string>("PathCode")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(100);
 
                     b.Property<byte>("Type");
 

@@ -68,14 +68,14 @@ namespace JuCheap.Core.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
-                    Code = table.Column<string>(maxLength: 6, nullable: false),
+                    Code = table.Column<string>(maxLength: 20, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     Icon = table.Column<string>(maxLength: 50, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
                     Order = table.Column<int>(nullable: false),
                     ParentId = table.Column<string>(nullable: true),
-                    PathCode = table.Column<string>(maxLength: 20, nullable: false),
+                    PathCode = table.Column<string>(maxLength: 100, nullable: false),
                     Type = table.Column<byte>(nullable: false),
                     Url = table.Column<string>(maxLength: 300, nullable: false)
                 },

@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using JuCheap.Core.Infrastructure.Extentions;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using JuCheap.Core.Infrastructure.Attributes;
+using JuCheap.Core.Infrastructure.Menu;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -32,6 +34,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
+        [Menu(Id = Menu.RolePageId, ParentId = Menu.SystemId, Name = "角色管理", Order = "5")]
         public IActionResult Index()
         {
             return View();
@@ -41,6 +44,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 添加
         /// </summary>
         /// <returns></returns>
+        [Menu(Id = Menu.RoleAddId, ParentId = Menu.RolePageId, Name = "添加角色", Order = "1")]
         public IActionResult Add()
         {
             return View(new RoleDto());
@@ -51,6 +55,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Menu(Id = Menu.RoleEditId, ParentId = Menu.RolePageId, Name = "编辑角色", Order = "2")]
         public async Task<IActionResult> Edit(string id)
         {
             var model = await _roleService.FindAsync(id);
@@ -61,6 +66,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 角色授权
         /// </summary>
         /// <returns></returns>
+        [Menu(Id = Menu.RoleAuthorizeId, ParentId = Menu.RolePageId, Name = "角色授权", Order = "3")]
         public IActionResult Authen()
         {
             return View();
@@ -100,10 +106,11 @@ namespace JuCheap.Core.Web.Controllers
         }
 
         /// <summary>
-        /// 获取角色下的菜单
+        /// 设置角色的权限
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [Menu(Id = Menu.RoleSetAuthorizeId, ParentId = Menu.RoleAuthorizeId, Name = "设置角色权限", Order = "1")]
         public async Task<IActionResult> SetRoleMenus([FromBody]List<RoleMenuDto> datas)
         {
             var result = new JsonResultModel<bool>();
@@ -124,6 +131,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="id">角色ID</param>
         /// <returns></returns>
         [HttpPost]
+        [Menu(Id = Menu.RoleCancelAuthorizeId, ParentId = Menu.RoleAuthorizeId, Name = "清空权限", Order = "2")]
         public async Task<IActionResult> ClearRoleMenus(string id)
         {
             var result = new JsonResultModel<bool>
@@ -170,6 +178,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
+        [Menu(Id = Menu.RoleDeleteId, ParentId = Menu.RolePageId, Name = "删除角色", Order = "3")]
         public async Task<IActionResult> Delete([FromBody]IEnumerable<string> ids)
         {
             var result = new JsonResultModel<bool>();

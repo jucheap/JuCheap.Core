@@ -67,5 +67,11 @@ namespace JuCheap.Core.Interfaces
         /// <param name="roleId">角色ID</param>
         /// <returns></returns>
         Task<List<MenuDto>> GetMenusByRoleIdAsync(string roleId);
+
+        /// <summary>
+        /// 重置系统的所有菜单
+        /// </summary>
+        /// <returns></returns>
+        Task<bool> ReInitMenuesAsync(List<MenuDto> list);
     }
 }

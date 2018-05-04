@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using JuCheap.Core.Infrastructure.Attributes;
+using JuCheap.Core.Infrastructure.Menu;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models.Filters;
 using JuCheap.Core.Web.Filters;
@@ -28,7 +30,8 @@ namespace JuCheap.Core.Web.Controllers
         /// 登录日志
         /// </summary>
         /// <returns></returns>
-            public IActionResult Logins()
+        [Menu(Id = Menu.LoginLogId, ParentId = Menu.LogsId, Name = "登陆日志", Order = "1")]
+        public IActionResult Logins()
         {
             return View();
         }
@@ -37,6 +40,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 访问记录
         /// </summary>
         /// <returns></returns>
+        [Menu(Id = Menu.PageViewId, ParentId = Menu.LogsId, Name = "访问记录", Order = "2")]
         public IActionResult Visits()
         {
             return View();
@@ -70,6 +74,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 统计图表
         /// </summary>
         /// <returns></returns>
+        [Menu(Id = Menu.ChartId, ParentId = Menu.LogsId, Name = "统计图表", Order = "3")]
         public IActionResult Charts()
         {
             return View();

@@ -50,7 +50,8 @@ namespace JuCheap.Core.Services.AppServices
             entity.Password = entity.Password.ToMd5();
             _context.Users.Add(entity);
 
-            return await _context.SaveChangesAsync() > 0 ? entity.Id : string.Empty;
+            await _context.SaveChangesAsync();
+            return entity.Id;
         }
 
         /// <summary>
@@ -69,7 +70,8 @@ namespace JuCheap.Core.Services.AppServices
             {
                 entity.Password = dto.Password.ToMd5();
             }
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         /// <summary>
@@ -80,8 +82,7 @@ namespace JuCheap.Core.Services.AppServices
         public async Task<UserDto> FindAsync(string id)
         {
             var entity = await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
-            var dto = _mapper.Map<UserEntity, UserDto>(entity);
-            return dto;
+            return _mapper.Map<UserEntity, UserDto>(entity);
         }
 
         /// <summary>
@@ -93,7 +94,8 @@ namespace JuCheap.Core.Services.AppServices
         {
             var entities = _context.Users.Where(item => ids.Contains(item.Id));
             entities.ForEach(item => item.IsDeleted = true);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         /// <summary>
@@ -158,7 +160,8 @@ namespace JuCheap.Core.Services.AppServices
                 UserId = userId,
                 RoleId = roleId
             });
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         /// <summary>
@@ -171,7 +174,8 @@ namespace JuCheap.Core.Services.AppServices
         {
             var userRole = await _context.UserRoles.FirstOrDefaultAsync(item => item.UserId == userId && item.RoleId == roleId);
             _context.UserRoles.Remove(userRole);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         /// <summary>
@@ -211,12 +215,16 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> HasRightAsync(string userId, string url)
         {
-            var query = _context.Menus.AsQueryable();
+            //检查是否是超级管理员,如果是超级管理员,则直接默认拥有所有权限
+            if(_context.Users.Any(x=>x.Id == userId&& x.IsSuperMan))
+            {
+                return true;
+            }
             var roleIds = await _context.UserRoles.Where(x => x.UserId == userId)
                 .Select(x => x.RoleId).ToListAsync();
             var menuIds = await _context.RoleMenus.Where(x => roleIds.Contains(x.RoleId))
                 .Select(x => x.MenuId).ToListAsync();
-            return await query.AnyAsync(x => menuIds.Contains(x.Id) && url.StartsWith(x.Url));
+            return await _context.Menus.AnyAsync(x => menuIds.Contains(x.Id) && url.StartsWith(x.Url));
         }
 
         /// <summary>
@@ -229,7 +237,8 @@ namespace JuCheap.Core.Services.AppServices
             var entity = _mapper.Map<VisitDto, PageViewEntity>(dto);
             entity.Init();
             _context.PageViews.Add(entity);
-            return await _context.SaveChangesAsync() > 0;
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         /// <summary>

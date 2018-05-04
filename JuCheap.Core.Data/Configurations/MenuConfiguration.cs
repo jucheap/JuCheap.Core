@@ -15,8 +15,8 @@ namespace JuCheap.Core.Data.Configurations
 
             builder.HasKey(e => e.Id);
             builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
-            builder.Property(e => e.Code).HasMaxLength(6).IsRequired();
-            builder.Property(e => e.PathCode).HasMaxLength(20).IsRequired();
+            builder.Property(e => e.Code).HasMaxLength(20).IsRequired();
+            builder.Property(e => e.PathCode).HasMaxLength(100).IsRequired();
             builder.Property(e => e.Name).HasMaxLength(20).IsRequired();
             builder.Property(e => e.Url).HasMaxLength(300).IsRequired();
             builder.Property(e => e.Order).IsRequired();

@@ -9,6 +9,8 @@ using JuCheap.Core.Web.Filters;
 using JuCheap.Core.Web.Models;
 using JuCheap.Core.Infrastructure.Extentions;
 using Microsoft.AspNetCore.Authorization;
+using JuCheap.Core.Infrastructure.Attributes;
+using JuCheap.Core.Infrastructure.Menu;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -29,6 +31,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
+        [Menu(Id = Menu.MenuPageId, ParentId = Menu.SystemId, Name = "菜单管理", Order = "4")]
         public IActionResult Index()
         {
             return View();
@@ -38,6 +41,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 添加
         /// </summary>
         /// <returns></returns>
+        [Menu(Id = Menu.MenuAddId, ParentId = Menu.MenuPageId, Name = "添加菜单", Order = "1")]
         public IActionResult Add()
         {
             return View(new MenuDto());
@@ -48,6 +52,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Menu(Id = Menu.MenuEditId, ParentId = Menu.MenuPageId, Name = "编辑菜单", Order = "2")]
         public async Task<IActionResult> Edit(string id)
         {
             var model = await _menuService.FindAsync(id);
@@ -101,6 +106,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
+        [Menu(Id = Menu.MenuDeleteId, ParentId = Menu.MenuPageId, Name = "删除菜单", Order = "3")]
         public async Task<IActionResult> Delete([FromBody]IEnumerable<string> ids)
         {
             var result = new JsonResultModel<bool>();

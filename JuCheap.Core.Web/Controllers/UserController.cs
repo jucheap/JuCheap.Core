@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Mvc;
 using JuCheap.Core.Infrastructure.Extentions;
 using Microsoft.AspNetCore.Authorization;
 using System;
+using JuCheap.Core.Infrastructure.Attributes;
+using JuCheap.Core.Infrastructure.Menu;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -35,6 +37,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
+        [Menu(Id = Menu.UserPageId, ParentId = Menu.SystemId, Name = "用户管理", Order = "6")]
         public IActionResult Index()
         {
             return View();
@@ -44,6 +47,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 用户角色授权
         /// </summary>
         /// <returns></returns>
+        [Menu(Id = Menu.UserRoleSetPageId, ParentId = Menu.UserPageId, Name = "用户角色授权", Order = "4")]
         public IActionResult Authen(string id)
         {
             var user = new UserDto
@@ -57,6 +61,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 添加
         /// </summary>
         /// <returns></returns>
+        [Menu(Id = Menu.UserAddId, ParentId = Menu.UserPageId, Name = "添加用户", Order = "1")]
         public IActionResult Add()
         {
             return View(new UserAddDto());
@@ -67,6 +72,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [Menu(Id = Menu.UserEditId, ParentId = Menu.UserPageId, Name = "编辑用户", Order = "2")]
         public async Task<IActionResult> Edit(string id)
         {
             var dto = await _userService.FindAsync(id);
@@ -114,6 +120,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
+        [Menu(Id = Menu.UserDeleteId, ParentId = Menu.UserPageId, Name = "删除用户", Order = "3")]
         public async Task<IActionResult> Delete([FromBody]List<string> ids)
         {
             var result = new JsonResultModel<bool>();
@@ -168,6 +175,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="userId">用户Id</param>
         /// <returns></returns>
         [HttpPost]
+        [Menu(Id = Menu.UserRoleSetId, ParentId = Menu.UserRoleSetPageId, Name = "用户角色授权", Order = "1")]
         public async Task<IActionResult> GiveRight(string id, string userId)
         {
             var result = new JsonResultModel<bool>
@@ -184,6 +192,7 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="userId">用户Id</param>
         /// <returns></returns>
         [HttpPost]
+        [Menu(Id = Menu.UserRoleCancelId, ParentId = Menu.UserRoleSetPageId, Name = "用户角色取消", Order = "2")]
         public async Task<IActionResult> CancelRight(string id, string userId)
         {
             var result = new JsonResultModel<bool>

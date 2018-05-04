@@ -121,7 +121,7 @@ namespace JuCheap.Core.Data.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasMaxLength(6);
+                        .HasMaxLength(20);
 
                     b.Property<DateTime>("CreateDateTime");
 
@@ -140,7 +140,7 @@ namespace JuCheap.Core.Data.Migrations
 
                     b.Property<string>("PathCode")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(100);
 
                     b.Property<byte>("Type");
 

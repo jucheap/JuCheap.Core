@@ -1,6 +1,4 @@
 using Hangfire;
-using Hangfire.MySql;
-using Hangfire.MySql.Core;
 using JuCheap.Core.Data;
 using JuCheap.Core.Infrastructure.Utilities;
 using JuCheap.Core.Interfaces;

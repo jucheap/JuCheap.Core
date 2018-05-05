@@ -66,7 +66,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 角色授权
         /// </summary>
         /// <returns></returns>
-        [Menu(Id = Menu.RoleAuthorizeId, ParentId = Menu.RolePageId, Name = "角色授权", Order = "3")]
+        [Menu(Id = Menu.RoleAuthorizeId, ParentId = Menu.SystemId, Name = "角色授权", Order = "6")]
         public IActionResult Authen()
         {
             return View();

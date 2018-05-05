@@ -60,7 +60,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        [Menu(Id = Menu.ResetAreaId, ParentId = Menu.SystemConfigId, Name = "重置路径码", Order = "2")]
+        [Menu(Id = Menu.ResetAreaId, ParentId = Menu.SystemConfigId, Name = "重置省市区基础数据", Order = "2")]
         public async Task<JsonResult> ReInitAreas()
         {
             var result = new JsonResultModel<bool>

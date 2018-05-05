@@ -93,13 +93,22 @@
             var config = {
                 title: '用户列表',
                 url: '@Url.Action("GetListWithPager")',
-                colNames: ['主键', '登录名', '真实姓名','所属部门', '邮箱', '注册时间'],
+                colNames: ['主键', '登录名', '真实姓名','所属部门', '邮箱','超级管理员', '注册时间'],
                 colModel: [
                     { name: 'id', index: 'id', width: 60, key: true, hidden: true },
                     { name: 'loginName', index: 'loginName', width: 60 },
                     { name: 'realName', index: 'realName', width: 60 },
                     { name: 'departmentName', index: 'departmentName', width: 120 },
                     { name: 'email', index: 'email', width: 60 },
+                    {
+                        name: 'isSuperMan',
+                        index: 'isSuperMan',
+                        width: 30,
+                        align:'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            return cellValue == true ? "<span class='btn btn-primary btn-rounded btn-xs'>是</span>" : "<span class='btn btn-danger btn-rounded btn-xs'>否</span>";
+                        }
+                    },
                     {
                         name: 'createDateTime',
                         index: 'createDateTime',

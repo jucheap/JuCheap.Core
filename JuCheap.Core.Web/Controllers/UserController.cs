@@ -37,7 +37,7 @@ namespace JuCheap.Core.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
-        [Menu(Id = Menu.UserPageId, ParentId = Menu.SystemId, Name = "用户管理", Order = "6")]
+        [Menu(Id = Menu.UserPageId, ParentId = Menu.SystemId, Name = "用户管理", Order = "7")]
         public IActionResult Index()
         {
             return View();

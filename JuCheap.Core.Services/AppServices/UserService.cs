@@ -92,8 +92,12 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> DeleteAsync(IEnumerable<string> ids)
         {
-            var entities = _context.Users.Where(item => ids.Contains(item.Id));
-            entities.ForEach(item => item.IsDeleted = true);
+            if(await _context.Users.AnyAsync(x => ids.Contains(x.Id) && x.IsSuperMan))
+            {
+                throw new Exception("超级管理员不能被删除");
+            }
+            var users = _context.Users.Where(item => ids.Contains(item.Id));
+            users.ForEach(item => item.IsDeleted = true);
             await _context.SaveChangesAsync();
             return true;
         }
@@ -203,6 +207,7 @@ namespace JuCheap.Core.Services.AppServices
                     RealName = x.RealName,
                     Email = x.Email,
                     DepartmentName = x.Department.FullName,
+                    IsSuperMan = x.IsSuperMan,
                     CreateDateTime = x.CreateDateTime
                 }).PagingAsync(filters.page, filters.rows);
         }

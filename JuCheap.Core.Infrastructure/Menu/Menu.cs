@@ -38,7 +38,7 @@
         public const string LogsId = "00002";
 
         /// <summary>
-        /// 日志查看模块Id
+        /// 示例页面模块Id
         /// </summary>
         public const string PagesId = "00003";
 
@@ -201,6 +201,36 @@
         /// 统计图表页面Id
         /// </summary>
         public const string ChartId = "00035";
+
+        /// <summary>
+        /// 按钮页面Id
+        /// </summary>
+        public const string PageButtonId = "00036";
+
+        /// <summary>
+        /// 字体页面Id
+        /// </summary>
+        public const string PageFontId = "00037";
+
+        /// <summary>
+        /// 表单页面Id
+        /// </summary>
+        public const string PageFormId = "00038";
+
+        /// <summary>
+        /// 高级表单页面Id
+        /// </summary>
+        public const string PageFormAdvanceId = "00039";
+
+        /// <summary>
+        /// 表格页面Id
+        /// </summary>
+        public const string PageTableId = "00040";
+
+        /// <summary>
+        /// Tab页面Id
+        /// </summary>
+        public const string PageTabId = "00041";
         #endregion
     }
 }

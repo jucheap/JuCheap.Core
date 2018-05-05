@@ -39,6 +39,11 @@ namespace JuCheap.Core.Models
         public string DepartmentName { get; set; }
 
         /// <summary>
+        /// 是否是超级管理员
+        /// </summary>
+        public bool IsSuperMan { get; set; }
+
+        /// <summary>
         /// 用户拥有的角色
         /// </summary>
         public virtual IList<UserRoleDto> UserRoles { get; set; }

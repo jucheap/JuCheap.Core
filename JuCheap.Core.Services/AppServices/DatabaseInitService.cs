@@ -89,13 +89,15 @@ namespace JuCheap.Core.Services.AppServices
                 {
                     Id = Guid.NewGuid().ToString("N"),
                     Name = "超级管理员",
-                    Description = "超级管理员"
+                    Description = "超级管理员",
+                    CreateDateTime = Now
                 };
                 var guestRole = new RoleEntity
                 {
                     Id = Guid.NewGuid().ToString("N"),
                     Name = "guest",
-                    Description = "游客"
+                    Description = "游客",
+                    CreateDateTime = Now
                 };
                 var roles = new List<RoleEntity>
             {

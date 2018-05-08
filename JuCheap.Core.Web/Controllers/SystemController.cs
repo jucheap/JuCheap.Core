@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using JuCheap.Core.Infrastructure.Attributes;
-using JuCheap.Core.Infrastructure.Extentions;
+﻿using JuCheap.Core.Infrastructure.Attributes;
 using JuCheap.Core.Infrastructure.Menu;
 using JuCheap.Core.Interfaces;
-using JuCheap.Core.Models;
-using JuCheap.Core.Web.Filters;
 using JuCheap.Core.Web.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace JuCheap.Core.Web.Controllers
 {

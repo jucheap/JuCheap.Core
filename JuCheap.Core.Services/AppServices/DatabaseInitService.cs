@@ -211,6 +211,7 @@ namespace JuCheap.Core.Services.AppServices
             //删除以前的数据
             var olds = await _context.Areas.ToListAsync();
             _context.Areas.RemoveRange(olds);
+            await _context.SaveChangesAsync();
             var filePath = string.Format("{0}areas-json.json", AppDomain.CurrentDomain.BaseDirectory);
             if (File.Exists(filePath))
             {

@@ -14,7 +14,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -129,7 +128,7 @@ namespace JuCheap.Core.Web
             app.UseHangfireDashboard("/task", option);
             //添加一个每天自动在凌晨的时候执行的统计任务
             RecurringJob.AddOrUpdate<ISiteViewService>(x => x.AddOrUpdate(), Cron.Daily());
-            RecurringJob.AddOrUpdate(() => Debug.WriteLine($"Job在{DateTime.Now}执行完成."), Cron.Minutely());
+            RecurringJob.AddOrUpdate(() => Console.WriteLine($"Job在{DateTime.Now}执行完成."), Cron.Minutely());
         }
     }    
 

@@ -35,7 +35,7 @@ namespace JuCheap.Core.Web.Controllers
         }
 
         [Menu(Id = Menu.PageTableId, ParentId = Menu.PagesId, Name = "表格", Order = "5")]
-        public IActionResult Table()
+        public IActionResult Tables()
         {
             return View();
         }

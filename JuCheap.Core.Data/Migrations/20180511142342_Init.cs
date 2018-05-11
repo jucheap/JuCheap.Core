@@ -85,6 +85,23 @@ namespace JuCheap.Core.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
+                    Contents = table.Column<string>(maxLength: 500, nullable: false),
+                    CreateDateTime = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    ReadedNumber = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(maxLength: 50, nullable: false),
+                    Total = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PageViews",
                 columns: table => new
                 {
@@ -188,6 +205,29 @@ namespace JuCheap.Core.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "MessageReceivers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
+                    CreateDateTime = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    IsReaded = table.Column<bool>(nullable: false),
+                    MessageId = table.Column<string>(maxLength: 36, nullable: false),
+                    ReadDate = table.Column<DateTime>(nullable: true),
+                    UserId = table.Column<string>(maxLength: 36, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MessageReceivers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MessageReceivers_Messages_MessageId",
+                        column: x => x.MessageId,
+                        principalTable: "Messages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RoleMenus",
                 columns: table => new
                 {
@@ -242,6 +282,11 @@ namespace JuCheap.Core.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_MessageReceivers_MessageId",
+                table: "MessageReceivers",
+                column: "MessageId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RoleMenus_MenuId",
                 table: "RoleMenus",
                 column: "MenuId");
@@ -276,6 +321,9 @@ namespace JuCheap.Core.Data.Migrations
                 name: "LoginLogs");
 
             migrationBuilder.DropTable(
+                name: "MessageReceivers");
+
+            migrationBuilder.DropTable(
                 name: "PageViews");
 
             migrationBuilder.DropTable(
@@ -292,6 +340,9 @@ namespace JuCheap.Core.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserRoles");
+
+            migrationBuilder.DropTable(
+                name: "Messages");
 
             migrationBuilder.DropTable(
                 name: "Menus");

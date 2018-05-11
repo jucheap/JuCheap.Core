@@ -119,6 +119,16 @@ namespace JuCheap.Core.Data
         /// </summary>
         public DbSet<SiteViewEntity> SiteViews { get; set; }
 
+        /// <summary>
+        /// 站内信
+        /// </summary>
+        public DbSet<MessageEntity> Messages { get; set; }
+
+        /// <summary>
+        /// 站内信接收人
+        /// </summary>
+        public DbSet<MessageReceiverEntity> MessageReceivers { get; set; }
+
         #endregion
     }
 }

@@ -214,5 +214,27 @@ namespace JuCheap.Core.Web.Controllers
             var isExists = await _userService.ExistsLoginNameAsync(null, loginName);
             return isExists ? Json("登录帐号已存在") : Json(data: true);
         }
+
+        /// <summary>
+        /// 获取树
+        /// </summary>
+        /// <param name="q">查询关键字</param>
+        /// <returns></returns>
+        [HttpGet, IgnoreRightFilter]
+        public async Task<ActionResult> GetUsers(string q)
+        {
+            var filter = new UserFilters
+            {
+                page = 1,
+                rows = 1000,
+                keywords = q
+            };
+            var result = await _userService.SearchAsync(filter);
+            var users = new
+            {
+                results = result.rows.Select(x => new { id = x.Id, text = x.LoginName })
+            };
+            return Json(users);
+        }
     }
 }

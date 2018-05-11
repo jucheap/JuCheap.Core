@@ -11,7 +11,7 @@ using System;
 namespace JuCheap.Core.Data.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    [Migration("20180504151333_Init")]
+    [Migration("20180511142342_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -152,6 +152,62 @@ namespace JuCheap.Core.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Menus");
+                });
+
+            modelBuilder.Entity("JuCheap.Core.Data.Entity.MessageEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36);
+
+                    b.Property<string>("Contents")
+                        .IsRequired()
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<int>("ReadedNumber");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(50);
+
+                    b.Property<int>("Total");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("JuCheap.Core.Data.Entity.MessageReceiverEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(36);
+
+                    b.Property<DateTime>("CreateDateTime");
+
+                    b.Property<bool>("IsDeleted");
+
+                    b.Property<bool>("IsReaded");
+
+                    b.Property<string>("MessageId")
+                        .IsRequired()
+                        .HasMaxLength(36);
+
+                    b.Property<DateTime?>("ReadDate");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(36);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MessageId");
+
+                    b.ToTable("MessageReceivers");
                 });
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.PageViewEntity", b =>
@@ -354,6 +410,14 @@ namespace JuCheap.Core.Data.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("JuCheap.Core.Data.Entity.MessageReceiverEntity", b =>
+                {
+                    b.HasOne("JuCheap.Core.Data.Entity.MessageEntity", "Message")
+                        .WithMany("MessageReceivers")
+                        .HasForeignKey("MessageId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("JuCheap.Core.Data.Entity.RoleMenuEntity", b =>

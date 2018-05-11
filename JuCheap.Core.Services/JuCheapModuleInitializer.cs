@@ -14,7 +14,7 @@ namespace JuCheap.Core.Services
     public class JuCheapModuleInitializer : ModuleInitializer
     {
         /// <summary>
-        /// 加载AutoMapper配置
+        /// 加载AutoMapper配置(AutoMapper映射关系配置)
         /// </summary>
         /// <param name="config"></param>
         public override void LoadAutoMapper(IMapperConfigurationExpression config)
@@ -43,6 +43,7 @@ namespace JuCheap.Core.Services
 
             config.CreateMap<DepartmentEntity, DepartmentDto>().ReverseMap();
             config.CreateMap<AreaEntity, AreaDto>().ReverseMap();
+            config.CreateMap<MessageEntity, MessageDto>().ReverseMap();
         }
     }
 

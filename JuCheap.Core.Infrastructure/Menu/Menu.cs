@@ -231,6 +231,26 @@
         /// Tab页面Id
         /// </summary>
         public const string PageTabId = "00041";
+
+        /// <summary>
+        /// 站内信页面Id
+        /// </summary>
+        public const string MessagePageId = "00042";
+
+        /// <summary>
+        /// 发送站内信页面Id
+        /// </summary>
+        public const string MessageAddId = "00043";
+
+        /// <summary>
+        /// 编辑站内信页面Id
+        /// </summary>
+        public const string MessageEditId = "00044";
+
+        /// <summary>
+        /// 删除站内信页面Id
+        /// </summary>
+        public const string MessageDeleteId = "00045";
         #endregion
     }
 }

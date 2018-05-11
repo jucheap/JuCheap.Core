@@ -16,13 +16,19 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 角色名称
         /// </summary>
-        [Display(Name = "角色名称"), MinLength(2), MaxLength(20)]
+        [Display(Name = "角色名称")]
+        [Required(ErrorMessage = Message.Required)]
+        [MinLength(2, ErrorMessage = Message.MinLength)]
+        [MaxLength(20, ErrorMessage = Message.MaxLength)]
         public string Name { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>
-        [Display(Name = "角色描述"), MaxLength(50)]
+        [Display(Name = "角色描述")]
+        [Required(ErrorMessage = Message.Required)]
+        [MinLength(2, ErrorMessage = Message.MinLength)]
+        [MaxLength(50, ErrorMessage = Message.MaxLength)]
         public string Description { get; set; }
     }
 }

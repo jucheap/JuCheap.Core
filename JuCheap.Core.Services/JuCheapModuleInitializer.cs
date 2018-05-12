@@ -44,6 +44,7 @@ namespace JuCheap.Core.Services
             config.CreateMap<DepartmentEntity, DepartmentDto>().ReverseMap();
             config.CreateMap<AreaEntity, AreaDto>().ReverseMap();
             config.CreateMap<MessageEntity, MessageDto>().ReverseMap();
+            config.CreateMap<MessageEntity, MessageQueryDto>();
         }
     }
 

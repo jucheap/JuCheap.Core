@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 
 namespace JuCheap.Core.Models
 {
@@ -31,5 +32,10 @@ namespace JuCheap.Core.Models
         /// 总接收人数
         /// </summary>
         public int Total { get; set; }
+
+        /// <summary>
+        /// 详情
+        /// </summary>
+        public IList<MessageDetailDto> Details { get; set; }
     }
 }

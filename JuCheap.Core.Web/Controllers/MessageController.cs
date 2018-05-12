@@ -54,7 +54,7 @@ namespace JuCheap.Core.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(MessageDto message)
         {
-            await _messageService.Send(message);
+            await _messageService.SendAsync(message);
             return RedirectToAction("Add");
         }
 
@@ -63,9 +63,10 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [IgnoreRightFilter]
-        public IActionResult Detail(string id)
+        public async Task<IActionResult> Detail(string id)
         {
-            return View();
+            var message = await _messageService.GetDetailsAsync(id);
+            return View(message);
         }
 
         /// <summary>

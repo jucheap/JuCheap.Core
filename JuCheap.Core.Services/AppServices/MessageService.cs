@@ -35,7 +35,7 @@ namespace JuCheap.Core.Services.AppServices
         /// 发送站内信
         /// </summary>
         /// <param name="message"></param>
-        public async Task Send(MessageDto message)
+        public async Task SendAsync(MessageDto message)
         {
             if (message == null)
             {
@@ -69,7 +69,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="id">站内信Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns></returns>
-        public async Task<MessageDto> GetMessage(string id, string userId)
+        public async Task<MessageDto> GetMessageAsync(string id, string userId)
         {
             var query = _context.Messages.Where(x => x.Id == id)
                 .WhereIf(userId.IsNotBlank(), x => x.MessageReceivers.Any(m => m.UserId == userId));
@@ -82,7 +82,7 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         /// <param name="id">站内信Id</param>
         /// <param name="userId">用户Id</param>
-        public async Task Read(string id, string userId)
+        public async Task ReadAsync(string id, string userId)
         {
             var message = await _context.Messages.FindAsync(id);
             if (message != null)
@@ -122,6 +122,28 @@ namespace JuCheap.Core.Services.AppServices
             }
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        /// <summary>
+        /// 获取详情
+        /// </summary>
+        public async Task<MessageQueryDto> GetDetailsAsync(string messageId)
+        {
+            var entity = await _context.Messages.FindAsync(messageId);
+            var message = _mapper.Map<MessageEntity, MessageQueryDto>(entity);
+            var query = from rec in _context.MessageReceivers
+                        join user in _context.Users on rec.UserId equals user.Id into users
+                        from user in users.DefaultIfEmpty()
+                        select new MessageDetailDto
+                        {
+                            UserId = rec.UserId,
+                            IsReaded = rec.IsReaded,
+                            ReadDate = rec.ReadDate,
+                            CreateDateTime = rec.CreateDateTime,
+                            UserName = user != null ? user.LoginName : string.Empty,
+                        };
+            message.Details = await query.ToListAsync();
+            return message;
         }
     }
 }

@@ -26,7 +26,6 @@
         <div class="ibox-content">
             <div class="form-group">
                 <button id="btnAdd" type="button" class="btn btn-primary " onclick="addModel()"><i class="fa fa-check"></i>&nbsp;发送站内信</button>
-                <button id="btnEdit" type="button" class="btn btn-info " onclick="editModel()"><i class="fa fa-paste"></i> 编辑</button>
                 <button id="btnDel" type="button" class="btn btn-danger " onclick="delData()">
                     <i class="fa fa-dedent"></i>&nbsp;&nbsp;<span class="bold">删除</span>
                 </button>
@@ -67,16 +66,6 @@
             $("#btnAdd").button("loading");
             window.location.href = "@Url.Action("Add")";
         }
-        
-        function editModel() {//编辑
-            var row = JucheapGrid.GetData();
-            if (row != null) {
-                $("#btnEdit").button("loading");
-                window.location.href = "@Url.Action("Edit")/" + row.id;
-            } else {
-                alert("请选择要编辑的数据");
-            }
-        }
 
         function delData() {//删除
             XPage.DelData("@Url.Action("Delete")");
@@ -103,16 +92,16 @@
                 colNames: ['主键', '标题','已读数/总量', '创建时间', '操作'],
                 colModel: [
                     { name: 'id', index: 'id', width: 60, key: true, hidden: true },
-                    { name: 'title', index: 'title', width: 100 },
+                    { name: 'title', index: 'title', width: 200 },
                     {
                         name: 'Total', index: 'Total', width: 30,
                         formatter: function (cellValue, options, rowObject) {
                             return rowObject.readedNumber + " / " + rowObject.total;
                         }
                     },
-                    { name: 'createDateTime', index: 'createDateTime', width: 50 },
+                    { name: 'createDateTime', index: 'createDateTime', width: 60 },
                     {
-                        name: 'createDateTime', index: 'createDateTime', width: 50,
+                        name: 'createDateTime', index: 'createDateTime', width: 30,align:'center',
                         formatter: function (cellValue, options, rowObject) {
                             return '<a class="btn btn-primary btn-xs" onclick="showDetails(\'' + rowObject.id + '\')">详情</a>';
                         }

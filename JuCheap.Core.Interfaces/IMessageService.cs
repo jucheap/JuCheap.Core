@@ -15,7 +15,7 @@ namespace JuCheap.Core.Interfaces
         /// 发送站内信
         /// </summary>
         /// <param name="message"></param>
-        Task Send(MessageDto message);
+        Task SendAsync(MessageDto message);
 
         /// <summary>
         /// 获取站内信
@@ -23,14 +23,14 @@ namespace JuCheap.Core.Interfaces
         /// <param name="id">站内信Id</param>
         /// <param name="userId">用户Id</param>
         /// <returns></returns>
-        Task<MessageDto> GetMessage(string id, string userId);
+        Task<MessageDto> GetMessageAsync(string id, string userId);
 
         /// <summary>
         /// 查看站内信
         /// </summary>
         /// <param name="id">站内信Id</param>
         /// <param name="userId">用户Id</param>
-        Task Read(string id, string userId);
+        Task ReadAsync(string id, string userId);
 
         /// <summary>
         /// 获取站内信列表
@@ -45,5 +45,12 @@ namespace JuCheap.Core.Interfaces
         /// <param name="ids">主键ID集合</param>
         /// <returns></returns>
         Task<bool> DeleteAsync(IList<string> ids);
+
+        /// <summary>
+        /// 获取详情
+        /// </summary>
+        /// <param name="messageId"></param>
+        /// <returns></returns>
+        Task<MessageQueryDto> GetDetailsAsync(string messageId);
     }
 }

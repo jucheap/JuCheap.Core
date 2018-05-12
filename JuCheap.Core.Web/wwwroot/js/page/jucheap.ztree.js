@@ -43,7 +43,7 @@
     this.editPage = function(e) {
         var id = $("#txtParentId").val();
         if (id === "") {
-            parent.layer.alert("请选择要编辑的节点");
+            parent.layer.msg("请选择要编辑的节点");
             return;
         }
         parent.layer.open({
@@ -67,7 +67,7 @@
     this.deletePage = function(e) {
         var id = $("#txtParentId").val();
         if (id === "") {
-            parent.layer.alert("请选择要删除的数据");
+            parent.layer.msg("请选择要删除的数据");
             return;
         }
         var scope = e.data.scope;

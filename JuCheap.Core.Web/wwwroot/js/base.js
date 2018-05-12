@@ -32,28 +32,34 @@ var XPage = {
     DelData: function (url) {
         var delDatas = JucheapGrid.GetDataTableDeleteData();
         if (delDatas.Len > 0 && delDatas.Data.length > 0) {
-            if (confirm("确认要删除这" + delDatas.Len + "条数据？")) {
-                var btn = $("#btnDel");
-                btn.button('loading');
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    dataType: "json",
-                    data: JSON.stringify(delDatas.Data),
-                    contentType: "application/json, charset=utf-8",
-                    success: function (res) {
-                        btn.button('reset');
-                        if (res.flag) {
-                            alert("删除成功");
-                            $("#table_list").trigger("reloadGrid");
-                        } else {
-                            alert("删除失败：" + res.msg);
+            parent.layer.confirm("确认要删除这" + delDatas.Len + "条数据？",
+                { icon: 3, title: '提示' },
+                function (index) {
+                    //loading
+                    parent.layer.load(2, { shade: 0.3 });
+                    var btn = $("#btnDel");
+                    btn.button('loading');
+                    $.ajax({
+                        url: url,
+                        type: "POST",
+                        dataType: "json",
+                        data: JSON.stringify(delDatas.Data),
+                        contentType: "application/json, charset=utf-8",
+                        success: function (res) {
+                            btn.button('reset');
+                            parent.layer.close(index);
+                            parent.layer.closeAll();
+                            if (res.flag) {
+                                parent.layer.msg("删除成功");
+                                $("#table_list").trigger("reloadGrid");
+                            } else {
+                                parent.layer.msg("删除失败：" + res.msg);
+                            }
                         }
-                    }
+                    });
                 });
-            }
         } else {
-            alert("请选择要删除的数据！");
+            parent.layer.msg("请选择要删除的数据！");
         }
     },
 
@@ -85,12 +91,12 @@ var XPage = {
                 }
                 if (res.flag) {
                     if (suc_callback == null || typeof (suc_callback) == 'undefined')
-                        alert("操作成功" );
+                        parent.layer.msg("操作成功" );
                     else
                         suc_callback.call(this, res);
                 } else {
                     if (fail_callback == null || typeof (fail_callback) == 'undefined')
-                        alert("操作失败：" + res.msg);
+                        parent.layer.msg("操作失败：" + res.msg);
                     else
                         fail_callback.call(this, res);
                 }
@@ -101,11 +107,11 @@ var XPage = {
                 }
                 if (status === "timeout") {//超时,status还有success,error等值的情况
                     myRequestAjax.abort();
-                    alert("请求超时，请刷新页面重试");
+                    parent.layer.msg("请求超时，请刷新页面重试");
                 }
                 if (status === "error") {
                     myRequestAjax.abort();
-                    alert("请求失败，请刷新页面重试");
+                    parent.layer.msg("请求失败，请刷新页面重试");
                 }
             }
         });

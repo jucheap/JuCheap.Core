@@ -1,0 +1,20 @@
+﻿@model JuCheap.Core.Models.MessageQueryDto
+
+@{
+    ViewBag.Title = "站内信详情";
+    Layout = "~/Views/Shared/_Layout_Content.cshtml";
+}
+
+<div class="wrapper wrapper-content">
+
+    <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>站内信内容 </h5>
+            </div>
+            <div class="ibox-content">
+                <p>标题：@Model.Title</p>
+                <p>内容：@Model.Contents</p>
+                <p>发送时间：@Model.CreateDateTime</p>
+            </div>
+        </div>
+</div>

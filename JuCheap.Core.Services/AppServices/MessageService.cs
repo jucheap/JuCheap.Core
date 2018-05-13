@@ -84,7 +84,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <param name="userId">用户Id</param>
         public async Task ReadAsync(string id, string userId)
         {
-            var message = await _context.Messages.FindAsync(id);
+            var message = await _context.Messages.Include(x => x.MessageReceivers).FirstOrDefaultAsync(x => x.Id == id);
             if (message != null)
             {
                 var receiver = message.MessageReceivers.FirstOrDefault(x => x.UserId == userId);
@@ -119,6 +119,7 @@ namespace JuCheap.Core.Services.AppServices
             foreach (var x in messages)
             {
                 x.IsDeleted = true;
+                x.MessageReceivers.ForEach(m => m.IsDeleted = true);
             }
             await _context.SaveChangesAsync();
             return true;
@@ -144,6 +145,37 @@ namespace JuCheap.Core.Services.AppServices
                         };
             message.Details = await query.ToListAsync();
             return message;
+        }
+
+        /// <summary>
+        /// 获取我的未读消息统计
+        /// </summary>
+        /// <param name="userId">用户id</param>
+        /// <returns></returns>
+        public async Task<int> GetMyMessageCountAsync(string userId)
+        {
+            var query = _context.MessageReceivers.Where(x => x.IsReaded == false && x.UserId == userId);
+            return await query.CountAsync();
+        }
+
+        /// <summary>
+        /// 获取我的未读消息
+        /// </summary>
+        /// <param name="userId">用户Id</param>
+        /// <returns></returns>
+        public async Task<IList<MessageQueryDto>> GetUnReadMesasgeAsync(string userId)
+        {
+            var query = from message in _context.Messages
+                        join receiver in _context.MessageReceivers on message.Id equals receiver.MessageId into receivers
+                        from receiver in receivers.DefaultIfEmpty()
+                        where receiver.IsReaded == false && receiver.UserId == userId
+                        select new MessageQueryDto
+                        {
+                            Id = message.Id,
+                            Title = message.Title,
+                            CreateDateTime = message.CreateDateTime
+                        };
+            return await query.ToListAsync();
         }
     }
 }

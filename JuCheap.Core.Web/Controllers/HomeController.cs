@@ -28,13 +28,18 @@ namespace JuCheap.Core.Web.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMenuService _menuService;
+        private readonly IMessageService _messageService;
         private readonly IHostingEnvironment _hostEnvironment;
 
-        public HomeController(IUserService userSvr, IMenuService menuService,IHostingEnvironment hostEnvironment)
+        public HomeController(IUserService userSvr, 
+            IMenuService menuService,
+            IMessageService messageService,
+            IHostingEnvironment hostEnvironment)
         {
             _userService = userSvr;
             _menuService = menuService;
             _hostEnvironment = hostEnvironment;
+            _messageService = messageService;
             //log.Error("home ctor error");
         }
 
@@ -44,9 +49,13 @@ namespace JuCheap.Core.Web.Controllers
         /// <returns></returns>
         public async Task<IActionResult> Index()
         {
-            var myMenus = await _menuService.GetMyMenusAsync(User.Identity.GetLoginUserId());
+            var userId = User.Identity.GetLoginUserId();
+            var myMenus = await _menuService.GetMyMenusAsync(userId);
+            var myUnReadMessageNumber = await _messageService.GetMyMessageCountAsync(userId);
+            var myUnReadMessages = await _messageService.GetUnReadMesasgeAsync(userId);
             ViewBag.Menus = myMenus;
-            return View();
+            ViewBag.MyUnReadMessageNumber = myUnReadMessageNumber;
+            return View(myUnReadMessages);
         }
 
         /// <summary>

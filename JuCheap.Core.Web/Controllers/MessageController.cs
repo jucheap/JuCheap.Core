@@ -70,6 +70,18 @@ namespace JuCheap.Core.Web.Controllers
         }
 
         /// <summary>
+        /// 阅读站内信
+        /// </summary>
+        /// <returns></returns>
+        [IgnoreRightFilter]
+        public async Task<IActionResult> Read(string id)
+        {
+            var message = await _messageService.GetDetailsAsync(id);
+            await _messageService.ReadAsync(id, User.Identity.GetLoginUserId());
+            return View(message);
+        }
+
+        /// <summary>
         /// 删除
         /// </summary>
         /// <param name="ids"></param>

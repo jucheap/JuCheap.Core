@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using JuCheap.Core.Data;
 using JuCheap.Core.Data.Entity;
@@ -115,7 +115,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<bool> DeleteAsync(IList<string> ids)
         {
-            var messages = await _context.Messages.Where(x => ids.Contains(x.Id)).ToListAsync();
+            var messages = await _context.Messages.Include(x => x.MessageReceivers).Where(x => ids.Contains(x.Id)).ToListAsync();
             foreach (var x in messages)
             {
                 x.IsDeleted = true;

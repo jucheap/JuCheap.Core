@@ -1,5 +1,4 @@
-﻿
-namespace JuCheap.Core.Models.Enum
+﻿namespace JuCheap.Core.Models.Enum
 {
     /// <summary>
     /// 登陆结果

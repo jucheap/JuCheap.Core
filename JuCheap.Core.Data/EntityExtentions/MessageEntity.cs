@@ -18,7 +18,6 @@ namespace JuCheap.Core.Data.Entity
         /// </summary>
         public void Read()
         {
-            Total -= 1;
             ReadedNumber += 1;
         }
     }

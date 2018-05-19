@@ -1,4 +1,5 @@
 using Hangfire;
+using Hangfire.MySql.Core;
 using JuCheap.Core.Data;
 using JuCheap.Core.Infrastructure.Utilities;
 using JuCheap.Core.Interfaces;
@@ -52,8 +53,6 @@ namespace JuCheap.Core.Web
                 });
             //使用Sql Server数据库
             services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
-            //支持sql2008的row_number分页函数
-            //services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"), x => x.UseRowNumberForPaging()));
 
             ////使用Sqlite数据库
             //services.AddDbContext<JuCheapContext>(options => options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite")));
@@ -118,7 +117,8 @@ namespace JuCheap.Core.Web
             //hangfire自动任务配置
             var jobOptions = new BackgroundJobServerOptions
             {
-                ServerName = Environment.MachineName
+                ServerName = Environment.MachineName,
+                WorkerCount = 1
             };
             app.UseHangfireServer(jobOptions);
             var option = new DashboardOptions

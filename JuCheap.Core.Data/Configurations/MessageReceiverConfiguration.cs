@@ -14,8 +14,6 @@ namespace JuCheap.Core.Data.Configurations
             base.Configure(builder);
 
             builder.ToTable("MessageReceivers");
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).HasMaxLength(36);
             builder.Property(x => x.UserId).IsRequired().HasMaxLength(36);
             builder.Property(x => x.MessageId).IsRequired().HasMaxLength(36);
             builder.Property(x => x.IsReaded).IsRequired();

@@ -12,12 +12,8 @@ namespace JuCheap.Core.Data.Configurations
         public override void Configure(EntityTypeBuilder<RoleEntity> builder)
         {
             base.Configure(builder);
-            builder.HasKey(e => e.Id);
-            builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
-            builder.Property(e => e.Name).HasMaxLength(20).IsRequired();
-            builder.Property(e => e.Description).HasMaxLength(50).IsRequired();
-            builder.Property(e => e.CreateDateTime).IsRequired();
-            builder.Property(e => e.IsDeleted).IsRequired();
+            builder.Property(e => e.Name).IsRequired().IsUnicode(true).HasMaxLength(20);
+            builder.Property(e => e.Description).IsRequired().IsUnicode(true).HasMaxLength(50);
             builder.ToTable("Roles");
         }
     }

@@ -14,9 +14,7 @@ namespace JuCheap.Core.Data.Configurations
             base.Configure(builder);
 
             builder.ToTable("Areas");
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).HasMaxLength(36);
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
+            builder.Property(x => x.Name).IsRequired().IsUnicode(true).HasMaxLength(50);
             builder.Property(x => x.ParentId).HasMaxLength(36);
             builder.Property(x => x.FullSpelling).HasMaxLength(100);
             builder.Property(x => x.SimpleSpelling).HasMaxLength(20);

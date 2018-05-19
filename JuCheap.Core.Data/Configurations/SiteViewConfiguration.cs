@@ -27,8 +27,6 @@ namespace JuCheap.Core.Data.Configurations
             base.Configure(builder);
 
             builder.ToTable("SiteViews");
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).HasMaxLength(36);
             builder.Property(x => x.Number).IsRequired();
             builder.Property(x => x.Day).IsRequired();
         }

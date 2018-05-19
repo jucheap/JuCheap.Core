@@ -14,10 +14,8 @@ namespace JuCheap.Core.Data.Configurations
             base.Configure(builder);
 
             builder.ToTable("Messages");
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).HasMaxLength(36);
-            builder.Property(x => x.Title).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.Contents).IsRequired().HasMaxLength(500);
+            builder.Property(x => x.Title).IsRequired().IsUnicode(true).HasMaxLength(50);
+            builder.Property(x => x.Contents).IsRequired().IsUnicode(true).HasMaxLength(500);
         }
     }
 }

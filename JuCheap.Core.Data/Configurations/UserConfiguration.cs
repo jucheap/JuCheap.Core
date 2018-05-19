@@ -12,19 +12,14 @@ namespace JuCheap.Core.Data.Configurations
         public override void Configure(EntityTypeBuilder<UserEntity> builder)
         {
             base.Configure(builder);
-
-            builder.HasKey(e => e.Id);
-            builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
+            builder.ToTable("Users");
             builder.Property(e => e.LoginName).HasMaxLength(20).IsRequired();
-            builder.Property(e => e.RealName).HasMaxLength(20).IsRequired();
+            builder.Property(e => e.RealName).IsUnicode(true).HasMaxLength(20).IsRequired();
             builder.Property(e => e.Email).HasMaxLength(36).IsRequired();
             builder.Property(e => e.Password).HasMaxLength(50).IsRequired();
             builder.Property(e => e.IsSuperMan).IsRequired();
-            builder.Property(e => e.CreateDateTime).IsRequired();
-            builder.Property(e => e.IsDeleted).IsRequired();
             builder.Property(e => e.DepartmentId).HasMaxLength(36);
             builder.HasOne(e => e.Department).WithMany(e => e.Users).HasForeignKey(e => e.DepartmentId);
-            builder.ToTable("Users");
         }
     }
 }

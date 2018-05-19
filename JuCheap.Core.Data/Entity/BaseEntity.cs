@@ -21,6 +21,11 @@ namespace JuCheap.Core.Data.Entity
         /// 是否删除
         /// </summary>
         public bool IsDeleted { get; set; }
+
+        /// <summary>
+        /// 创建人Id
+        /// </summary>
+        public string CreateUserId { get; set; }
     }
 
     /// <summary>

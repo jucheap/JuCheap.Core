@@ -12,14 +12,9 @@ namespace JuCheap.Core.Data.Configurations
         public override void Configure(EntityTypeBuilder<PathCodeEntity> builder)
         {
             base.Configure(builder);
-
-            builder.HasKey(e => e.Id);
-            builder.Property(e => e.Id).HasMaxLength(36).ValueGeneratedNever();
+            builder.ToTable("PathCodes");
             builder.Property(e => e.Code).HasMaxLength(4).IsRequired();
             builder.Property(e => e.Len).IsRequired();
-            builder.Property(e => e.CreateDateTime).IsRequired();
-            builder.Property(e => e.IsDeleted).IsRequired();
-            builder.ToTable("PathCodes");
         }
     }
 }

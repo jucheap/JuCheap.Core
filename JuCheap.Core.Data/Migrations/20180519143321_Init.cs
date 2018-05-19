@@ -14,6 +14,7 @@ namespace JuCheap.Core.Data.Migrations
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     DisplaySequence = table.Column<int>(nullable: false),
                     Enabled = table.Column<bool>(nullable: false),
                     FullSpelling = table.Column<string>(maxLength: 100, nullable: true),
@@ -35,6 +36,7 @@ namespace JuCheap.Core.Data.Migrations
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     FullName = table.Column<string>(maxLength: 500, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
@@ -52,6 +54,7 @@ namespace JuCheap.Core.Data.Migrations
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     IP = table.Column<string>(maxLength: 20, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     LoginName = table.Column<string>(maxLength: 20, nullable: false),
@@ -70,6 +73,7 @@ namespace JuCheap.Core.Data.Migrations
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     Code = table.Column<string>(maxLength: 20, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     Icon = table.Column<string>(maxLength: 50, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
@@ -91,6 +95,7 @@ namespace JuCheap.Core.Data.Migrations
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     Contents = table.Column<string>(maxLength: 500, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     ReadedNumber = table.Column<int>(nullable: false),
                     Title = table.Column<string>(maxLength: 50, nullable: false),
@@ -107,6 +112,7 @@ namespace JuCheap.Core.Data.Migrations
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     IP = table.Column<string>(maxLength: 20, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     LoginName = table.Column<string>(maxLength: 20, nullable: false),
@@ -125,6 +131,7 @@ namespace JuCheap.Core.Data.Migrations
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     Code = table.Column<string>(maxLength: 4, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Len = table.Column<int>(nullable: false)
                 },
@@ -139,6 +146,7 @@ namespace JuCheap.Core.Data.Migrations
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     Description = table.Column<string>(maxLength: 50, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false)
@@ -154,6 +162,7 @@ namespace JuCheap.Core.Data.Migrations
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     Day = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
                     Number = table.Column<int>(nullable: false)
@@ -169,6 +178,7 @@ namespace JuCheap.Core.Data.Migrations
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     DataInitedDate = table.Column<DateTime>(nullable: false),
                     IsDataInited = table.Column<bool>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -180,11 +190,27 @@ namespace JuCheap.Core.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TaskTemplate",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
+                    CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskTemplate", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     DepartmentId = table.Column<string>(maxLength: 36, nullable: true),
                     Email = table.Column<string>(maxLength: 36, nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
@@ -210,6 +236,7 @@ namespace JuCheap.Core.Data.Migrations
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     IsReaded = table.Column<bool>(nullable: false),
                     MessageId = table.Column<string>(maxLength: 36, nullable: false),
@@ -233,6 +260,7 @@ namespace JuCheap.Core.Data.Migrations
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     MenuId = table.Column<string>(maxLength: 36, nullable: false),
                     RoleId = table.Column<string>(maxLength: 36, nullable: false)
@@ -255,11 +283,58 @@ namespace JuCheap.Core.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TaskTemplateForm",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
+                    ControlName = table.Column<string>(maxLength: 50, nullable: false),
+                    ControlType = table.Column<int>(nullable: false),
+                    CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    TemplateId = table.Column<string>(maxLength: 36, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskTemplateForm", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TaskTemplateForm_TaskTemplate_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "TaskTemplate",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TaskTemplateStep",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
+                    CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Order = table.Column<int>(nullable: false),
+                    StepName = table.Column<string>(maxLength: 20, nullable: false),
+                    TemplateId = table.Column<string>(maxLength: 36, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskTemplateStep", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TaskTemplateStep_TaskTemplate_TemplateId",
+                        column: x => x.TemplateId,
+                        principalTable: "TaskTemplate",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserRoles",
                 columns: table => new
                 {
                     Id = table.Column<string>(maxLength: 36, nullable: false),
                     CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
                     RoleId = table.Column<string>(maxLength: 36, nullable: false),
                     UserId = table.Column<string>(maxLength: 36, nullable: false)
@@ -281,6 +356,29 @@ namespace JuCheap.Core.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TaskTemplateStepOperate",
+                columns: table => new
+                {
+                    Id = table.Column<string>(maxLength: 36, nullable: false),
+                    CreateDateTime = table.Column<DateTime>(nullable: false),
+                    CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    OperateDirection = table.Column<int>(nullable: false),
+                    StepId = table.Column<string>(maxLength: 36, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TaskTemplateStepOperate", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TaskTemplateStepOperate_TaskTemplateStep_StepId",
+                        column: x => x.StepId,
+                        principalTable: "TaskTemplateStep",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_MessageReceivers_MessageId",
                 table: "MessageReceivers",
@@ -295,6 +393,21 @@ namespace JuCheap.Core.Data.Migrations
                 name: "IX_RoleMenus_RoleId",
                 table: "RoleMenus",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskTemplateForm_TemplateId",
+                table: "TaskTemplateForm",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskTemplateStep_TemplateId",
+                table: "TaskTemplateStep",
+                column: "TemplateId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TaskTemplateStepOperate_StepId",
+                table: "TaskTemplateStepOperate",
+                column: "StepId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserRoles_RoleId",
@@ -339,6 +452,12 @@ namespace JuCheap.Core.Data.Migrations
                 name: "SystemConfigs");
 
             migrationBuilder.DropTable(
+                name: "TaskTemplateForm");
+
+            migrationBuilder.DropTable(
+                name: "TaskTemplateStepOperate");
+
+            migrationBuilder.DropTable(
                 name: "UserRoles");
 
             migrationBuilder.DropTable(
@@ -348,10 +467,16 @@ namespace JuCheap.Core.Data.Migrations
                 name: "Menus");
 
             migrationBuilder.DropTable(
+                name: "TaskTemplateStep");
+
+            migrationBuilder.DropTable(
                 name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "TaskTemplate");
 
             migrationBuilder.DropTable(
                 name: "Departments");

@@ -26,11 +26,9 @@ namespace JuCheap.Core.Data.Configurations
             base.Configure(builder);
 
             builder.ToTable("Departments");
-            builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id).HasMaxLength(36);
             builder.Property(x => x.ParentId).HasMaxLength(36);
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(50);
-            builder.Property(x => x.FullName).HasMaxLength(500);
+            builder.Property(x => x.Name).IsRequired().IsUnicode(true).HasMaxLength(50);
+            builder.Property(x => x.FullName).IsUnicode(true).HasMaxLength(500);
         }
     }
 }

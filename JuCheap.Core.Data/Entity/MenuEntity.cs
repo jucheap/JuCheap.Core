@@ -11,6 +11,7 @@
 *********************************************************************************/
 
 
+using JuCheap.Core.Data.Enum;
 using System;
 using System.Collections.Generic;
 
@@ -59,7 +60,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 菜单类型
         /// </summary>
-        public byte Type { get; set; }
+        public int Type { get; set; }
 
         /// <summary>
         /// 角色菜单关系

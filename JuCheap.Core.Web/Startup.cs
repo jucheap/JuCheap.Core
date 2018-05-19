@@ -52,13 +52,13 @@ namespace JuCheap.Core.Web
                     //o.DataProtectionProvider = null;//如果需要做负载均衡，就需要提供一个Key
                 });
             //使用Sql Server数据库
-            services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
+            //services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
 
             ////使用Sqlite数据库
             //services.AddDbContext<JuCheapContext>(options => options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite")));
 
             //使用MySql数据库
-            //services.AddDbContext<JuCheapContext>(options => options.UseMySql(Configuration.GetConnectionString("Connection_MySql")));
+            services.AddDbContext<JuCheapContext>(options => options.UseMySql(Configuration.GetConnectionString("Connection_MySql")));
 
             //权限验证filter
             services.AddMvc(cfg =>
@@ -72,9 +72,16 @@ namespace JuCheap.Core.Web
 
             //hangfire自动任务配置数据库配置
             //使用sql server数据库做hangfire的持久化
-            services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("Connection_Job_SqlServer")));
+            //services.AddHangfire(x => x.UseSqlServerStorage(Configuration.GetConnectionString("Connection_Job_SqlServer")));
+
             //使用mysql数据库做hangfire的持久化
-            //services.AddHangfire(x => x.UseStorage(new MySqlStorage(Configuration.GetConnectionString("Connection_Job_MySql"))));
+            //使用mysql的时候，由于很同学不知道怎么设置数据库和数据表的编码格式，会导致hangfire初始化失败，
+            //所以不自动创建hangfire的数据表，需要手动导入根目录下Hangfire/hangfire.job.mysql.sql文件来创建表
+            var mySqlOption = new MySqlStorageOptions
+            {
+                PrepareSchemaIfNecessary = false
+            };
+            services.AddHangfire(x => x.UseStorage(new MySqlStorage(Configuration.GetConnectionString("Connection_Job_MySql"),mySqlOption)));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

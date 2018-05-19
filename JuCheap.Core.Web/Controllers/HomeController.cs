@@ -16,6 +16,7 @@ using JuCheap.Core.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Diagnostics;
 using JuCheap.Core.Web.Models;
+using JuCheap.Core.Infrastructure.Exceptions;
 
 namespace JuCheap.Core.Web.Controllers
 {
@@ -153,6 +154,10 @@ namespace JuCheap.Core.Web.Controllers
             }
             if (isAjax)
             {
+                if(error is BusinessException)
+                {
+                    Response.StatusCode = 200;
+                }
                 return Json(new JsonResultModel<string>(false, error?.Message, string.Empty));
             }
             return View();

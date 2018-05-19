@@ -54,7 +54,7 @@ namespace JuCheap.Core.Web.Controllers
         public async Task<IActionResult> Add(MessageDto message)
         {
             await _messageService.SendAsync(message);
-            return RedirectToAction("Add");
+            return RedirectToAction("Index");
         }
 
         /// <summary>

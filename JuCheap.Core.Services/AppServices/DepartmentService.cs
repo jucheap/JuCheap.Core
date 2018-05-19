@@ -6,6 +6,7 @@ using AutoMapper;
 using JuCheap.Core.Data;
 using JuCheap.Core.Data.Entity;
 using JuCheap.Core.Infrastructure;
+using JuCheap.Core.Infrastructure.Exceptions;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
@@ -121,11 +122,11 @@ namespace JuCheap.Core.Services.AppServices
 
             if (!departments.AnyOne())
             {
-                throw new Exception("没有找到相关的部门数据");
+                throw new BusinessException("没有找到相关的部门数据");
             }
             if (await _context.Users.AnyAsync(x => ids.Contains(x.DepartmentId)))
             {
-                throw new Exception("该部门下还存在用户，请先将用户移除该部门");
+                throw new BusinessException("该部门下还存在用户，请先将用户移除该部门");
             }
             //标记成逻辑删除
             foreach (var department in departments)

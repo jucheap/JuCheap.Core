@@ -6,6 +6,7 @@ using AutoMapper;
 using JuCheap.Core.Data;
 using JuCheap.Core.Data.Entity;
 using JuCheap.Core.Infrastructure;
+using JuCheap.Core.Infrastructure.Exceptions;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
@@ -113,12 +114,12 @@ namespace JuCheap.Core.Services.AppServices
 
             if (!areas.AnyOne())
             {
-                throw new Exception("没有找到任何需要删除的数据");
+                throw new BusinessException("没有找到任何需要删除的数据");
             }
 
             if (await _context.Areas.AnyAsync(x => x.Enabled && ids.Contains(x.ParentId)))
             {
-                throw new Exception("该节点下还有子节点，请删除子节点");
+                throw new BusinessException("该节点下还有子节点，请删除子节点");
             }
 
             foreach (var area in areas)

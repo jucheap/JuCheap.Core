@@ -15,7 +15,6 @@ using JuCheap.Core.Data.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Reflection;
 
 namespace JuCheap.Core.Data
 {

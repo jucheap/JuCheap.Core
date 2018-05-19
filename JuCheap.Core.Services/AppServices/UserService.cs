@@ -12,6 +12,7 @@ using JuCheap.Core.Models.Filters;
 using JuCheap.Core.Infrastructure.Extentions;
 using Microsoft.EntityFrameworkCore;
 using System;
+using JuCheap.Core.Infrastructure.Exceptions;
 
 namespace JuCheap.Core.Services.AppServices
 {
@@ -94,7 +95,7 @@ namespace JuCheap.Core.Services.AppServices
         {
             if(await _context.Users.AnyAsync(x => ids.Contains(x.Id) && x.IsSuperMan))
             {
-                throw new Exception("超级管理员不能被删除");
+                throw new BusinessException("超级管理员不能被删除");
             }
             var users = _context.Users.Where(item => ids.Contains(item.Id));
             users.ForEach(item => item.IsDeleted = true);

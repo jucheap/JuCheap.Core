@@ -7,9 +7,16 @@ namespace JuCheap.Core.Infrastructure.Exceptions
     /// </summary>
     public class BusinessException : Exception
     {
-        public BusinessException(string message)
+        public BusinessException() { }
+
+        public BusinessException(string message) : base(message)
         {
-            
+
+        }
+
+        public BusinessException(string message,Exception ex) : base(message, ex)
+        {
+
         }
     }
 }

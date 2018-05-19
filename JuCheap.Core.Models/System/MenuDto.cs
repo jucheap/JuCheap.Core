@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using JuCheap.Core.Models.Enum;
+using JuCheap.Core.Infrastructure.Enums;
 using JuCheap.Core.Infrastructure.Extentions;
 using System;
 

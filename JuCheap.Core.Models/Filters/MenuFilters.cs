@@ -1,4 +1,4 @@
-﻿using JuCheap.Core.Models.Enum;
+﻿using JuCheap.Core.Infrastructure.Enums;
 
 namespace JuCheap.Core.Models.Filters
 {

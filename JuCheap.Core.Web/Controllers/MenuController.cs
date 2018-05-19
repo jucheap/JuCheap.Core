@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
-using JuCheap.Core.Models.Enum;
+using JuCheap.Core.Infrastructure.Enums;
 using JuCheap.Core.Models.Filters;
 using JuCheap.Core.Web.Filters;
 using JuCheap.Core.Web.Models;

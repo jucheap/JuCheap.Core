@@ -1,4 +1,4 @@
-﻿namespace JuCheap.Core.Models.Enum
+﻿namespace JuCheap.Core.Infrastructure.Enums
 {
     /// <summary>
     /// 登陆结果

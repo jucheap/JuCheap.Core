@@ -7,7 +7,7 @@ using JuCheap.Core.Data.Entity;
 using JuCheap.Core.Infrastructure;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
-using JuCheap.Core.Models.Enum;
+using JuCheap.Core.Infrastructure.Enums;
 using JuCheap.Core.Models.Filters;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Infrastructure.Utilities;

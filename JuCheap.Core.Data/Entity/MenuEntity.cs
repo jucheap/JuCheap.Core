@@ -11,7 +11,7 @@
 *********************************************************************************/
 
 
-using JuCheap.Core.Data.Enum;
+using JuCheap.Core.Infrastructure.Enums;
 using System;
 using System.Collections.Generic;
 

@@ -9,7 +9,7 @@ using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Infrastructure.Utilities;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
-using JuCheap.Core.Models.Enum;
+using JuCheap.Core.Infrastructure.Enums;
 using log4net;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;

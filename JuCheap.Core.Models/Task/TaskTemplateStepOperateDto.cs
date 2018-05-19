@@ -1,11 +1,8 @@
 ﻿using JuCheap.Core.Infrastructure.Enums;
 
-namespace JuCheap.Core.Data.Entity
+namespace JuCheap.Core.Models
 {
-    /// <summary>
-    /// 任务流模板步骤操作实体
-    /// </summary>
-    public class TaskTemplateStepOperateEntity : BaseEntity
+    public class TaskTemplateStepOperateDto
     {
         /// <summary>
         /// 所属步骤Id
@@ -16,12 +13,10 @@ namespace JuCheap.Core.Data.Entity
         /// </summary>
         public string Name { get; set; }
         /// <summary>
-        /// 操作方向(退回上一步，下一步，退回到发起人等)
+        /// 操作方向
         /// </summary>
         public OperateDirection OperateDirection { get; set; }
-        /// <summary>
-        /// 所属步骤
-        /// </summary>
-        public virtual TaskTemplateStepEntity Step { get; set; }
+
+
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace JuCheap.Core.Data.Enum
+﻿namespace JuCheap.Core.Infrastructure.Enums
 {
     /// <summary>
     /// 操作方向

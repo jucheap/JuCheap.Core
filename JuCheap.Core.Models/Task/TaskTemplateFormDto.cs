@@ -1,11 +1,8 @@
 ﻿using JuCheap.Core.Infrastructure.Enums;
 
-namespace JuCheap.Core.Data.Entity
+namespace JuCheap.Core.Models
 {
-    /// <summary>
-    /// 任务流模板表单信息实体
-    /// </summary>
-    public class TaskTemplateFormEntity : BaseEntity
+    public class TaskTemplateFormDto
     {
         /// <summary>
         /// 所属模板Id
@@ -19,9 +16,5 @@ namespace JuCheap.Core.Data.Entity
         /// 控件名称
         /// </summary>
         public string ControlName { get; set; }
-        /// <summary>
-        /// 所属模板
-        /// </summary>
-        public virtual TaskTemplateEntity Template { get; set; }
     }
 }

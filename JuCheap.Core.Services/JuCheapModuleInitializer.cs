@@ -2,7 +2,7 @@
 using JuCheap.Core.Data.Entity;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Models;
-using JuCheap.Core.Models.Enum;
+using JuCheap.Core.Infrastructure.Enums;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
 

@@ -1,21 +1,28 @@
-﻿namespace JuCheap.Core.Data.Enum
+﻿using System.ComponentModel;
+
+namespace JuCheap.Core.Infrastructure.Enums
 {
     /// <summary>
     /// 菜单类型
     /// </summary>
-    public enum MenuType
+    public enum MenuType : byte
     {
         /// <summary>
         /// 模块
         /// </summary>
-        Moudle = 1,
+        [Description("模块")]
+        Module = 1,
+
         /// <summary>
         /// 菜单
         /// </summary>
+        [Description("菜单")]
         Menu = 2,
+
         /// <summary>
         /// 操作
         /// </summary>
+        [Description("操作")]
         Action = 3
     }
 }

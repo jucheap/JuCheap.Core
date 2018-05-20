@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace JuCheap.Core.Models
 {
@@ -11,6 +12,9 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 步骤名称
         /// </summary>
+        [Display(Name = "步骤名称")]
+        [Required(ErrorMessage = Message.Required)]
+        [MaxLength(20, ErrorMessage = Message.MaxLength)]
         public string StepName { get; set; }
         /// <summary>
         /// 排序

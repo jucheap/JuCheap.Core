@@ -3,4 +3,66 @@
     Layout = "~/Views/Shared/_Layout_Content.cshtml";
 }
 
+@model string
 
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>@ViewBag.Title</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            <form id="taskForm" asp-controller="TaskTemplate" asp-action="AddForm" class="form-horizontal" method="POST">
+                @Html.AntiForgeryToken()
+                <div id="taskFormDatas" data-url="/tasktemplate/addformdatas/@Model">                    
+                    表单数据加载中……
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <button class="btn btn-info" type="submit">下一步</button>
+                        <button class="btn btn-white" type="button" id="btnBack">返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <environment names="Development">
+        <script src="~/js/jquery.validate.js"></script>
+        <script src="~/js/jquery.validate.unobtrusive.js"></script>
+        <script src="~/js/base.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/validate.min.js" asp-append-version="true"></script>
+        <script src="~/js/base.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <script>
+        $("#btnBack").bind("click", function (e) {
+            window.history.go(-1);
+        });
+        function resetFormValidate() {
+            $.validator.unobtrusive.parse($("#taskForm"));
+        }
+        function loadDatas(isAdd) {
+            var dom = $("#taskFormDatas");
+            var url = dom.data("url") + "?isAdd=" + isAdd + "&date=" + new Date().getTime();
+            $.get(url, function (res) {
+                if (isAdd === "false") {
+                    dom.html("");
+                }
+                dom.append(res);
+                resetFormValidate();
+            });
+
+        }
+        $(document).ready(function () { 
+            loadDatas("false");
+        });
+    </script>
+}

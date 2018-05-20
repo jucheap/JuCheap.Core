@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "添加任务模板表单";
+    Layout = null;
+}
+
+@model IList<JuCheap.Core.Models.TaskTemplateStepDto>
+
+@foreach(var form in Model)
+{
+    var index = Guid.NewGuid();
+
+    <div class="form-group">
+        <input type="hidden" name="index" id="@index" value="@index"/>
+        <input asp-for="@form.TemplateId" name="[@index].TemplateId" type="hidden"/>
+        <label class="col-sm-2 control-label" asp-for="@form.StepName"></label>
+        <div class="col-sm-4">
+            <input asp-for="@form.StepName" name="[@index].StepName" class="form-control" placeholder="步骤名称"/>
+            <span asp-validation-for="@form.StepName"></span>
+            <span class="field-validation-valid" data-valmsg-for="[@index].ControlName" data-valmsg-replace="true"></span>
+        </div>
+        <div class="col-sm-2 text-right">
+            <button class="btn btn-info btn-sm btn-add-form" type="button" onclick="loadDatas('true')">添加</button>
+        </div>
+    </div>
+}  
+
+
+

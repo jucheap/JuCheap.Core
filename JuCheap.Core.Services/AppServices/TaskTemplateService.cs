@@ -35,7 +35,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <summary>
         /// 创建任务流模板
         /// </summary>
-        public async Task<string> Create(string templateName, CurrentUserDto user)
+        public async Task<string> CreateAsync(string templateName, CurrentUserDto user)
         {
             if (templateName.IsBlank())
             {
@@ -51,7 +51,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <summary>
         /// 创建表单信息
         /// </summary>
-        public async Task CreateForms(IList<TaskTemplateFormDto> forms, CurrentUserDto user)
+        public async Task CreateFormsAsync(IList<TaskTemplateFormDto> forms, CurrentUserDto user)
         {
             var templateIds = forms.Select(x => x.TemplateId).Distinct().ToList();
             var templateForms = await _context.TaskTemplateForms.Where(x => templateIds.Contains(x.TemplateId)).ToListAsync();
@@ -68,7 +68,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <summary>
         /// 创建步骤操作信息
         /// </summary>
-        public async Task CreateSteps(IList<TaskTemplateStepDto> steps, CurrentUserDto user)
+        public async Task CreateStepsAsync(IList<TaskTemplateStepDto> steps, CurrentUserDto user)
         {
             var templateIds = steps.Select(x => x.TemplateId).Distinct().ToList();
             var stepList = await _context.TaskTemplateSteps.Where(x => templateIds.Contains(x.TemplateId)).ToListAsync();
@@ -100,6 +100,26 @@ namespace JuCheap.Core.Services.AppServices
             return await query.OrderByDescending(x => x.CreateDateTime)
                 .ProjectTo<TaskTemplateDto>(_configurationProvider)
                 .PagingAsync(filters.page, filters.rows);
+        }
+
+        /// <summary>
+        /// 获取模板的表单信息
+        /// </summary>
+        public async Task<IList<TaskTemplateFormDto>> GetFormsAsync(string templateId)
+        {
+            var query = _context.TaskTemplateForms.Where(x => x.TemplateId == templateId);
+            return await query.ProjectTo<TaskTemplateFormDto>(_configurationProvider).ToListAsync();
+        }
+
+        /// <summary>
+        /// 获取模板的步骤信息
+        /// </summary>
+        public async Task<IList<TaskTemplateStepDto>> GetStepsAsync(string templateId)
+        {
+            var query = _context.TaskTemplateSteps
+                .Include(x => x.Operates)
+                .Where(x => x.TemplateId == templateId);
+            return await query.ProjectTo<TaskTemplateStepDto>(_configurationProvider).ToListAsync();
         }
     }
 }

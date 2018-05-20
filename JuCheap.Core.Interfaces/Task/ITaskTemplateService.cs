@@ -14,21 +14,31 @@ namespace JuCheap.Core.Interfaces
         /// <summary>
         /// 创建任务流模板
         /// </summary>
-        Task<string> Create(string templateName, CurrentUserDto user);
+        Task<string> CreateAsync(string templateName, CurrentUserDto user);
 
         /// <summary>
         /// 创建表单信息
         /// </summary>
-        Task CreateForms(IList<TaskTemplateFormDto> forms, CurrentUserDto user);
+        Task CreateFormsAsync(IList<TaskTemplateFormDto> forms, CurrentUserDto user);
 
         /// <summary>
         /// 创建步骤操作信息
         /// </summary>
-        Task CreateSteps(IList<TaskTemplateStepDto> steps, CurrentUserDto user);
+        Task CreateStepsAsync(IList<TaskTemplateStepDto> steps, CurrentUserDto user);
 
         /// <summary>
         /// 获取任务模板列表
         /// </summary>
         Task<PagedResult<TaskTemplateDto>> SearchAsync(BaseFilter filters);
+
+        /// <summary>
+        /// 获取模板的表单信息
+        /// </summary>
+        Task<IList<TaskTemplateFormDto>> GetFormsAsync(string templateId);
+
+        /// <summary>
+        /// 获取模板的步骤信息
+        /// </summary>
+        Task<IList<TaskTemplateStepDto>> GetStepsAsync(string templateId);
     }
 }

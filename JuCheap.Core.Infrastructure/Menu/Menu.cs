@@ -24,7 +24,6 @@
 
         #endregion
 
-
         #region 菜单常量配置
 
         /// <summary>
@@ -251,6 +250,20 @@
         /// 删除站内信页面Id
         /// </summary>
         public const string MessageDeleteId = "00045";
+        #endregion
+
+        #region 任务模板常量配置
+
+        /// <summary>
+        /// 任务模板首页页面Id
+        /// </summary>
+        public const string TaskTemplatePageId = "00046";
+
+        /// <summary>
+        /// 任务模板添加页面Id
+        /// </summary>
+        public const string TaskTemplateAddId = "00047";
+
         #endregion
     }
 }

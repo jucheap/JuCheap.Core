@@ -1,10 +1,13 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using JuCheap.Core.Data;
 using JuCheap.Core.Data.Entity;
+using JuCheap.Core.Infrastructure;
 using JuCheap.Core.Infrastructure.Exceptions;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
+using JuCheap.Core.Models.Filters;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,11 +23,13 @@ namespace JuCheap.Core.Services.AppServices
     {
         private readonly JuCheapContext _context;
         private readonly IMapper _mapper;
+        private readonly IConfigurationProvider _configurationProvider;
 
-        public TaskTemplateService(JuCheapContext context, IMapper mapper)
+        public TaskTemplateService(JuCheapContext context, IMapper mapper, IConfigurationProvider configurationProvider)
         {
             _context = context;
             _mapper = mapper;
+            _configurationProvider = configurationProvider;
         }
 
         /// <summary>
@@ -82,6 +87,19 @@ namespace JuCheap.Core.Services.AppServices
             });
             await _context.TaskTemplateSteps.AddRangeAsync(list);
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// 获取任务模板列表
+        /// </summary>
+        public async Task<PagedResult<TaskTemplateDto>> SearchAsync(BaseFilter filters)
+        {
+            var query = _context.TaskTemplates
+                .WhereIf(filters.keywords.IsNotBlank(), x => x.Name.Contains(filters.keywords));
+
+            return await query.OrderByDescending(x => x.CreateDateTime)
+                .ProjectTo<TaskTemplateDto>(_configurationProvider)
+                .PagingAsync(filters.page, filters.rows);
         }
     }
 }

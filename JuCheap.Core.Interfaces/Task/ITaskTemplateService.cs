@@ -1,4 +1,6 @@
-﻿using JuCheap.Core.Models;
+﻿using JuCheap.Core.Infrastructure;
+using JuCheap.Core.Models;
+using JuCheap.Core.Models.Filters;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,5 +25,10 @@ namespace JuCheap.Core.Interfaces
         /// 创建步骤操作信息
         /// </summary>
         Task CreateSteps(IList<TaskTemplateStepDto> steps, CurrentUserDto user);
+
+        /// <summary>
+        /// 获取任务模板列表
+        /// </summary>
+        Task<PagedResult<TaskTemplateDto>> SearchAsync(BaseFilter filters);
     }
 }

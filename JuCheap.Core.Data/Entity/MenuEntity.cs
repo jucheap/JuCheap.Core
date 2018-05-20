@@ -60,7 +60,7 @@ namespace JuCheap.Core.Data.Entity
         /// <summary>
         /// 菜单类型
         /// </summary>
-        public int Type { get; set; }
+        public MenuType Type { get; set; }
 
         /// <summary>
         /// 角色菜单关系

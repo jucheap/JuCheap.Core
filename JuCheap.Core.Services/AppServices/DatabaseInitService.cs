@@ -133,7 +133,7 @@ namespace JuCheap.Core.Services.AppServices
 
                 var roleMenus = new List<RoleMenuEntity>();
                 //guest授权(guest只有查看权限，没有按钮操作权限)
-                menus.Where(item => item.Type != (byte)MenuType.Action).ForEach(m =>
+                menus.Where(item => item.Type != MenuType.Action).ForEach(m =>
                 {
                     roleMenus.Add(new RoleMenuEntity
                     {
@@ -226,61 +226,5 @@ namespace JuCheap.Core.Services.AppServices
             }
             return false;
         }
-
-        #region Private
-
-        /// <summary>
-        /// 获取菜单的基础按钮
-        /// </summary>
-        /// <param name="parentId">父级ID</param>
-        /// <param name="controllerName">控制器名称</param>
-        /// <param name="controllerShowName">菜单显示名称</param>
-        /// <param name="parentPathCode">父级路径码</param>
-        /// <param name="order">排序</param>
-        /// <returns></returns>
-        private IEnumerable<MenuEntity> GetMenuButtons(string parentId, string controllerName, string controllerShowName, string parentPathCode, int order)
-        {
-            return new List<MenuEntity>
-            {
-                new MenuEntity
-                {
-                    Id = Guid.NewGuid().ToString("N"),
-                    ParentId = parentId,
-                    Name = string.Concat("添加",controllerShowName),
-                    Url = string.Format("/{0}/Add",controllerName),
-                    CreateDateTime = Now,
-                    Order = order,
-                    Code = "AA",
-                    PathCode = parentPathCode+"AA",
-                    Type = 3
-                },
-                new MenuEntity
-                {
-                    Id = Guid.NewGuid().ToString("N"),
-                    ParentId = parentId,
-                    Name = string.Concat("修改",controllerShowName),
-                    Url = string.Format("/{0}/Edit",controllerName),
-                    CreateDateTime = Now,
-                    Order = order+1,
-                    Code = "AB",
-                    PathCode = parentPathCode+"AB",
-                    Type = 3
-                },
-                new MenuEntity
-                {
-                    Id = Guid.NewGuid().ToString("N"),
-                    ParentId = parentId,
-                    Name = string.Concat("删除",controllerShowName),
-                    Url = string.Format("/{0}/Delete",controllerName),
-                    CreateDateTime = Now,
-                    Order = order+2,
-                    Code = "AC",
-                    PathCode = parentPathCode+"AC",
-                    Type = 3
-                }
-            };
-        }
-
-        #endregion
     }
 }

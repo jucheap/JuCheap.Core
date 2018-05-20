@@ -60,12 +60,12 @@ namespace JuCheap.Core.Services.AppServices
             {
                 var parent = await dbSet.FirstOrDefaultAsync(m => m.Id == entity.ParentId);
                 entity.PathCode = string.Concat(parent.PathCode.Trim(), entity.Code.Trim());
-                entity.Type = parent.Type == 1 ? (byte)MenuType.Menu : (byte)MenuType.Action;
+                entity.Type = parent.Type == MenuType.Module ? MenuType.Menu : MenuType.Action;
             }
             else
             {
                 entity.PathCode = entity.Code.Trim();
-                entity.Type = (byte)MenuType.Module;
+                entity.Type = MenuType.Module;
             }
             dbSet.Add(entity);
 
@@ -138,7 +138,7 @@ namespace JuCheap.Core.Services.AppServices
             if (filters.keywords.IsNotBlank())
                 query = query.Where(x => x.Name.Contains(filters.keywords));
             if (filters.ExcludeType.HasValue)
-                query = query.Where(x => x.Type != (byte)filters.ExcludeType.Value);
+                query = query.Where(x => x.Type != filters.ExcludeType.Value);
 
             return await query.OrderByDescending(item => item.CreateDateTime)
                 .Select(item => new MenuDto
@@ -159,7 +159,7 @@ namespace JuCheap.Core.Services.AppServices
         /// <returns></returns>
         public async Task<List<MenuDto>> GetMyMenusAsync(string userId)
         {
-            var query = _context.Menus.Where(x => x.Type != (byte)MenuType.Action);
+            var query = _context.Menus.Where(x => x.Type != MenuType.Action);
             var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == userId);
             if (user == null)
             {
@@ -238,15 +238,15 @@ namespace JuCheap.Core.Services.AppServices
                 //设置菜单类型
                 if (menu.ParentId.IsBlank())
                 {
-                    menu.Type = (byte)MenuType.Module;
+                    menu.Type = MenuType.Module;
                 }
                 else if (moduleIds.Contains(menu.ParentId))
                 {
-                    menu.Type = (byte)MenuType.Menu;
+                    menu.Type = MenuType.Menu;
                 }
                 else
                 {
-                    menu.Type = (byte)MenuType.Action;
+                    menu.Type = MenuType.Action;
                 }
 
                 //设置菜单的路径(层级关系) 父类的PathCode+当前类别的Id

@@ -1,4 +1,5 @@
 ﻿using JuCheap.Core.Infrastructure.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace JuCheap.Core.Models
 {
@@ -11,10 +12,15 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 控件类型
         /// </summary>
+        [Display(Name = "控件类型")]
+        [Required(ErrorMessage = Message.Required)]
         public ControlType ControlType { get; set; }
         /// <summary>
         /// 控件名称
         /// </summary>
+        [Display(Name = "控件名称")]
+        [Required(ErrorMessage = Message.Required)]
+        [MaxLength(50, ErrorMessage = Message.MaxLength)]
         public string ControlName { get; set; }
     }
 }

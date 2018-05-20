@@ -46,6 +46,9 @@ namespace JuCheap.Core.Services
             config.CreateMap<MessageEntity, MessageDto>().ReverseMap();
             config.CreateMap<MessageEntity, MessageQueryDto>();
             config.CreateMap<TaskTemplateFormEntity, TaskTemplateFormDto>().ReverseMap();
+            config.CreateMap<TaskTemplateStepEntity, TaskTemplateStepDto>().ReverseMap();
+            config.CreateMap<TaskTemplateStepOperateEntity, TaskTemplateStepOperateDto>().ReverseMap();
+            config.CreateMap<TaskTemplateEntity, TaskTemplateDto>().ReverseMap();
         }
     }
 

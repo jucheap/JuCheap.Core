@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "添加任务模板";
+    Layout = "~/Views/Shared/_Layout_Content.cshtml";
+}
+
+
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model JuCheap.Core.Models.TaskTemplateDto
+
+<div class="wrapper wrapper-content">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>@ViewBag.Title</h5>
+            <div class="ibox-tools">
+                <a class="collapse-link">
+                    <i class="fa fa-chevron-up"></i>
+                </a>
+            </div>
+        </div>
+        <div class="ibox-content">
+            @using (Html.BeginForm("Add", "TaskTemplate", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">@Html.LabelFor(m => m.Name)：</label>
+                    <div class="col-sm-8">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "模板名称" })
+                        @Html.ValidationMessageFor(m => m.Name)
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-8">
+                        <button class="btn btn-info" type="submit">下一步</button>
+                        <button class="btn btn-white" type="button" id="btnBack">返回</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section scripts{
+    <environment names="Development">
+        <script src="~/js/jquery.validate.js"></script>
+        <script src="~/js/jquery.validate.unobtrusive.js"></script>
+        <script src="~/js/base.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/validate.min.js" asp-append-version="true"></script>
+        <script src="~/js/base.min.js" asp-append-version="true"></script>
+    </environment>
+
+    <script>
+        $("#btnBack").bind("click", function(e) {
+            XPage.GoTo(e.target, "@Url.Action("Index")");
+        });
+    </script>
+}

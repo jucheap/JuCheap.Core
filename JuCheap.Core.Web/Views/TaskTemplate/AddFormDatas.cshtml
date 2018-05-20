@@ -15,7 +15,6 @@
         <label class="col-sm-2 control-label" asp-for="@form.ControlName"></label>
         <div class="col-sm-4">
             <input asp-for="@form.ControlName" name="[@index].ControlName" class="form-control" placeholder="控件名称"/>
-            <span asp-validation-for="@form.ControlName"></span>
             <span class="field-validation-valid" data-valmsg-for="[@index].ControlName" data-valmsg-replace="true"></span>
         </div>
         <label class="col-sm-2 control-label" asp-for="@form.ControlType"></label>

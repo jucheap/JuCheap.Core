@@ -12,13 +12,24 @@
     <div id="step-@index" class="form-group">
         <input type="hidden" name="index" id="@index" value="@index"/>
         <input asp-for="@form.TemplateId" name="[@index].TemplateId" type="hidden"/>
-        <label class="col-sm-2 control-label" asp-for="@form.StepName"></label>
-        <div class="col-sm-4">
+        <label class="col-sm-1 control-label" asp-for="@form.StepName"></label>
+        <div class="col-sm-2">
             <input asp-for="@form.StepName" name="[@index].StepName" class="form-control" placeholder="步骤名称"/>
-            <span asp-validation-for="@form.StepName"></span>
             <span class="field-validation-valid" data-valmsg-for="[@index].StepName" data-valmsg-replace="true"></span>
         </div>
-        <div class="col-sm-2 text-right">
+        <div class="col-sm-4">
+            <input asp-for="@form.StepName" name="[@index].StepName" class="form-control" placeholder="操作按钮名称"/>
+            <select  name="[@index].ControlType" class="form-control" placeholder="控件类型">
+                <option value="1">单行文本框</option>
+                <option value="2">多行文本框</option>
+            </select>
+            <span class="field-validation-valid" data-valmsg-for="[@index].StepName" data-valmsg-replace="true"></span>
+        </div>
+        <div class="col-sm-4">
+            <input asp-for="@form.StepName" name="[@index].StepName" class="form-control" placeholder="操作按钮名称"/>
+            <span class="field-validation-valid" data-valmsg-for="[@index].StepName" data-valmsg-replace="true"></span>
+        </div>
+        <div class="col-sm-1 text-right">
             <button class="btn btn-info btn-xs" type="button" onclick="loadDatas('true')">
                 <i class="fa fa-plus-circle"></i>
             </button>

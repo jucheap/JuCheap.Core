@@ -54,6 +54,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(TaskTemplateDto template)
         {
             var templateId = await _taskTemplateService.Create(template.Name, null);

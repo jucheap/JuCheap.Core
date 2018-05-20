@@ -51,6 +51,7 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(MessageDto message)
         {
             await _messageService.SendAsync(message);

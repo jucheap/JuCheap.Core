@@ -3,8 +3,6 @@
     Layout = "~/Views/Shared/_Layout_Content.cshtml";
 }
 
-
-@using Microsoft.AspNetCore.Mvc.Rendering
 @model JuCheap.Core.Models.TaskTemplateDto
 
 <div class="wrapper wrapper-content">
@@ -18,13 +16,13 @@
             </div>
         </div>
         <div class="ibox-content">
-            @using (Html.BeginForm("Add", "TaskTemplate", FormMethod.Post, new { @class = "form-horizontal" }))
-            {
+            <form asp-controller="Message" asp-action="Add" class="form-horizontal" method="POST">
+                @Html.AntiForgeryToken()
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">@Html.LabelFor(m => m.Name)：</label>
+                    <label class="col-sm-3 control-label" asp-for="Name"></label>
                     <div class="col-sm-8">
-                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "模板名称" })
-                        @Html.ValidationMessageFor(m => m.Name)
+                        <input asp-for="Name" class="form-control" placeholder="模板名称"/>
+                        <span asp-validation-for="Name"></span>
                     </div>
                 </div>
                 <div class="form-group">
@@ -33,7 +31,7 @@
                         <button class="btn btn-white" type="button" id="btnBack">返回</button>
                     </div>
                 </div>
-            }
+            </form>
         </div>
     </div>
 </div>

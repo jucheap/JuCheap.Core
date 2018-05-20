@@ -1,9 +1,14 @@
 ﻿using AutoMapper;
 using JuCheap.Core.Data;
+using JuCheap.Core.Data.Entity;
+using JuCheap.Core.Infrastructure.Exceptions;
+using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Interfaces;
 using JuCheap.Core.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace JuCheap.Core.Services.AppServices
@@ -27,7 +32,15 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         public async Task<string> Create(string templateName, CurrentUserDto user)
         {
-            throw new NotImplementedException();
+            if (templateName.IsBlank())
+            {
+                throw new BusinessException("模板名称已存在");
+            }
+            var template = new TaskTemplateEntity { Name = templateName };
+            template.Init();
+            await _context.AddAsync(template);
+            await _context.SaveChangesAsync();
+            return template.Id;
         }
 
         /// <summary>
@@ -35,7 +48,16 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         public async Task CreateForms(IList<TaskTemplateFormDto> forms, CurrentUserDto user)
         {
-            throw new NotImplementedException();
+            var templateIds = forms.Select(x => x.TemplateId).Distinct().ToList();
+            var templateForms = await _context.TaskTemplateForms.Where(x => templateIds.Contains(x.TemplateId)).ToListAsync();
+            if (templateForms.AnyOne())
+            {
+                _context.TaskTemplateForms.RemoveRange(templateForms);
+            }
+            var formList = _mapper.Map<List<TaskTemplateFormEntity>>(forms);
+            formList.ForEach(x => x.CreateBy(user.UserId));
+            await _context.TaskTemplateForms.AddRangeAsync(formList);
+            await _context.SaveChangesAsync();
         }
 
         /// <summary>
@@ -43,7 +65,23 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         public async Task CreateSteps(IList<TaskTemplateStepDto> steps, CurrentUserDto user)
         {
-            throw new NotImplementedException();
+            var templateIds = steps.Select(x => x.TemplateId).Distinct().ToList();
+            var stepList = await _context.TaskTemplateSteps.Where(x => templateIds.Contains(x.TemplateId)).ToListAsync();
+            if (stepList.AnyOne())
+            {
+                var stepIds = stepList.Select(x => x.Id).ToList();
+                var operateList = await _context.TaskTemplateStepOperates.Where(x => stepIds.Contains(x.StepId)).ToListAsync();
+                _context.TaskTemplateStepOperates.RemoveRange(operateList);
+                _context.TaskTemplateSteps.RemoveRange(stepList);
+            }
+            var list = _mapper.Map<List<TaskTemplateStepEntity>>(steps);
+            list.ForEach(x =>
+            {
+                x.CreateBy(user.UserId);
+                x.Operates.ForEach(m => m.StepId = x.Id);
+            });
+            await _context.TaskTemplateSteps.AddRangeAsync(list);
+            await _context.SaveChangesAsync();
         }
     }
 }

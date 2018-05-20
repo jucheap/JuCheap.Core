@@ -128,6 +128,26 @@ namespace JuCheap.Core.Data
         /// </summary>
         public DbSet<MessageReceiverEntity> MessageReceivers { get; set; }
 
+        /// <summary>
+        /// 任务流模板
+        /// </summary>
+        public DbSet<TaskTemplateEntity> TaskTemplates { get; set; }
+
+        /// <summary>
+        /// 任务流表单
+        /// </summary>
+        public DbSet<TaskTemplateFormEntity> TaskTemplateForms { get; set; }
+
+        /// <summary>
+        /// 任务流步骤
+        /// </summary>
+        public DbSet<TaskTemplateStepEntity> TaskTemplateSteps { get; set; }
+
+        /// <summary>
+        /// 任务流操作
+        /// </summary>
+        public DbSet<TaskTemplateStepOperateEntity> TaskTemplateStepOperates { get; set; }
+
         #endregion
     }
 }

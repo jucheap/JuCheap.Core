@@ -42,5 +42,14 @@ namespace JuCheap.Core.Data.Entity
             entity.Id = Guid.NewGuid().ToString("N");
             entity.CreateDateTime = DateTime.Now;
         }
+
+        /// <summary>
+        /// 用户初始化
+        /// </summary>
+        public static void CreateBy(this BaseEntity entity, string userId)
+        {
+            entity.Init();
+            entity.CreateUserId = userId;
+        }
     }
 }

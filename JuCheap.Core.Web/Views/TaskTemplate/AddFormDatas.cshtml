@@ -7,9 +7,9 @@
 
 @foreach(var form in Model)
 {
-    var index = Guid.NewGuid();
+    var index = Guid.NewGuid().ToString("N");
 
-    <div class="form-group">
+    <div id="control-@index" class="form-group">
         <input type="hidden" name="index" id="@index" value="@index"/>
         <input asp-for="@form.TemplateId" name="[@index].TemplateId" type="hidden"/>
         <label class="col-sm-2 control-label" asp-for="@form.ControlName"></label>
@@ -27,7 +27,12 @@
             <span class="field-validation-valid" data-valmsg-for="[@index].ControlType" data-valmsg-replace="true"></span>
         </div>
         <div class="col-sm-2 text-right">
-            <button class="btn btn-info btn-sm btn-add-form" type="button" onclick="loadDatas('true')">添加</button>
+            <button class="btn btn-info btn-xs" type="button" onclick="loadDatas('true')">
+                <i class="fa fa-plus-circle"></i>
+            </button>
+            <button class="btn btn-danger btn-xs" type="button" onclick="deleteControl('@index')">
+                <i class="fa fa-minus-circle"></i>
+            </button>
         </div>
     </div>
 }  

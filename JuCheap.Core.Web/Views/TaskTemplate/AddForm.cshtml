@@ -49,6 +49,9 @@
         function resetFormValidate() {
             $.validator.unobtrusive.parse($("#taskForm"));
         }
+        function deleteControl(index) {
+            $("#control-" + index).remove();
+        }
         function loadDatas(isAdd) {
             var dom = $("#taskFormDatas");
             var url = dom.data("url") + "?isAdd=" + isAdd + "&date=" + new Date().getTime();

@@ -1,9 +1,10 @@
 ﻿@{
     ViewBag.Title = "添加任务模板步骤";
     Layout = "~/Views/Shared/_Layout_Content.cshtml";
+    var index = 0;
 }
 
-@model string
+@model JuCheap.Core.Models.TaskTemplateStepDto
 
 <div class="wrapper wrapper-content">
     <div class="ibox float-e-margins">
@@ -16,14 +17,49 @@
             </div>
         </div>
         <div class="ibox-content">
+            
+            <div id="taskStepDatas" data-url="/tasktemplate/addstepdatas/@Model.TemplateId">
+                表单数据加载中……
+            </div>
             <form id="taskForm" asp-controller="TaskTemplate" asp-action="AddStep" class="form-horizontal" method="POST">
                 @Html.AntiForgeryToken()
-                <div id="taskFormDatas" data-url="/tasktemplate/addstepdatas/@Model">                    
-                    表单数据加载中……
+                <input type="hidden" asp-for="@Model.TemplateId" />
+                <div class="form-group">                    
+                    <table class="table">
+                        <tr>
+                            <td colspan="3">
+                                <div class="col-sm-12">
+                                    <input asp-for="@Model.StepName" class="form-control" placeholder="步骤名称"/>
+                                    <span asp-validation-for="@Model.StepName"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            @foreach(var op in Model.Operates)
+                            {
+                                <td>
+                                    <div class="col-sm-6">
+                                        <input asp-for="@op.Name" name="Operates[@index].Name" class="form-control" placeholder="操作名称"/>
+                                        <span class="field-validation-valid" data-valmsg-for="Operates[@index].Name" data-valmsg-replace="true"></span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <select asp-for="@op.OperateDirection" name="Operates[@index].OperateDirection" class="form-control" placeholder="操作类型">
+                                            <option value="-1">上一步</option>
+                                            <option value="1">下一步</option>
+                                            <option value="0">退回到发起人</option>
+                                            <option value="99">结束</option>
+                                        </select>
+                                    </div>
+                                </td>
+
+                                index++;
+                            }
+                        </tr>
+                    </table>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-12 text-right">
-                        <button class="btn btn-info" type="submit">下一步</button>
+                        <button class="btn btn-info" type="submit">保存操作</button>
                         <button class="btn btn-white" type="button" id="btnBack">返回</button>
                     </div>
                 </div>
@@ -53,7 +89,7 @@
             $("#step-" + index).remove();
         }
         function loadDatas(isAdd) {
-            var dom = $("#taskFormDatas");
+            var dom = $("#taskStepDatas");
             var url = dom.data("url") + "?isAdd=" + isAdd + "&date=" + new Date().getTime();
             $.get(url, function (res) {
                 if (isAdd === "false") {

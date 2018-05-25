@@ -115,7 +115,17 @@ namespace JuCheap.Core.Web.Controllers
         /// <param name="id">模板Id</param>
         public IActionResult AddStep(string id)
         {
-            return View("AddStep", id);
+            var model = new TaskTemplateStepDto
+            {
+                TemplateId = id,
+                Operates = new List<TaskTemplateStepOperateDto>
+                {
+                    new TaskTemplateStepOperateDto{ StepId = Guid.NewGuid().ToString("N") },
+                    new TaskTemplateStepOperateDto{ StepId = Guid.NewGuid().ToString("N") },
+                    new TaskTemplateStepOperateDto{ StepId = Guid.NewGuid().ToString("N") }
+                }
+            };
+            return View(model);
         }
 
         /// <summary>
@@ -135,11 +145,6 @@ namespace JuCheap.Core.Web.Controllers
                 }
             }
 
-            if (!steps.AnyOne())
-            {
-                steps.Add(new TaskTemplateStepDto { TemplateId = id });
-            }
-
             return View(steps);
         }
 
@@ -149,10 +154,10 @@ namespace JuCheap.Core.Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddStep(IList<TaskTemplateStepDto> steps)
+        public async Task<IActionResult> AddStep(TaskTemplateStepDto step)
         {
-            await _taskTemplateService.CreateStepsAsync(steps, GetCurrentUser());
-            return RedirectToAction("Index");
+            await _taskTemplateService.CreateStepsAsync(new List<TaskTemplateStepDto> { step }, GetCurrentUser());
+            return RedirectToAction("AddStep", new { id = step.TemplateId });
         }
 
         /// <summary>

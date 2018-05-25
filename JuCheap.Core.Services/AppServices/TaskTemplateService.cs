@@ -70,20 +70,16 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         public async Task CreateStepsAsync(IList<TaskTemplateStepDto> steps, CurrentUserDto user)
         {
-            var templateIds = steps.Select(x => x.TemplateId).Distinct().ToList();
-            var stepList = await _context.TaskTemplateSteps.Where(x => templateIds.Contains(x.TemplateId)).ToListAsync();
-            if (stepList.AnyOne())
-            {
-                var stepIds = stepList.Select(x => x.Id).ToList();
-                var operateList = await _context.TaskTemplateStepOperates.Where(x => stepIds.Contains(x.StepId)).ToListAsync();
-                _context.TaskTemplateStepOperates.RemoveRange(operateList);
-                _context.TaskTemplateSteps.RemoveRange(stepList);
-            }
             var list = _mapper.Map<List<TaskTemplateStepEntity>>(steps);
             list.ForEach(x =>
             {
+                x.Operates = x.Operates.Where(o => o.Name.IsNotBlank()).ToList();
                 x.CreateBy(user.UserId);
-                x.Operates.ForEach(m => m.StepId = x.Id);
+                x.Operates.ForEach(m =>
+                {
+                    m.CreateBy(user.UserId);
+                    m.StepId = x.Id;
+                });
             });
             await _context.TaskTemplateSteps.AddRangeAsync(list);
             await _context.SaveChangesAsync();

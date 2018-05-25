@@ -114,6 +114,7 @@ namespace JuCheap.Core.Services.AppServices
         {
             var query = _context.TaskTemplateSteps
                 .Include(x => x.Operates)
+                .OrderBy(x => x.CreateDateTime)
                 .Where(x => x.TemplateId == templateId);
             return await query.ProjectTo<TaskTemplateStepDto>(_configurationProvider).ToListAsync();
         }

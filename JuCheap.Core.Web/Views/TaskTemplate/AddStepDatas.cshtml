@@ -5,32 +5,22 @@
 @using JuCheap.Core.Infrastructure.Extentions
 @model IList<JuCheap.Core.Models.TaskTemplateStepDto>
 
+<ul class="sortable-list connectList agile-list ui-sortable">
 @if (Model.AnyOne())
 {
     foreach(var step in Model)
     {
-        var index = Guid.NewGuid().ToString("N");
-
-        <div id="step-@index" class="form-group">
-            <table class="table">
-                <tr>
-                    <td colspan="6">
-                        <span class="btn btn-outline btn-primary">@step.StepName</span>
-                    </td>
-                </tr>
-                <tr>
+        <li class="success-element" style="">
+            <i class="fa fa-clock-o"></i> @step.StepName
+            <div class="agile-detail">
                 @foreach(var op in step.Operates)
                 {
-                    <td>
-                        <span class="btn btn-outline btn-default">@op.Name</span>                           
-                    </td>
-                    <td>@op.OperateDirection.GetDescriptionForEnum()</td>
-                }
-                </tr>
-                
-            </table>
-        </div>
+                    <a href="#" class="btn btn-xs btn-white">@op.Name</a>
+                } 
+            </div>
+        </li>
     }
 }
+</ul>
 
 

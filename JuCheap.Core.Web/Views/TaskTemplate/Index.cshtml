@@ -81,11 +81,35 @@
             var config = {
                 title: '任务模板列表',
                 url: '@Url.Action("GetListWithPager")',
-                colNames: ['主键', '模板名称', '创建时间'],
+                colNames: ['主键', '模板名称', '创建时间','操作'],
                 colModel: [
                     { name: 'id', index: 'id', width: 60, key: true, hidden: true },
-                    { name: 'name', index: 'name', width: 200 },
-                    { name: 'createDateTime', index: 'createDateTime', width: 60 }
+                    { name: 'name', index: 'name', width: 300 },
+                    { name: 'createDateTime', index: 'createDateTime', width: 100 },
+                    {
+                        name: 'step', index: 'step', width: 30, align: 'center',
+                        formatter: function (cellValue, options, rowObject) {
+                            var url = "";
+                            var name = "";
+                            var className = "btn-primary";
+                            if (cellValue == 1) {
+                                url = "/tasktemplate/addform/" + rowObject.id;
+                                name = "设计表单";
+                                className = "btn-warning";
+                            } else if (cellValue == 2) {
+                                url = "/tasktemplate/addstep/" + rowObject.id;
+                                name = "设计步骤";
+                                className = "btn-danger";
+                            } else if (cellValue == 99) {
+                                url = "#";
+                                name = "已完成";
+                            }
+                            if (url != "") {
+                                return "<a href='" + url + "' class='btn btn-xs " + className + "'>" + name + "</a>";
+                            }
+                            return "";
+                        }
+                    }
                 ]
             };
             JucheapGrid.Load(config);

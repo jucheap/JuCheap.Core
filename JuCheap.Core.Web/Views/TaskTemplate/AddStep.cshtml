@@ -80,7 +80,7 @@
 
     <script>
         $("#btnBack").bind("click", function (e) {
-            window.history.go(-1);
+            window.location.href = "/tasktemplate";
         });
         function resetFormValidate() {
             $.validator.unobtrusive.parse($("#taskForm"));

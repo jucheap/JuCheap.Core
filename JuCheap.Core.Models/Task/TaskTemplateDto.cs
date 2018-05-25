@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JuCheap.Core.Infrastructure.Enums;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace JuCheap.Core.Models
@@ -14,6 +15,11 @@ namespace JuCheap.Core.Models
         [Required(ErrorMessage = Message.Required)]
         [MaxLength(100, ErrorMessage = Message.MaxLength)]
         public string Name { get; set; }
+
+        /// <summary>
+        /// 设计步骤
+        /// </summary>
+        public TaskTemplateStep Step { get; set; }
 
         /// <summary>
         /// 创建日期

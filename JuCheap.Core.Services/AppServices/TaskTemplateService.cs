@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using JuCheap.Core.Data;
 using JuCheap.Core.Data.Entity;
 using JuCheap.Core.Infrastructure;
+using JuCheap.Core.Infrastructure.Enums;
 using JuCheap.Core.Infrastructure.Exceptions;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Interfaces;
@@ -42,7 +43,8 @@ namespace JuCheap.Core.Services.AppServices
                 throw new BusinessException("模板名称已存在");
             }
             var template = new TaskTemplateEntity { Name = templateName };
-            template.Init();
+            template.CreateBy(user.UserId);
+            template.SetStep(TaskTemplateStep.Save);
             await _context.AddAsync(template);
             await _context.SaveChangesAsync();
             return template.Id;
@@ -54,6 +56,8 @@ namespace JuCheap.Core.Services.AppServices
         public async Task CreateFormsAsync(IList<TaskTemplateFormDto> forms, CurrentUserDto user)
         {
             var templateIds = forms.Select(x => x.TemplateId).Distinct().ToList();
+            var templates = await _context.TaskTemplates.Where(x => templateIds.Contains(x.Id)).ToListAsync();
+            templates.ForEach(x => x.SetStep(TaskTemplateStep.DesignForms));
             var templateForms = await _context.TaskTemplateForms.Where(x => templateIds.Contains(x.TemplateId)).ToListAsync();
             if (templateForms.AnyOne())
             {
@@ -70,6 +74,9 @@ namespace JuCheap.Core.Services.AppServices
         /// </summary>
         public async Task CreateStepsAsync(IList<TaskTemplateStepDto> steps, CurrentUserDto user)
         {
+            var templateIds = steps.Select(x => x.TemplateId).Distinct().ToList();
+            var templates = await _context.TaskTemplates.Where(x => templateIds.Contains(x.Id)).ToListAsync();
+            templates.ForEach(x => x.SetStep(TaskTemplateStep.DesignSteps));
             var list = _mapper.Map<List<TaskTemplateStepEntity>>(steps);
             list.ForEach(x =>
             {

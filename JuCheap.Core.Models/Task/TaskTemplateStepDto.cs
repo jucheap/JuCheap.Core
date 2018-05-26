@@ -20,6 +20,7 @@ namespace JuCheap.Core.Models
         /// 排序
         /// </summary>
         [Display(Name = "排序")]
+        [Required(ErrorMessage = Message.Required)]
         public int Order { get; set; }
 
         /// <summary>

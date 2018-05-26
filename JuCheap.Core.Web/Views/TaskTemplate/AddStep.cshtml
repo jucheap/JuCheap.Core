@@ -27,10 +27,19 @@
                 <div class="form-group">                    
                     <table class="table">
                         <tr>
-                            <td colspan="3">
+                            <td colspan="2">
                                 <div class="col-sm-12">
                                     <input asp-for="@Model.StepName" class="form-control" placeholder="步骤名称"/>
                                     <span asp-validation-for="@Model.StepName"></span>
+                                </div>
+                            </td>
+                            <td>    
+                                <div class="col-sm-2">
+                                    <label class="control-label pull-left" asp-for="@Model.Order"></label>
+                                </div>
+                                <div class="col-sm-10">
+                                    <input asp-for="@Model.Order" class="form-control" placeholder="步骤序号"/>
+                                    <span asp-validation-for="@Model.Order"></span>
                                 </div>
                             </td>
                         </tr>
@@ -80,7 +89,7 @@
 
     <script>
         $("#btnBack").bind("click", function (e) {
-            window.location.href = "/tasktemplate";
+            window.location.href = "/tasktemplate/addform/@Model.TemplateId";
         });
         function resetFormValidate() {
             $.validator.unobtrusive.parse($("#taskForm"));

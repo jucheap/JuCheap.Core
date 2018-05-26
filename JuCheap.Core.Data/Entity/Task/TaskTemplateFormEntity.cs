@@ -20,6 +20,10 @@ namespace JuCheap.Core.Data.Entity
         /// </summary>
         public string ControlName { get; set; }
         /// <summary>
+        /// 排序(升序)
+        /// </summary>
+        public int Order { get; set; }
+        /// <summary>
         /// 所属模板
         /// </summary>
         public virtual TaskTemplateEntity Template { get; set; }

@@ -44,9 +44,11 @@ namespace JuCheap.Core.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [Menu(Id = Menu.TaskTemplateAddId, ParentId = Menu.TaskTemplatePageId, Name = "添加任务模板", Order = "1")]
-        public IActionResult Add()
+        public async Task<IActionResult> Add(string id)
         {
-            return View();
+            var template = (await _taskTemplateService.GetTemplateAsync(id)) ?? new TaskTemplateDto();
+            
+            return View(template);
         }
 
         /// <summary>
@@ -57,7 +59,7 @@ namespace JuCheap.Core.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(TaskTemplateDto template)
         {
-            var templateId = await _taskTemplateService.CreateAsync(template.Name, GetCurrentUser());
+            var templateId = await _taskTemplateService.CreateAsync(template, GetCurrentUser());
             if (templateId.IsNotBlank())
                 return RedirectToAction("AddForm", new { id = templateId });
             return View(template);

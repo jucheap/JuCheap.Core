@@ -12,7 +12,7 @@ using System;
 namespace JuCheap.Core.Data.Migrations
 {
     [DbContext(typeof(JuCheapContext))]
-    [Migration("20180519143321_Init")]
+    [Migration("20180526032240_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -157,7 +157,8 @@ namespace JuCheap.Core.Data.Migrations
 
                     b.Property<int>("Order");
 
-                    b.Property<string>("ParentId");
+                    b.Property<string>("ParentId")
+                        .HasMaxLength(36);
 
                     b.Property<string>("PathCode")
                         .IsRequired()
@@ -421,6 +422,8 @@ namespace JuCheap.Core.Data.Migrations
                         .HasMaxLength(100)
                         .IsUnicode(true);
 
+                    b.Property<int>("Step");
+
                     b.HasKey("Id");
 
                     b.ToTable("TaskTemplate");
@@ -445,6 +448,8 @@ namespace JuCheap.Core.Data.Migrations
                         .HasMaxLength(36);
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<int>("Order");
 
                     b.Property<string>("TemplateId")
                         .IsRequired()
@@ -507,6 +512,8 @@ namespace JuCheap.Core.Data.Migrations
                         .IsUnicode(true);
 
                     b.Property<int>("OperateDirection");
+
+                    b.Property<int>("Order");
 
                     b.Property<string>("StepId")
                         .IsRequired()

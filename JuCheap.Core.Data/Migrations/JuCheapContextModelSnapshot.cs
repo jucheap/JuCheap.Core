@@ -156,7 +156,8 @@ namespace JuCheap.Core.Data.Migrations
 
                     b.Property<int>("Order");
 
-                    b.Property<string>("ParentId");
+                    b.Property<string>("ParentId")
+                        .HasMaxLength(36);
 
                     b.Property<string>("PathCode")
                         .IsRequired()
@@ -420,6 +421,8 @@ namespace JuCheap.Core.Data.Migrations
                         .HasMaxLength(100)
                         .IsUnicode(true);
 
+                    b.Property<int>("Step");
+
                     b.HasKey("Id");
 
                     b.ToTable("TaskTemplate");
@@ -444,6 +447,8 @@ namespace JuCheap.Core.Data.Migrations
                         .HasMaxLength(36);
 
                     b.Property<bool>("IsDeleted");
+
+                    b.Property<int>("Order");
 
                     b.Property<string>("TemplateId")
                         .IsRequired()
@@ -506,6 +511,8 @@ namespace JuCheap.Core.Data.Migrations
                         .IsUnicode(true);
 
                     b.Property<int>("OperateDirection");
+
+                    b.Property<int>("Order");
 
                     b.Property<string>("StepId")
                         .IsRequired()

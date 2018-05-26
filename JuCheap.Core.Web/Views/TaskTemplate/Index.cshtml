@@ -92,7 +92,11 @@
                             var url = "";
                             var name = "";
                             var className = "btn-primary";
-                            if (cellValue == 1) {
+                            if (cellValue == 0) {
+                                url = "/tasktemplate/add/" + rowObject.id;
+                                name = "修改模板";
+                                className = "btn-danger";
+                            } else if (cellValue == 1) {
                                 url = "/tasktemplate/addform/" + rowObject.id;
                                 name = "设计表单";
                                 className = "btn-warning";

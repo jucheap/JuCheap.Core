@@ -19,6 +19,7 @@ namespace JuCheap.Core.Models
         /// <summary>
         /// 排序
         /// </summary>
+        [Display(Name = "排序")]
         public int Order { get; set; }
 
         /// <summary>

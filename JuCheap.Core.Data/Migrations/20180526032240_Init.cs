@@ -78,7 +78,7 @@ namespace JuCheap.Core.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
                     Order = table.Column<int>(nullable: false),
-                    ParentId = table.Column<string>(nullable: true),
+                    ParentId = table.Column<string>(maxLength: 36, nullable: true),
                     PathCode = table.Column<string>(maxLength: 100, nullable: false),
                     Type = table.Column<byte>(nullable: false),
                     Url = table.Column<string>(maxLength: 300, nullable: false)
@@ -197,7 +197,8 @@ namespace JuCheap.Core.Data.Migrations
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(maxLength: 100, nullable: false)
+                    Name = table.Column<string>(maxLength: 100, nullable: false),
+                    Step = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -292,6 +293,7 @@ namespace JuCheap.Core.Data.Migrations
                     CreateDateTime = table.Column<DateTime>(nullable: false),
                     CreateUserId = table.Column<string>(maxLength: 36, nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false),
+                    Order = table.Column<int>(nullable: false),
                     TemplateId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>
@@ -366,6 +368,7 @@ namespace JuCheap.Core.Data.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
                     OperateDirection = table.Column<int>(nullable: false),
+                    Order = table.Column<int>(nullable: false),
                     StepId = table.Column<string>(maxLength: 36, nullable: false)
                 },
                 constraints: table =>

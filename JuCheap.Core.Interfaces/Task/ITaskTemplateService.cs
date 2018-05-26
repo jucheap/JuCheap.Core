@@ -14,7 +14,7 @@ namespace JuCheap.Core.Interfaces
         /// <summary>
         /// 创建任务流模板
         /// </summary>
-        Task<string> CreateAsync(string templateName, CurrentUserDto user);
+        Task<string> CreateAsync(TaskTemplateDto templateDto, CurrentUserDto user);
 
         /// <summary>
         /// 创建表单信息
@@ -30,6 +30,11 @@ namespace JuCheap.Core.Interfaces
         /// 获取任务模板列表
         /// </summary>
         Task<PagedResult<TaskTemplateDto>> SearchAsync(BaseFilter filters);
+
+        /// <summary>
+        /// 获取任务模板的信息
+        /// </summary>
+        Task<TaskTemplateDto> GetTemplateAsync(string templateId);
 
         /// <summary>
         /// 获取模板的表单信息

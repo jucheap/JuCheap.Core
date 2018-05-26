@@ -16,6 +16,10 @@ namespace JuCheap.Core.Data.Entity
         /// </summary>
         public string Name { get; set; }
         /// <summary>
+        /// 排序（升序）
+        /// </summary>
+        public int Order { get; set; }
+        /// <summary>
         /// 操作方向(退回上一步，下一步，退回到发起人等)
         /// </summary>
         public OperateDirection OperateDirection { get; set; }

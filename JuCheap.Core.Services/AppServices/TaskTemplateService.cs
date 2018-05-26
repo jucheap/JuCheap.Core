@@ -36,18 +36,31 @@ namespace JuCheap.Core.Services.AppServices
         /// <summary>
         /// 创建任务流模板
         /// </summary>
-        public async Task<string> CreateAsync(string templateName, CurrentUserDto user)
+        public async Task<string> CreateAsync(TaskTemplateDto templateDto, CurrentUserDto user)
         {
-            if (templateName.IsBlank())
+            if (templateDto.Name.IsBlank())
             {
-                throw new BusinessException("模板名称已存在");
+                throw new BusinessException("模板名称不能为空");
             }
-            var template = new TaskTemplateEntity { Name = templateName };
-            template.CreateBy(user.UserId);
-            template.SetStep(TaskTemplateStep.Save);
-            await _context.AddAsync(template);
+            if (templateDto.Id.IsNotBlank())
+            {
+                var template = await _context.TaskTemplates.FindAsync(templateDto.Id);
+                if (template != null)
+                {
+                    template.Name = templateDto.Name;
+                }
+            }
+            else
+            {
+                var template = new TaskTemplateEntity { Name = templateDto.Name };
+                template.CreateBy(user.UserId);
+                template.SetStep(TaskTemplateStep.Save);
+                await _context.AddAsync(template);
+            }
+            
+           
             await _context.SaveChangesAsync();
-            return template.Id;
+            return templateDto.Id;
         }
 
         /// <summary>
@@ -64,7 +77,11 @@ namespace JuCheap.Core.Services.AppServices
                 _context.TaskTemplateForms.RemoveRange(templateForms);
             }
             var formList = _mapper.Map<List<TaskTemplateFormEntity>>(forms);
-            formList.ForEach(x => x.CreateBy(user.UserId));
+            formList.ForEach(x =>
+            {
+                x.CreateBy(user.UserId);
+                x.Order += 1;
+            });
             await _context.TaskTemplateForms.AddRangeAsync(formList);
             await _context.SaveChangesAsync();
         }
@@ -80,12 +97,13 @@ namespace JuCheap.Core.Services.AppServices
             var list = _mapper.Map<List<TaskTemplateStepEntity>>(steps);
             list.ForEach(x =>
             {
+                x.Order += 1;
                 x.Operates = x.Operates.Where(o => o.Name.IsNotBlank()).ToList();
                 x.CreateBy(user.UserId);
                 x.Operates.ForEach(m =>
                 {
-                    m.CreateBy(user.UserId);
                     m.StepId = x.Id;
+                    m.CreateBy(user.UserId);
                 });
             });
             await _context.TaskTemplateSteps.AddRangeAsync(list);
@@ -106,11 +124,26 @@ namespace JuCheap.Core.Services.AppServices
         }
 
         /// <summary>
+        /// 获取任务模板的信息
+        /// </summary>
+        public async Task<TaskTemplateDto> GetTemplateAsync(string templateId)
+        {
+            if (templateId.IsBlank())
+            {
+                return null;
+            }
+            var query = _context.TaskTemplates.Where(x => x.Id == templateId);
+            return await query.ProjectTo<TaskTemplateDto>(_configurationProvider).FirstOrDefaultAsync();
+        }
+
+        /// <summary>
         /// 获取模板的表单信息
         /// </summary>
         public async Task<IList<TaskTemplateFormDto>> GetFormsAsync(string templateId)
         {
-            var query = _context.TaskTemplateForms.Where(x => x.TemplateId == templateId);
+            var query = _context.TaskTemplateForms
+                .OrderBy(x => x.Order)
+                .Where(x => x.TemplateId == templateId);
             return await query.ProjectTo<TaskTemplateFormDto>(_configurationProvider).ToListAsync();
         }
 
@@ -121,7 +154,7 @@ namespace JuCheap.Core.Services.AppServices
         {
             var query = _context.TaskTemplateSteps
                 .Include(x => x.Operates)
-                .OrderBy(x => x.CreateDateTime)
+                .OrderBy(x => x.Order)
                 .Where(x => x.TemplateId == templateId);
             return await query.ProjectTo<TaskTemplateStepDto>(_configurationProvider).ToListAsync();
         }

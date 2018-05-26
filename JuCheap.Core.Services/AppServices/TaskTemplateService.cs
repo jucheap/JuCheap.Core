@@ -77,10 +77,12 @@ namespace JuCheap.Core.Services.AppServices
                 _context.TaskTemplateForms.RemoveRange(templateForms);
             }
             var formList = _mapper.Map<List<TaskTemplateFormEntity>>(forms);
+            var order = 1;
             formList.ForEach(x =>
             {
                 x.CreateBy(user.UserId);
-                x.Order += 1;
+                x.Order = order;
+                order++;
             });
             await _context.TaskTemplateForms.AddRangeAsync(formList);
             await _context.SaveChangesAsync();

@@ -96,6 +96,12 @@ namespace JuCheap.Core.Services.AppServices
             var templateIds = steps.Select(x => x.TemplateId).Distinct().ToList();
             var templates = await _context.TaskTemplates.Where(x => templateIds.Contains(x.Id)).ToListAsync();
             templates.ForEach(x => x.SetStep(TaskTemplateStep.DesignSteps));
+            //删除以前的数据
+            var stepIds = steps.Select(x => x.Id).Distinct().ToList();
+            var operates = await _context.TaskTemplateStepOperates.Where(x => stepIds.Contains(x.StepId)).ToListAsync();
+            _context.TaskTemplateStepOperates.RemoveRange(operates);
+            var oldSteps = await _context.TaskTemplateSteps.Where(x => stepIds.Contains(x.Id)).ToListAsync();
+            _context.TaskTemplateSteps.RemoveRange(oldSteps);
             var list = _mapper.Map<List<TaskTemplateStepEntity>>(steps);
             list.ForEach(x =>
             {

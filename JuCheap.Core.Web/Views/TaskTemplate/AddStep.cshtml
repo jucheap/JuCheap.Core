@@ -37,8 +37,8 @@
                         <tr>
                             <td colspan="2">
                                 <div class="col-sm-12">
-                                    <input id="StepName" class="form-control" placeholder="步骤名称" v-bind:value="currentData.stepName"/>
-                                    <input id="Id" type="hidden" v-bind:value="currentData.id"/>
+                                    <input id="StepName" name="StepName" class="form-control" placeholder="步骤名称" v-bind:value="currentData.stepName"/>
+                                    <input id="Id" name="Id" type="hidden" v-bind:value="currentData.id"/>
                                 </div>
                             </td>
                             <td>    
@@ -46,7 +46,7 @@
                                     <label class="control-label pull-left">排序</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input id="Order" class="form-control" placeholder="步骤序号" v-bind:value="currentData.order"/>
+                                    <input id="Order" name="Order" class="form-control" placeholder="步骤序号" v-bind:value="currentData.order"/>
                                 </div>
                             </td>
                         </tr>
@@ -57,7 +57,7 @@
                                     <span class="field-validation-valid" data-valmsg-for="Operates[index].Name" data-valmsg-replace="true"></span>
                                 </div>
                                 <div class="col-sm-6">
-                                    <select name="Operates[index].OperateDirection" class="form-control" placeholder="操作类型" v-bind:value="op.operateDirection">
+                                    <select name="'Operates['+index+'].OperateDirection" class="form-control" placeholder="操作类型" v-bind:value="op.operateDirection">
                                         <option value="-1">上一步</option>
                                         <option value="1">下一步</option>
                                         <option value="0">退回到发起人</option>

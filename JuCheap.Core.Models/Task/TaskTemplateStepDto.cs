@@ -5,6 +5,8 @@ namespace JuCheap.Core.Models
 {
     public class TaskTemplateStepDto
     {
+        public string Id { get; set; }
+
         /// <summary>
         /// 所属模板Id
         /// </summary>

@@ -16,10 +16,18 @@
                 </a>
             </div>
         </div>
-        <div class="ibox-content">
-            
+        <div id="app" class="ibox-content">
             <div id="taskStepDatas" data-url="/tasktemplate/addstepdatas/@Model.TemplateId">
-                表单数据加载中……
+                <ul class="sortable-list connectList agile-list ui-sortable">
+                    <li class="success-element" style="" v-for="step in datas" v-on:click="setData(step)">
+                        <i class="fa fa-clock-o"></i> {{step.stepName}}
+                        <div class="agile-detail">                
+                            <template v-for="op in step.operates">
+                                <a href="#" class="btn btn-xs btn-white">{{op.name}}</a>&nbsp;
+                            </template>
+                        </div>
+                    </li>
+                </ul>
             </div>
             <form id="taskForm" asp-controller="TaskTemplate" asp-action="AddStep" class="form-horizontal" method="POST">
                 @Html.AntiForgeryToken()
@@ -29,40 +37,42 @@
                         <tr>
                             <td colspan="2">
                                 <div class="col-sm-12">
-                                    <input asp-for="@Model.StepName" class="form-control" placeholder="步骤名称"/>
-                                    <span asp-validation-for="@Model.StepName"></span>
+                                    <input id="StepName" class="form-control" placeholder="步骤名称" v-bind:value="currentData.stepName"/>
+                                    <input id="Id" type="hidden" v-bind:value="currentData.id"/>
                                 </div>
                             </td>
                             <td>    
                                 <div class="col-sm-2">
-                                    <label class="control-label pull-left" asp-for="@Model.Order"></label>
+                                    <label class="control-label pull-left">排序</label>
                                 </div>
                                 <div class="col-sm-10">
-                                    <input asp-for="@Model.Order" class="form-control" placeholder="步骤序号"/>
-                                    <span asp-validation-for="@Model.Order"></span>
+                                    <input id="Order" class="form-control" placeholder="步骤序号" v-bind:value="currentData.order"/>
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                            @foreach(var op in Model.Operates)
-                            {
-                                <td>
-                                    <div class="col-sm-6">
-                                        <input asp-for="@op.Name" name="Operates[@index].Name" class="form-control" placeholder="操作名称"/>
-                                        <span class="field-validation-valid" data-valmsg-for="Operates[@index].Name" data-valmsg-replace="true"></span>
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <select asp-for="@op.OperateDirection" name="Operates[@index].OperateDirection" class="form-control" placeholder="操作类型">
-                                            <option value="-1">上一步</option>
-                                            <option value="1">下一步</option>
-                                            <option value="0">退回到发起人</option>
-                                            <option value="99">结束</option>
-                                        </select>
-                                    </div>
-                                </td>
-
-                                index++;
-                            }
+                        <tr v-for="(op,index) in currentData.operates">
+                            <td colspan="2">
+                                <div class="col-sm-6">
+                                    <input :name="'Operates['+index+'].Name'" class="form-control" placeholder="操作名称" v-bind:value="op.name"/>
+                                    <span class="field-validation-valid" data-valmsg-for="Operates[index].Name" data-valmsg-replace="true"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <select name="Operates[index].OperateDirection" class="form-control" placeholder="操作类型" v-bind:value="op.operateDirection">
+                                        <option value="-1">上一步</option>
+                                        <option value="1">下一步</option>
+                                        <option value="0">退回到发起人</option>
+                                        <option value="99">结束</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <button class="btn btn-info btn-xs" type="button" v-on:click="addOperate(index)">
+                                    <i class="fa fa-plus-circle"></i>
+                                </button>
+                                <button class="btn btn-danger btn-xs" type="button" v-on:click="deleteOperate(index)">
+                                    <i class="fa fa-minus-circle"></i>
+                                </button>
+                            </td>
                         </tr>
                     </table>
                 </div>
@@ -77,40 +87,64 @@
     </div>
 </div>
 @section scripts{
-    <environment names="Development">
-        <script src="~/js/jquery.validate.js"></script>
-        <script src="~/js/jquery.validate.unobtrusive.js"></script>
-        <script src="~/js/base.js"></script>
-    </environment>
+<environment names="Development">
+    <script src="~/js/jquery.validate.js"></script>
+    <script src="~/js/jquery.validate.unobtrusive.js"></script>
+    <script src="~/js/base.js"></script>
+    <script src="~/js/vue.js"></script>
+    <script src="~/lib/vue-resource/dist/vue-resource.js"></script>
+</environment>
     <environment names="Staging,Production">
         <script src="~/js/validate.min.js" asp-append-version="true"></script>
         <script src="~/js/base.min.js" asp-append-version="true"></script>
+        <script src="~/js/vue.min.js" asp-append-version="true"></script>
+        <script src="~/lib/vue-resource/dist/vue-resource.js" asp-append-version="true"></script>
     </environment>
 
     <script>
         $("#btnBack").bind("click", function (e) {
             window.location.href = "/tasktemplate/addform/@Model.TemplateId";
         });
-        function resetFormValidate() {
-            $.validator.unobtrusive.parse($("#taskForm"));
-        }
-        function deleteStep(index) {
-            $("#step-" + index).remove();
-        }
-        function loadDatas(isAdd) {
-            var dom = $("#taskStepDatas");
-            var url = dom.data("url") + "?isAdd=" + isAdd + "&date=" + new Date().getTime();
-            $.get(url, function (res) {
-                if (isAdd === "false") {
-                    dom.html("");
+        $(document).ready(function () {            
+            new Vue({
+                el: "#app",
+                data: {
+                    datas: [],
+                    currentData: {
+                        id: '',
+                        stepName: '',
+                        operates: [
+                            { id: '', name: '', operateDirection: 1 }
+                        ]
+                    }
+                },
+                mounted: function () {
+                    this.showData();
+                },
+                methods: {
+                    showData: function () {
+                        var loadStepUrl = "/tasktemplate/addstepdatas/@Model.TemplateId";
+                        this.$http.get(loadStepUrl)
+                            .then(function (data) {
+                                this.datas = data.body;
+                            }).catch(function (response) {
+                                console.log(response)
+                            });
+                    },
+                    setData: function (step) {
+                        this.currentData = step;
+                    },
+                    addOperate: function (index) {
+                        var len = this.currentData.operates.length;
+                        this.currentData.operates.splice(len - 1, 0, { id: '', name: '', operateDirection: 1 });
+                    },
+                    deleteOperate: function (index) {
+                        var len = this.currentData.operates.length;
+                        if (len > 1)
+                            this.currentData.operates.splice(index, 1);
+                    }
                 }
-                dom.append(res);
-                resetFormValidate();
             });
-
-        }
-        $(document).ready(function () { 
-            loadDatas("false");
         });
     </script>
 }

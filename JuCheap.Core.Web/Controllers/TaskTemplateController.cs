@@ -147,7 +147,7 @@ namespace JuCheap.Core.Web.Controllers
                 }
             }
 
-            return View(steps);
+            return Json(steps);
         }
 
         /// <summary>

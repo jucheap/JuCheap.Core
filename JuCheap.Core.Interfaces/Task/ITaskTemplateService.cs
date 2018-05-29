@@ -19,12 +19,17 @@ namespace JuCheap.Core.Interfaces
         /// <summary>
         /// 创建表单信息
         /// </summary>
-        Task CreateFormsAsync(IList<TaskTemplateFormDto> forms, CurrentUserDto user);
+        Task CreateFormsAsync(TaskTemplateFormDto form, CurrentUserDto user);
+
+        /// <summary>
+        /// 删除表单
+        /// </summary>
+        Task<bool> DeleteFormAsync(string formId);
 
         /// <summary>
         /// 创建步骤操作信息
         /// </summary>
-        Task CreateStepsAsync(IList<TaskTemplateStepDto> steps, CurrentUserDto user);
+        Task CreateStepsAsync(TaskTemplateStepDto step, CurrentUserDto user);
 
         /// <summary>
         /// 获取任务模板列表

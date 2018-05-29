@@ -66,55 +66,63 @@ namespace JuCheap.Core.Services.AppServices
         /// <summary>
         /// 创建表单信息
         /// </summary>
-        public async Task CreateFormsAsync(IList<TaskTemplateFormDto> forms, CurrentUserDto user)
+        public async Task CreateFormsAsync(TaskTemplateFormDto form, CurrentUserDto user)
         {
-            var templateIds = forms.Select(x => x.TemplateId).Distinct().ToList();
-            var templates = await _context.TaskTemplates.Where(x => templateIds.Contains(x.Id)).ToListAsync();
-            templates.ForEach(x => x.SetStep(TaskTemplateStep.DesignForms));
-            var templateForms = await _context.TaskTemplateForms.Where(x => templateIds.Contains(x.TemplateId)).ToListAsync();
-            if (templateForms.AnyOne())
+            var template = await _context.TaskTemplates.FirstOrDefaultAsync(x => x.Id == form.TemplateId);
+            template.SetStep(TaskTemplateStep.DesignForms);
+            if (form.Id.IsNotBlank())
             {
-                _context.TaskTemplateForms.RemoveRange(templateForms);
+                var templateForm = await _context.TaskTemplateForms.FirstOrDefaultAsync(x => x.Id == form.Id);
+                if (templateForm != null)
+                {
+                    _mapper.Map(form, templateForm);
+                }
             }
-            var formList = _mapper.Map<List<TaskTemplateFormEntity>>(forms);
-            var order = 1;
-            formList.ForEach(x =>
+            else
             {
-                x.CreateBy(user.UserId);
-                x.Order = order;
-                order++;
-            });
-            await _context.TaskTemplateForms.AddRangeAsync(formList);
+                var formEntity = _mapper.Map<TaskTemplateFormEntity>(form);
+                formEntity.CreateBy(user.UserId);
+                await _context.TaskTemplateForms.AddAsync(formEntity);
+            }
+            
             await _context.SaveChangesAsync();
+        }
+
+        /// <summary>
+        /// 删除表单
+        /// </summary>
+        public async Task<bool> DeleteFormAsync(string formId)
+        {
+            var form = await _context.TaskTemplateForms.FirstOrDefaultAsync(x => x.Id == formId);
+            if (form != null)
+            {
+                _context.Remove(form);
+                await _context.SaveChangesAsync();
+            }
+            return true;
         }
 
         /// <summary>
         /// 创建步骤操作信息
         /// </summary>
-        public async Task CreateStepsAsync(IList<TaskTemplateStepDto> steps, CurrentUserDto user)
+        public async Task CreateStepsAsync(TaskTemplateStepDto stepDto, CurrentUserDto user)
         {
-            var templateIds = steps.Select(x => x.TemplateId).Distinct().ToList();
-            var templates = await _context.TaskTemplates.Where(x => templateIds.Contains(x.Id)).ToListAsync();
-            templates.ForEach(x => x.SetStep(TaskTemplateStep.DesignSteps));
+            var template = await _context.TaskTemplates.FirstOrDefaultAsync(x => x.Id == stepDto.TemplateId);
+            template.SetStep(TaskTemplateStep.DesignSteps);
             //删除以前的数据
-            var stepIds = steps.Select(x => x.Id).Distinct().ToList();
-            var operates = await _context.TaskTemplateStepOperates.Where(x => stepIds.Contains(x.StepId)).ToListAsync();
+            var operates = await _context.TaskTemplateStepOperates.Where(x => x.StepId == stepDto.Id).ToListAsync();
             _context.TaskTemplateStepOperates.RemoveRange(operates);
-            var oldSteps = await _context.TaskTemplateSteps.Where(x => stepIds.Contains(x.Id)).ToListAsync();
-            _context.TaskTemplateSteps.RemoveRange(oldSteps);
-            var list = _mapper.Map<List<TaskTemplateStepEntity>>(steps);
-            list.ForEach(x =>
+            var oldStep = await _context.TaskTemplateSteps.FirstOrDefaultAsync(x => x.Id == stepDto.Id);
+            _context.TaskTemplateSteps.Remove(oldStep);
+            var step = _mapper.Map<TaskTemplateStepEntity>(stepDto);
+            step.Operates = step.Operates.Where(o => o.Name.IsNotBlank()).ToList();
+            step.CreateBy(user.UserId);
+            step.Operates.ForEach(m =>
             {
-                x.Order += 1;
-                x.Operates = x.Operates.Where(o => o.Name.IsNotBlank()).ToList();
-                x.CreateBy(user.UserId);
-                x.Operates.ForEach(m =>
-                {
-                    m.StepId = x.Id;
-                    m.CreateBy(user.UserId);
-                });
+                m.StepId = step.Id;
+                m.CreateBy(user.UserId);
             });
-            await _context.TaskTemplateSteps.AddRangeAsync(list);
+            await _context.TaskTemplateSteps.AddAsync(step);
             await _context.SaveChangesAsync();
         }
 

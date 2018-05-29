@@ -9,7 +9,8 @@ namespace JuCheap.Core.Data.Entity
         /// <param name="step"></param>
         public void SetStep(TaskTemplateStep step)
         {
-            Step = step;
+            if (step > Step)
+                Step = step;
         }
     }
 }

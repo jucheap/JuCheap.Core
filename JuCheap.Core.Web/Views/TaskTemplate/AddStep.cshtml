@@ -1,7 +1,6 @@
 ﻿@{
     ViewBag.Title = "添加任务模板步骤";
     Layout = "~/Views/Shared/_Layout_Content.cshtml";
-    var index = 0;
 }
 
 @model JuCheap.Core.Models.TaskTemplateStepDto
@@ -17,18 +16,16 @@
             </div>
         </div>
         <div id="app" class="ibox-content">
-            <div id="taskStepDatas" data-url="/tasktemplate/addstepdatas/@Model.TemplateId">
-                <ul class="sortable-list connectList agile-list ui-sortable">
-                    <li class="success-element" style="" v-for="step in datas" v-on:click="setData(step)">
-                        <i class="fa fa-clock-o"></i> {{step.stepName}}
-                        <div class="agile-detail">                
-                            <template v-for="op in step.operates">
-                                <a href="#" class="btn btn-xs btn-white">{{op.name}}</a>&nbsp;
-                            </template>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+            <ul class="sortable-list connectList agile-list ui-sortable">
+                <li class="success-element" style="" v-for="step in datas" v-on:click="setData(step)">
+                    <i class="fa fa-clock-o"></i> {{step.stepName}}
+                    <div class="agile-detail">                
+                        <template v-for="op in step.operates">
+                            <a href="#" class="btn btn-xs btn-white">{{op.name}}</a>&nbsp;
+                        </template>
+                    </div>
+                </li>
+            </ul>
             <form id="taskForm" asp-controller="TaskTemplate" asp-action="AddStep" class="form-horizontal" method="POST">
                 @Html.AntiForgeryToken()
                 <input type="hidden" asp-for="@Model.TemplateId" />
@@ -79,7 +76,7 @@
                 <div class="form-group">
                     <div class="col-sm-12 text-right">
                         <button class="btn btn-info" type="submit">保存操作</button>
-                        <button class="btn btn-white" type="button" id="btnBack">返回</button>
+                        <button class="btn btn-white" type="button" id="btnBack" v-on:click="goBack">返回</button>
                     </div>
                 </div>
             </form>
@@ -102,10 +99,7 @@
     </environment>
 
     <script>
-        $("#btnBack").bind("click", function (e) {
-            window.location.href = "/tasktemplate/addform/@Model.TemplateId";
-        });
-        $(document).ready(function () {            
+        $(document).ready(function () {
             new Vue({
                 el: "#app",
                 data: {
@@ -142,6 +136,10 @@
                         var len = this.currentData.operates.length;
                         if (len > 1)
                             this.currentData.operates.splice(index, 1);
+                    },
+                    goBack: function () {
+                        $("btnBack").button("loading");
+                        window.location.href = "/tasktemplate/addform/@Model.TemplateId";
                     }
                 }
             });

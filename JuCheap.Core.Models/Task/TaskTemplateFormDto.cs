@@ -1,10 +1,12 @@
 ﻿using JuCheap.Core.Infrastructure.Enums;
+using JuCheap.Core.Infrastructure.Extentions;
 using System.ComponentModel.DataAnnotations;
 
 namespace JuCheap.Core.Models
 {
     public class TaskTemplateFormDto
     {
+        public string Id { get; set; }
         /// <summary>
         /// 所属模板Id
         /// </summary>
@@ -22,5 +24,11 @@ namespace JuCheap.Core.Models
         [Required(ErrorMessage = Message.Required)]
         [MaxLength(50, ErrorMessage = Message.MaxLength)]
         public string ControlName { get; set; }
+        /// <summary>
+        /// 排序
+        /// </summary>
+        public int Order { get; set; }
+
+        public string ControlTypeName => ControlType.GetDescriptionForEnum();
     }
 }

@@ -56,8 +56,8 @@ namespace JuCheap.Core.Services.AppServices
                 template.CreateBy(user.UserId);
                 template.SetStep(TaskTemplateStep.Save);
                 await _context.AddAsync(template);
+                templateDto.Id = template.Id;
             }
-            
            
             await _context.SaveChangesAsync();
             return templateDto.Id;
@@ -111,9 +111,15 @@ namespace JuCheap.Core.Services.AppServices
             template.SetStep(TaskTemplateStep.DesignSteps);
             //删除以前的数据
             var operates = await _context.TaskTemplateStepOperates.Where(x => x.StepId == stepDto.Id).ToListAsync();
-            _context.TaskTemplateStepOperates.RemoveRange(operates);
+            if (operates.AnyOne())
+            {
+                _context.TaskTemplateStepOperates.RemoveRange(operates);
+            }
             var oldStep = await _context.TaskTemplateSteps.FirstOrDefaultAsync(x => x.Id == stepDto.Id);
-            _context.TaskTemplateSteps.Remove(oldStep);
+            if (oldStep != null)
+            {
+                _context.TaskTemplateSteps.Remove(oldStep);
+            }
             var step = _mapper.Map<TaskTemplateStepEntity>(stepDto);
             step.Operates = step.Operates.Where(o => o.Name.IsNotBlank()).ToList();
             step.CreateBy(user.UserId);

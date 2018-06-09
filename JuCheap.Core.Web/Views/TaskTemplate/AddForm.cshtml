@@ -36,35 +36,37 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>            
-            <form id="taskForm" asp-controller="TaskTemplate" asp-action="AddForm" class="form-horizontal" method="POST">
+            </table>
+            <form id="taskForm" asp-controller="TaskTemplate" asp-action="AddForm" class="form-horizontal" method="POST" novalidate>
                 @Html.AntiForgeryToken()
-                <table class="table table-bordered">
-                    <tr>
-                        <td class="col-sm-4">
-                            <input name="TemplateId" type="hidden" v-bind:value="currentForm.templateId"/>
-                            <input name="Id" type="hidden" v-bind:value="currentForm.id"/>
-                            <input name="ControlName" class="form-control" placeholder="控件名称" v-bind:value="currentForm.controlName"/>
-                        </td>
-                        <td class="col-sm-3">
-                            <select name="ControlType" class="form-control" placeholder="控件类型"  v-bind:value="currentForm.controlType">
-                                <option value="1">单行文本框</option>
-                                <option value="2">多行文本框</option>
-                                <option value="3">下拉框</option>
-                                <option value="4">日期</option>
-                                <option value="5">日期时间</option>
-                            </select>
-                        </td>
-                        <td class="col-sm-3">
-                            <input type="text" class="form-control" name="Order" v-bind:value="currentForm.order"/>
-                        </td>
-                        <td class="text-left col-sm-2">
-                            <button class="btn btn-primary btn-xs" type="submit">保存</button>
-                            <button class="btn btn-info btn-xs" type="button" id="btnNext" v-on:click="nextStep">下一步</button>
-                            <button class="btn btn-white btn-xs" type="button" id="btnBack" v-on:click="goBack">返回</button>
-                        </td>
-                    </tr>
-                </table>
+                
+                    <table class="table table-bordered">
+                        <tr>
+                            <td class="col-sm-4">
+                                <input name="TemplateId" type="hidden" v-bind:value="currentForm.templateId"/>
+                                <input name="Id" type="hidden" v-bind:value="currentForm.id"/>
+                                <input name="ControlName" class="form-control" placeholder="控件名称" v-bind:value="currentForm.controlName" v-validate="'required'"/>
+                                <span class="field-validation-error">{{ errors.first('ControlName') }}</span>
+                            </td>
+                            <td class="col-sm-3">
+                                <select name="ControlType" class="form-control" placeholder="控件类型"  v-bind:value="currentForm.controlType">
+                                    <option value="1">单行文本框</option>
+                                    <option value="2">多行文本框</option>
+                                    <option value="3">下拉框</option>
+                                    <option value="4">日期</option>
+                                    <option value="5">日期时间</option>
+                                </select>
+                            </td>
+                            <td class="col-sm-3">
+                                <input type="text" class="form-control" name="Order" v-bind:value="currentForm.order"/>
+                            </td>
+                            <td class="text-left col-sm-2">
+                                <button class="btn btn-primary btn-xs" type="submit">保存</button>
+                                <button class="btn btn-info btn-xs" type="button" id="btnNext" v-on:click="nextStep">下一步</button>
+                                <button class="btn btn-white btn-xs" type="button" id="btnBack" v-on:click="goBack">返回</button>
+                            </td>
+                        </tr>
+                    </table>
             </form>
         </div>
     </div>
@@ -74,20 +76,24 @@
     <environment names="Development">
         <script src="~/js/base.js"></script>
         <script src="~/js/vue.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vee-validate@latest/dist/vee-validate.js"></script>
         <script src="~/lib/vue-resource/dist/vue-resource.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/js/base.min.js" asp-append-version="true"></script>
         <script src="~/js/vue.min.js" asp-append-version="true"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vee-validate@latest/dist/vee-validate.js" asp-append-version="true"></script>
         <script src="~/lib/vue-resource/dist/vue-resource.js" asp-append-version="true"></script>
     </environment>
 
     <script>
-        $(document).ready(function () {            
+        $(document).ready(function () {
+            Vue.use(VeeValidate);
             new Vue({
                 el: "#app",
                 data: {
                     forms: [],
+                    controlName: '',
                     currentForm: {
                         id: '',
                         templateId:'@Model',

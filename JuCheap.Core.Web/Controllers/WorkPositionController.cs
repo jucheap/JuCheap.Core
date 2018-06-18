@@ -1,9 +1,11 @@
 ﻿using JuCheap.Core.Infrastructure.Attributes;
 using JuCheap.Core.Infrastructure.Menu;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JuCheap.Core.Web.Controllers
 {
+    [AllowAnonymous]
     public class WorkPositionController : BaseController
     {
         /// <summary>

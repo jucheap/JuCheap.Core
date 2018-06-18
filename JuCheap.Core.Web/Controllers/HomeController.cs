@@ -48,15 +48,18 @@ namespace JuCheap.Core.Web.Controllers
         /// 首页
         /// </summary>
         /// <returns></returns>
+        [AllowAnonymous]
+        [IgnoreRightFilter]
         public async Task<IActionResult> Index()
         {
-            var userId = User.Identity.GetLoginUserId();
-            var myMenus = await _menuService.GetMyMenusAsync(userId);
-            var myUnReadMessageNumber = await _messageService.GetMyMessageCountAsync(userId);
-            var myUnReadMessages = await _messageService.GetUnReadMesasgeAsync(userId);
-            ViewBag.Menus = myMenus;
-            ViewBag.MyUnReadMessageNumber = myUnReadMessageNumber;
-            return View(myUnReadMessages);
+            //var userId = User.Identity.GetLoginUserId();
+            //var myMenus = await _menuService.GetMyMenusAsync(userId);
+            //var myUnReadMessageNumber = await _messageService.GetMyMessageCountAsync(userId);
+            //var myUnReadMessages = await _messageService.GetUnReadMesasgeAsync(userId);
+            //ViewBag.Menus = myMenus;
+            //ViewBag.MyUnReadMessageNumber = myUnReadMessageNumber;
+            //return View(myUnReadMessages);
+            return View();
         }
 
         /// <summary>

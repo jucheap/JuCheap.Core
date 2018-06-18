@@ -22,6 +22,11 @@
         /// </summary>
         public static (string Id, string Name) Pages = (PagesId, "示例页面");
 
+        /// <summary>
+        /// 工位管理模块
+        /// </summary>
+        public static (string Id, string Name) WorkPosition = (WorkPositionId, "工位管理");
+
         #endregion
 
         #region 菜单常量配置
@@ -263,6 +268,25 @@
         /// 任务模板添加页面Id
         /// </summary>
         public const string TaskTemplateAddId = "00047";
+
+        #endregion
+
+        #region 工位模板常量配置
+
+        /// <summary>
+        /// 工位管理模块Id
+        /// </summary>
+        public const string WorkPositionId = "00048";
+
+        /// <summary>
+        /// 工位首页页面Id
+        /// </summary>
+        public const string WorkPositionPage = "00049";
+
+        /// <summary>
+        /// 工位详情页面Id
+        /// </summary>
+        public const string WorkPositionDetail = "00050";
 
         #endregion
     }

@@ -17,11 +17,13 @@ namespace JuCheap.Core.Web
         /// <returns></returns>
         public static List<MenuDto> GetMenues()
         {
+            //添加模块
             var menus = new List<MenuDto>
             {
                 new MenuDto{Id = Menu.System.Id,Name = Menu.System.Name,Icon = "fa fa-gear"},
                 new MenuDto{Id = Menu.Logs.Id,Name = Menu.Logs.Name,Icon = "fa fa-bars"},
-                new MenuDto{Id = Menu.Pages.Id,Name = Menu.Pages.Name,Icon = "fa fa-file-o"}
+                new MenuDto{Id = Menu.Pages.Id,Name = Menu.Pages.Name,Icon = "fa fa-file-o"},
+                new MenuDto{Id = Menu.WorkPosition.Id,Name = Menu.WorkPosition.Name,Icon = "fa fa-file-o"}
             };
 
             //获取所有的控制器

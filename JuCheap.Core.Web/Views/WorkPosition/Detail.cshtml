@@ -1,0 +1,194 @@
+﻿@model JuCheap.Core.Models.UserAddDto
+
+@{
+    ViewBag.Title = "工位列表";
+    Layout = "~/Views/Shared/_Layout_Content.cshtml";
+}
+
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <span class="label label-primary pull-right">在线</span>
+                    <h5>A001/生产组</h5>
+                </div>
+                <div class="ibox-content">
+                    <input class="form-control" type="text" placeholder="条码" autofocus />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="ibox">
+                <div class="ibox-title text-center">
+                    <h4>生产信息</h4>
+                </div>
+                <div class="ibox-content">
+                    <p class="col-sm-12">订单号：DD20180616001</p>
+                    <p class="col-sm-6">
+                        机型：P001
+                    </p>
+                    <p class="col-sm-6">
+                        操作员：李丽
+                    </p>
+                    <p class="col-sm-6">
+                        已生产：129
+                    </p>
+                    <p class="col-sm-6">
+                        合格数：120
+                    </p>
+                    <span>&nbsp;</span>
+                </div>
+            </div>
+
+            <div class="ibox">
+                <div class="ibox-title text-center">
+                    <h4>物料信息</h4>
+                </div>
+                <div class="ibox-content">
+                    <div class="list-group">
+                        <a class="list-group-item" href="#">
+                            <h3 class="list-group-item-heading">物料：WL001</h3>
+
+                            <p class="list-group-item-text">每箱：120 个，剩余：90 个</p>
+                        </a>
+
+                        <a class="list-group-item" href="#">
+                            <h3 class="list-group-item-heading">物料：WL002</h3>
+
+                            <p class="list-group-item-text">每箱：120 个，剩余：90 个</p>
+                        </a>
+
+                        <a class="list-group-item" href="#">
+                            <h3 class="list-group-item-heading">物料：WL003</h3>
+
+                            <p class="list-group-item-text">每箱：120 个，剩余：90 个</p>
+                        </a>
+                    </div>
+                    <div class="text-center">
+                        <ul class="pagination">
+                            <li tabindex="0" class="paginate_button previous disabled" id="editable_previous" aria-controls="editable"><a href="#">上一页</a></li>
+                            <li tabindex="0" class="paginate_button next" id="editable_next" aria-controls="editable"><a href="#">下一页</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a aria-expanded="true" href="#tab-1" data-toggle="tab"> 数据信息</a></li>
+                    <li><a aria-expanded="false" href="#tab-2" data-toggle="tab">操作指导</a></li>
+                    <li><a aria-expanded="false" href="#tab-3" data-toggle="tab">条码预览</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-1">
+                        <div class="panel-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>用户</th>
+                                        <th>值</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>张三</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 40%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>李四</td>
+                                        <td class="text-warning"> <i class="fa fa-level-down"></i> -20%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>5</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>6</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>7</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>8</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>9</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>10</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>11</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>12</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>13</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>14</td>
+                                        <td>王麻子</td>
+                                        <td class="text-navy"> <i class="fa fa-level-up"></i> 26%</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-2">
+                        <div class="panel-body">
+                            <strong>移动设备优先</strong>
+                            <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在 Bootstrap 3 中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap 是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-3">
+                        <div class="panel-body">
+                            <strong>移动设备优先</strong>
+                            <p>在 Bootstrap 2 中，我们对框架中的某些关键部分增加了对移动设备友好的样式。而在 Bootstrap 3 中，我们重写了整个框架，使其一开始就是对移动设备友好的。这次不是简单的增加一些可选的针对移动设备的样式，而是直接融合进了框架的内核中。也就是说，Bootstrap 是移动设备优先的。针对移动设备的样式融合进了框架的每个角落，而不是增加一个额外的文件。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 text-right">
+            <button class="btn btn-outline btn-primary" type="button" onclick="window.location.href='/workposition/index'">返回</button>
+        </div>
+    </div>
+</div>
+

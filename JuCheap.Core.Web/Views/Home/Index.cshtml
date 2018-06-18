@@ -1,71 +1,14 @@
 ﻿
 @model IList<JuCheap.Core.Models.MessageQueryDto>
 
-<div id="page-wrapper" class="gray-bg dashbard-1">
-    <div class="row border-bottom">
-        <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-            @*<div class="navbar-header">
-                <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-            </div>*@
-
-            <ul class="nav navbar-top-links navbar-right">
-                <li class="hidden-xs">
-                    @User.Identity.Name
-                </li>
-                @*站内信*@
-                <li class="dropdown">
-                    <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#" aria-expanded="false">
-                        <i class="fa fa-envelope"></i>  <span class="label label-warning">@ViewBag.MyUnReadMessageNumber</span>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        @if (Model.Any())
-                        {
-                            @foreach(var message in Model)
-                            {
-                                <li>
-                                    <div class="dropdown-messages-box">
-                                        <div class="media-body">
-                                            <strong><i class="fa fa-volume-down"></i><a href="javascript:;" onclick="readMessage('@message.Id')">@message.Title</a></strong><br>
-                                            <small class="text-muted">@message.CreateDateTime</small>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="divider"></li>
-                            }
-                        }
-                        else
-                        {
-                             <li>
-                                <div class="dropdown-messages-box">
-                                        <div class="media-body">
-                                            没有未读的信息
-                                        </div>
-                                    </div>
-                            </li>
-
-                        }
-                        @*<li>
-                            <div class="text-center link-block">
-                                <a href="#">
-                                    <i class="fa fa-envelope"></i> <strong>更多</strong>
-                                </a>
-                            </div>
-                        </li>*@
-                    </ul>
-                </li>
-                <li class="hidden-xs">
-                    <a href="@Url.Action("Logout")"><i class="fa fa fa-sign-out"></i> 退出</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+<div id="page-wrapper" class="gray-bg dashbard-1" style="margin-left:0">
     <div class="row content-tabs">
         <button class="roll-nav roll-left J_tabLeft">
             <i class="fa fa-backward"></i>
         </button>
         <nav class="page-tabs J_menuTabs">
             <div class="page-tabs-content">
-                <a href="javascript:;" class="active J_menuTab" data-id="@Url.Action("Welcome")">首页</a>
+                <a href="javascript:;" class="active J_menuTab" data-id="@Url.Action("Index","WorkPosition")">首页</a>
             </div>
         </nav>
         <button class="roll-nav roll-right J_tabRight">
@@ -90,7 +33,7 @@
         </div>
     </div>
     <div class="row J_mainContent" id="content-main">
-        <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="@Url.Action("Welcome")" frameborder="0" data-id="@Url.Action("Welcome")" seamless></iframe>
+        <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="@Url.Action("Index","WorkPosition")" frameborder="0" data-id="@Url.Action("Index","WorkPosition")" seamless></iframe>
     </div>
     <div class="footer">
         <div class="pull-right">

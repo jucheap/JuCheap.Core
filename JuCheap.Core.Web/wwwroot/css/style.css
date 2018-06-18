@@ -2581,7 +2581,7 @@ nav.page-tabs .page-tabs-content {
 	left:auto
 }
 #content-main {
-	height:calc(100% - 140px);
+	height:calc(100% - 80px);
 	overflow:hidden
 }
 .fixed-nav #content-main {

@@ -104,7 +104,7 @@ namespace JuCheap.Core.Web
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=WorkPosition}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
 
             //初始化数据库以及初始数据

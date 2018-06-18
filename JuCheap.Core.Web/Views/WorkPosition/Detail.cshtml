@@ -4,7 +4,13 @@
     ViewBag.Title = "工位列表";
     Layout = "~/Views/Shared/_Layout_Content.cshtml";
 }
-
+@section  scripts{ 
+    <script>
+        function goBack() {
+             parent.JuCheapTabs.addMenuTab("0", "首页", "/WorkPosition");
+        }
+    </script>
+}
 <div class="wrapper wrapper-content">
     <div class="row">
         <div class="col-sm-12">
@@ -187,7 +193,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12 text-right">
-            <button class="btn btn-outline btn-primary" type="button" onclick="window.location.href='/workposition/index'">返回</button>
+            <button class="btn btn-outline btn-primary" type="button" onclick="goBack()">返回</button>
         </div>
     </div>
 </div>

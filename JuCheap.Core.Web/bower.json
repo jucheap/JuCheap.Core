@@ -6,8 +6,7 @@
     "jquery": "2.2.0",
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.6",
-    "vue-resource": "1.2.1",
-    "vue": "v2.5.16"
+    "vue-resource": "1.2.1"
   },
   "resolutions": {
     "vee-validate": "2.0.9"

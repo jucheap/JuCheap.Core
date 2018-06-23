@@ -1,4 +1,5 @@
 ﻿using JuCheap.Core.Infrastructure.Attributes;
+using JuCheap.Core.Infrastructure.Exceptions;
 using JuCheap.Core.Infrastructure.Extentions;
 using JuCheap.Core.Infrastructure.Menu;
 using JuCheap.Core.Models;
@@ -51,7 +52,7 @@ namespace JuCheap.Core.Web
                     };
                     if (menus.Any(x => x.Id == menu.Id))
                     {
-                        throw new Exception($"已经存在相同的Id={menu.Id},Name={menu.Name}");
+                        throw new BusinessException($"已经存在相同的Id={menu.Id},Name={menu.Name}");
                     }
                     menus.Add(menu);
                 }

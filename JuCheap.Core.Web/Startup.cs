@@ -14,7 +14,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -52,7 +54,13 @@ namespace JuCheap.Core.Web
                     //o.DataProtectionProvider = null;//如果需要做负载均衡，就需要提供一个Key
                 });
             //使用Sql Server数据库
-            services.AddDbContext<JuCheapContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer")));
+            services.AddDbContext<JuCheapContext>(options =>
+            {
+                var loggerFactory = new LoggerFactory();
+                loggerFactory.AddProvider(new EFLoggerProvider());
+                options.UseLoggerFactory(loggerFactory)
+                        .UseSqlServer(Configuration.GetConnectionString("Connection_SqlServer"));
+            });
 
             ////使用Sqlite数据库
             //services.AddDbContext<JuCheapContext>(options => options.UseSqlite(Configuration.GetConnectionString("Connection_Sqlite")));
@@ -134,7 +142,37 @@ namespace JuCheap.Core.Web
             RecurringJob.AddOrUpdate<ISiteViewService>(x => x.AddOrUpdate(), Cron.Daily());
             RecurringJob.AddOrUpdate(() => Console.WriteLine($"Job在{DateTime.Now}执行完成."), Cron.Minutely());
         }
-    }    
+    }
+
+    public class EFLogger : ILogger
+    {
+        private readonly string categoryName;
+
+        public EFLogger(string categoryName) => this.categoryName = categoryName;
+
+        public bool IsEnabled(LogLevel logLevel) => true;
+
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        {
+            //ef core执行数据库查询时的categoryName为Microsoft.EntityFrameworkCore.Database.Command,日志级别为Information
+            if (categoryName == "Microsoft.EntityFrameworkCore.Database.Command"
+                    && logLevel == LogLevel.Information)
+            {
+                
+            }
+            var logContent = formatter(state, exception);
+            //TODO: 拿到日志内容想怎么玩就怎么玩吧
+            Debug.WriteLine(logContent);
+        }
+
+        public IDisposable BeginScope<TState>(TState state) => null;
+    }
+
+    public class EFLoggerProvider : ILoggerProvider
+    {
+        public ILogger CreateLogger(string categoryName) => new EFLogger(categoryName);
+        public void Dispose() { }
+    }
 
     /// <summary>
     /// IIdentity扩展

@@ -64,7 +64,10 @@ namespace JuCheap.Core.Web
             services.AddMvc(cfg =>
             {
                 cfg.Filters.Add(new RightFilter());
-            });            
+            }).AddJsonOptions(option =>
+            {
+                option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+            });
             //.AddJsonOptions(option => option.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver());//配置大小写问题，默认是首字母小写
 
             // service依赖注入

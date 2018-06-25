@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.IO;
 using System.Security.Claims;
@@ -67,8 +68,9 @@ namespace JuCheap.Core.Web
             }).AddJsonOptions(option =>
             {
                 option.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                //使用默认方式，不更改元数据的key的大小写，默认为驼峰式
+                //option.SerializerSettings.ContractResolver = new DefaultContractResolver();
             });
-            //.AddJsonOptions(option => option.SerializerSettings.ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver());//配置大小写问题，默认是首字母小写
 
             // service依赖注入
             services.UseJuCheapService();

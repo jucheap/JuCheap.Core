@@ -1,5 +1,4 @@
 using Hangfire;
-using Hangfire.MySql.Core;
 using JuCheap.Core.Data;
 using JuCheap.Core.Infrastructure.Utilities;
 using JuCheap.Core.Interfaces;
@@ -14,7 +13,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Serialization;
 using System;
 using System.IO;
 using System.Security.Claims;

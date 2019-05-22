@@ -8,6 +8,7 @@ net 4.5版本：http://www.jucheap.com
 net core版本：http://core.jucheap.com  
 账号/密码：admin/qwaszx
 
+
 #### 项目运行效果图
 
 ![JuCheap登陆界面](https://images.gitee.com/uploads/images/2019/0522/204550_1b6e782d_422345.png "JuCheap登陆界面")
@@ -20,10 +21,12 @@ net core版本：http://core.jucheap.com
 
 
 #### 技术栈
-net core
-ef core
-hangfire
-log4net
+net core  
+ef core  
+hangfire  
+log4net  
+simpleinjector(关于simpleinjector的api注入方式，请切换到api分支查看)  
+sso(identity server 4，请切换到sso分支)  
 
 #### 安装教程
 

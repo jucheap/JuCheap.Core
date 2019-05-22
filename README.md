@@ -3,6 +3,17 @@
 #### 介绍
 Jucheap.Core 使用asp.net core和ef core构建了一个跨平台的快速开发框架
 
+#### 项目运行效果图
+
+![JuCheap登陆界面](https://images.gitee.com/uploads/images/2019/0522/204550_1b6e782d_422345.png "JuCheap登陆界面")
+
+![JuCheap菜单管理](https://img-blog.csdn.net/20160722103223754?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQv/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center "JuCheap菜单管理")
+
+![JuCheap菜单管理](https://images.gitee.com/uploads/images/2019/0522/204638_ed9f84c9_422345.png "JuCheap菜单管理")
+
+
+
+
 #### 技术栈
 net core
 ef core
@@ -21,4 +32,4 @@ log4net
 1. Fork 本仓库
 2. 新建 Feat_xxx 分支
 3. 提交代码
-4. 新建 Pull Request
+4. 新建 Pull Request!

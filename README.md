@@ -3,9 +3,9 @@
 #### 介绍
 Jucheap.Core 使用asp.net core和ef core构建了一个跨平台的快速开发框架.
 
-项目线上地址：
-net 4.5版本：http://www.jucheap.com
-net core版本：http://core.jucheap.com
+项目线上地址： 
+net 4.5版本：http://www.jucheap.com  
+net core版本：http://core.jucheap.com  
 账号/密码：admin/qwaszx
 
 #### 项目运行效果图

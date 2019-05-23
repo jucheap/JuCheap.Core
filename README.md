@@ -25,6 +25,7 @@ net core
 ef core  
 hangfire  
 log4net  
+automapper  
 simpleinjector(关于simpleinjector的api注入方式，请切换到api分支查看)  
 sso(identity server 4，请切换到sso分支)  
 
